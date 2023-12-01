@@ -18,6 +18,7 @@ public class Game implements Runnable{
         gameThread.start();
     }
 
+    //Game Loop
     @Override
     public void run() {
         double timePerFrame=(1000000000.0 / FPS_SET);

@@ -9,10 +9,11 @@ public class GameWindow {
     public GameWindow(GamePanel gamePanel) {
         jframe= new JFrame(); //Initializes object
         
-        jframe.setSize(width, height);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.add(gamePanel);
         jframe.setLocationRelativeTo(null);
+        jframe.setResizable(false);
+        jframe.pack();
         jframe.setVisible(true);
     }
 

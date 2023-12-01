@@ -1,12 +1,15 @@
 package main.java.com.example;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import inputs.KeyboardInputs;
 import inputs.MouseInputs;
 
-import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.Random;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class GamePanel extends JPanel{
     private MouseInputs mouseInputs;
@@ -18,17 +21,35 @@ public class GamePanel extends JPanel{
 
     private int frames=0;
     private long lastCheck;
-    private Color color=new Color(150, 20, 90);
 
-    private Random random;
+    private BufferedImage img;
+
 
     public GamePanel() {
-        random= new Random();
         mouseInputs= new MouseInputs(this); //part of constructor
+        importImg();
+        setPanelSize();
 
         addKeyListener(new KeyboardInputs(this));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
+    }
+
+    private void importImg() {
+        InputStream is= getClass().getResourceAsStream("/game_sprite__player__by_monkey22mm_d6gfouv-fullview.png");
+        
+        try {
+            img= ImageIO.read(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setPanelSize(){
+        Dimension size= new Dimension(1200, 800);
+        setMinimumSize(size);
+        setPreferredSize(size);
+        setMaximumSize(size);
     }
 
     //Getters
@@ -72,34 +93,10 @@ public class GamePanel extends JPanel{
         this.yDelta=y;
     }
 
-    public void updateRectangle() {
-        xDelta+=xDir;
-        if (xDelta>GameWindow.getWidth() || xDelta<0) {
-            xDir*=-1;
-            color=getRndColor();
-        }
-        yDelta+=yDir;
-        if (yDelta>GameWindow.getHeight() || yDelta<0) {
-            yDir*=-1;
-            color=getRndColor();
-        }
-    }
-
     //Paint component
-
-    private Color getRndColor() {
-        int r=random.nextInt(255);
-        int g=random.nextInt(255);
-        int b=random.nextInt(255);
-        return new Color(r, g, b);
-    }
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        updateRectangle();
-        g.setColor(color);
-        g.fillRect((int) xDelta, (int) yDelta, 200, 50);
+       /*  g.drawImage(null, x, y, getFocusCycleRootAncestor()); */
 
         frames++;
         if (System.currentTimeMillis()-lastCheck>=1000) {
