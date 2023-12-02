@@ -48,6 +48,7 @@ public class Game implements Runnable{
             previousTime=currentTime;
 
             if (deltaU>=1) {
+                update();
                 updates++;
                 deltaU--;
             }
