@@ -90,15 +90,7 @@ public class GamePanel extends JPanel {
         this.moving=moving;
     }
 
-    //Set Animation
-    public void setAnimation() {
-        if (moving) {
-            playerAction=RUNNING;
-        } else {
-            playerAction=IDLE;
-        }
-    }
-
+    //Updating codes
     public void updatePos() {
         if (moving) {
             switch (playerDir) {
@@ -118,19 +110,20 @@ public class GamePanel extends JPanel {
         }
     }
 
-    // Paint component
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void updateGame() {
         updateAnimationTick();
-
         setAnimation();
         updatePos();
-
-        g.drawImage(animations[playerAction][aniIndex], (int) xDelta, (int) yDelta, 256, 160, null);
     }
-    
 
-    //Animation
+    public void setAnimation() {
+        if (moving) {
+            playerAction=RUNNING;
+        } else {
+            playerAction=IDLE;
+        }
+    }
+
     private void updateAnimationTick() {
         aniTick++;
         if (aniTick>=aniSpeed) {
@@ -141,4 +134,12 @@ public class GamePanel extends JPanel {
             }
         }
     }
+
+    // Paint component
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(animations[playerAction][aniIndex], (int) xDelta, (int) yDelta, 256, 160, null);
+    }
+    
 }
