@@ -23,13 +23,12 @@ public class GameWindow {
 
             @Override //Work on this later
             public void windowGainedFocus(WindowEvent e) {
-                gamePanel.getGame().windowFocusLost();
+                
             }
 
             @Override
             public void windowLostFocus(WindowEvent e) {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'windowLostFocus'");
+                gamePanel.getGame().windowFocusLost();
             }
             
         }); {
