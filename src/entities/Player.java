@@ -16,16 +16,20 @@ import static utilz.Constants.PlayerConstants.RUNNING;
 
 public class Player extends Entity {
     private int aniTick, aniIndex, aniSpeed=15;
-    private BufferedImage img;
+    private BufferedImage img; //Check later
     private BufferedImage[][] animations;
+
     private int playerAction=IDLE;
     private float playerSpeed=2.0f;
+    protected int width, height; //Inspect later
 
     private boolean moving=false, attacking=false;
     private boolean left, up, right, down;
 
-    public Player(float x, float y) {
+    public Player(float x, float y, int width, int height) {
         super(x, y);
+        this.width=width;
+        this.height=height; //Check these ones later
         loadAnimations();
     }
 
@@ -37,7 +41,7 @@ public class Player extends Entity {
 
     public void render(Graphics g) {
         if (animations != null && animations[playerAction][aniIndex] != null) {
-            g.drawImage(animations[playerAction][aniIndex], (int) x, (int) y, 256, 160, null);
+            g.drawImage(animations[playerAction][aniIndex], (int) x, (int) y, 64, 40, null);
         }
     }
     
