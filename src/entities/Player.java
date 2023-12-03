@@ -7,6 +7,8 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import utilz.LoadSave;
+
 import static utilz.Constants.PlayerConstants.ATTACK_1;
 import static utilz.Constants.PlayerConstants.GetSpriteAmount;
 import static utilz.Constants.PlayerConstants.IDLE;
@@ -41,18 +43,13 @@ public class Player extends Entity {
     
 
     private void loadAnimations() {
-        InputStream is = getClass().getResourceAsStream("/player/player_sprites.png");
-        try {
-            img = ImageIO.read(is);
-            animations = new BufferedImage[9][6]; // Initialize the class member
+        BufferedImage img=LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
+        animations = new BufferedImage[9][6]; 
             for (int i = 0; i < animations.length; i++) {
                 for (int j = 0; j < animations[i].length; j++) {
                     animations[i][j] = img.getSubimage(j * 64, i * 40, 64, 40);
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void updatePos() {
