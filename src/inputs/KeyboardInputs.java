@@ -1,7 +1,6 @@
 package inputs;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import main.java.com.example.GamePanel;
 
 public class KeyboardInputs implements KeyListener{
@@ -43,6 +42,9 @@ public class KeyboardInputs implements KeyListener{
                 break;
             case KeyEvent.VK_RIGHT:
                 gamePanel.getGame().getPlayer().setRight(true);
+                break;
+            case KeyEvent.VK_SPACE:
+                gamePanel.getGame().getPlayer().setAttacking(true);
                 break;
         }
     }

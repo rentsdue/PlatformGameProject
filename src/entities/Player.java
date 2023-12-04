@@ -15,34 +15,29 @@ import static utilz.Constants.PlayerConstants.IDLE;
 import static utilz.Constants.PlayerConstants.RUNNING;
 
 public class Player extends Entity {
-    private int aniTick, aniIndex, aniSpeed=15;
-    private BufferedImage img; //Check later
     private BufferedImage[][] animations;
-
+    private int aniTick, aniIndex, aniSpeed=25;
     private int playerAction=IDLE;
-    private float playerSpeed=2.0f;
-    protected int width, height; //Inspect later
-
     private boolean moving=false, attacking=false;
     private boolean left, up, right, down;
+    private float playerSpeed=2.0f;
+    private int[][] lvlData;
 
     public Player(float x, float y, int width, int height) {
-        super(x, y);
-        this.width=width;
-        this.height=height; //Check these ones later
+        super(x, y, width, height);
         loadAnimations();
     }
 
     public void update() {
+        updatePos();
+        updateHitBox();
         updateAnimationTick();
         setAnimation();
-        updatePos();
     }
 
     public void render(Graphics g) {
-        if (animations != null && animations[playerAction][aniIndex] != null) {
-            g.drawImage(animations[playerAction][aniIndex], (int) x, (int) y, 64, 40, null);
-        }
+        g.drawImage(animations[playerAction][aniIndex], (int) x, (int) y, 64, 40, null);
+        drawHitBox(g);
     }
     
 
@@ -54,6 +49,17 @@ public class Player extends Entity {
                     animations[i][j] = img.getSubimage(j * 64, i * 40, 64, 40);
                 }
             }
+    }
+
+    public void loadLvlData(int[][] lvlData) {
+        this.lvlData=lvlData;
+    }
+
+    public void resetDirBooleans() {
+        up=false;
+        down=false;
+        left=false;
+        right=false;
     }
 
     public void updatePos() {
@@ -114,12 +120,7 @@ public class Player extends Entity {
 
     //Getters and Setters
 
-    public void resetDirBooleans() {
-        up=false;
-        down=false;
-        left=false;
-        right=false;
-    }
+
 
     public boolean isLeft() {
         return left;
