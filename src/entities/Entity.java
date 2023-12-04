@@ -26,7 +26,7 @@ public abstract class Entity {
         hitBox= new Rectangle((int)x, (int)y, width, height);
     }
 
-    public void updateHitBox() {
+    protected void updateHitBox() {
         hitBox.x=(int) x;
         hitBox.y=(int) y;
     }
