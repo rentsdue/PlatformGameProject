@@ -1,13 +1,9 @@
 package main.java.com.example;
 import javax.swing.JPanel;
 
-import inputs.KeyboardInputs;
-import inputs.MouseInputs;
-
-import java.awt.Dimension;
-import java.awt.Graphics;
-import static main.java.com.example.Game.GAME_WIDTH;
-import static main.java.com.example.Game.GAME_HEIGHT;
+import inputs.*;
+import java.awt.*;
+import static main.java.com.example.Game.*;
 
 public class GamePanel extends JPanel {
     private MouseInputs mouseInputs;
@@ -16,16 +12,10 @@ public class GamePanel extends JPanel {
     public GamePanel(Game game) {
         mouseInputs = new MouseInputs(this);
         this.game=game;
-
         setPanelSize();
-        setFocusable(true);
         addKeyListener(new KeyboardInputs(this));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
-    }
-
-    public Game getGame() {
-        return this.game;
     }
     
     private void setPanelSize() {
@@ -41,5 +31,8 @@ public class GamePanel extends JPanel {
         game.render(g);
     }
 
+    public Game getGame() {
+        return this.game;
+    }
     
 }

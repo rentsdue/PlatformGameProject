@@ -17,19 +17,20 @@ public class LoadSave {
     public static BufferedImage GetSpriteAtlas(String fileName) {
         BufferedImage img=null;
         InputStream is = LoadSave.class.getResourceAsStream("/player/" + fileName);
-            try {
-                img = ImageIO.read(is);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return img;
-    }
+		try {
+			img = ImageIO.read(is);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return img;
+	}
 
     public static int[][] GetLevelData() {
         int[][] lvlData= new int [Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];

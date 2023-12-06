@@ -1,17 +1,13 @@
 package entities;
 
 import java.awt.Graphics;
-import java.awt.geom.Rectangle2D.Float;
 import java.awt.image.BufferedImage;
 
 import main.java.com.example.Game;
 import utilz.LoadSave;
 
-import static utilz.Constants.PlayerConstants.ATTACK_1;
-import static utilz.Constants.PlayerConstants.GetSpriteAmount;
+import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethods.*;
-import static utilz.Constants.PlayerConstants.IDLE;
-import static utilz.Constants.PlayerConstants.RUNNING;
 
 public class Player extends Entity {
     private BufferedImage[][] animations;
@@ -21,10 +17,10 @@ public class Player extends Entity {
     private boolean left, up, right, down, jump;
     private float playerSpeed=2.0f;
     private int[][] lvlData;
-
-    //Jumping/Gravity
     private float xDrawOffset= 21*Game.SCALE;
     private float yDrawOffset= 4*Game.SCALE;
+
+    //Jumping/Gravity
     private float airSpeed=0f;
     private float gravity=0.04f*Game.SCALE;
     private float jumpSpeed= -2.25f*Game.SCALE;
@@ -34,7 +30,7 @@ public class Player extends Entity {
     public Player(float x, float y, int width, int height) {
         super(x, y, width, height);
         loadAnimations();
-        initHitBox(x, y, 20*Game.SCALE, 28*Game.SCALE);
+        initHitBox(x, y, 20*Game.SCALE, 27*Game.SCALE);
     }
 
     public void update() {
@@ -47,30 +43,51 @@ public class Player extends Entity {
         g.drawImage(animations[playerAction][aniIndex], (int) (hitBox.x-xDrawOffset), (int) (hitBox.y-yDrawOffset), width, height, null);
         drawHitBox(g);
     }
-    
 
-    private void loadAnimations() {
-        BufferedImage img=LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
-        animations = new BufferedImage[9][6]; 
-            for (int i = 0; i < animations.length; i++) {
-                for (int j = 0; j < animations[i].length; j++) {
-                    animations[i][j] = img.getSubimage(j * 64, i * 40, 64, 40);
-                }
+    private void updateAnimationTick() {
+        aniTick++;
+        if (aniTick>=aniSpeed) {
+            aniTick=0;
+            aniIndex++;
+            if (aniIndex>=GetSpriteAmount(playerAction)) {
+                aniIndex=0;
+                attacking=false;
             }
+        }
+    }
+    private void setAnimation() {
+        int startAni=playerAction;
+        
+        if (moving) {
+            playerAction=RUNNING;
+        } else {
+            playerAction=IDLE;
+        }
+
+        if (inAir) {
+            if (airSpeed<0) {
+                playerAction=JUMP;
+            } else {
+                playerAction=FALLING;
+            }
+        }
+
+        if (attacking) {
+            playerAction=ATTACK_1;
+        }
+
+        if (startAni !=playerAction) {
+            resetAniTick();
+        }
+
+    }
+    
+    private void resetAniTick() {
+        aniTick=0;
+        aniIndex=0;
     }
 
-    public void loadLvlData(int[][] lvlData) {
-        this.lvlData=lvlData;
-    }
-
-    public void resetDirBooleans() {
-        up=false;
-        down=false;
-        left=false;
-        right=false;
-    }
-
-    public void updatePos() {  
+    private void updatePos() {  
         moving=false;
         if (jump) {
             jump();
@@ -85,6 +102,12 @@ public class Player extends Entity {
             xSpeed-=playerSpeed;
         } else if (right && !left) {
             xSpeed+=playerSpeed;
+        }
+
+        if (!inAir) {
+            if (!IsEntityOnFloor(hitBox, lvlData)) {
+                inAir=true;
+            }
         }
 
         if (inAir) {
@@ -120,42 +143,7 @@ public class Player extends Entity {
         inAir=false;
         airSpeed=0;
     }
-
-    public void setAnimation() {
-        int startAni=playerAction;
-        
-        if (moving) {
-            playerAction=RUNNING;
-        } else {
-            playerAction=IDLE;
-        }
-
-        if (attacking) {
-            playerAction=ATTACK_1;
-        }
-
-        if (startAni !=playerAction) {
-            resetAniTick();
-        }
-    }
-
-    private void resetAniTick() {
-        aniTick=0;
-        aniIndex=0;
-    }
-
-    private void updateAnimationTick() {
-        aniTick++;
-        if (aniTick>=aniSpeed) {
-            aniTick=0;
-            aniIndex++;
-            if (aniIndex>=GetSpriteAmount(playerAction)) {
-                aniIndex=0;
-                attacking=false;
-            }
-        }
-    }
-
+    
     private void updateXPos(float xSpeed) {
         if (CanMoveHere(hitBox.x+xSpeed, hitBox.y, hitBox.width, hitBox.height, lvlData)) {
             hitBox.x +=xSpeed;
@@ -165,6 +153,28 @@ public class Player extends Entity {
         }
     }
 
+    private void loadAnimations() {
+        BufferedImage img=LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
+        animations = new BufferedImage[9][6]; 
+            for (int i = 0; i < animations.length; i++) {
+                for (int j = 0; j < animations[i].length; j++) {
+                    animations[i][j] = img.getSubimage(j * 64, i * 40, 64, 40);
+                }
+            }
+    }
+
+    public void loadLvlData(int[][] lvlData) {
+        this.lvlData=lvlData;
+        if (!IsEntityOnFloor(hitBox, lvlData))
+            inAir=true;
+    }
+
+    public void resetDirBooleans() {
+        up=false;
+        down=false;
+        left=false;
+        right=false;
+    }
     //Getters and Setters
 
     public boolean isLeft() {
@@ -201,5 +211,9 @@ public class Player extends Entity {
 
     public void setAttacking(boolean attacking) {
         this.attacking=attacking;
+    }
+
+    public void setJump(boolean jump) {
+        this.jump=jump;
     }
 }
