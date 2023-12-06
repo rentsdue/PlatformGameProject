@@ -6,8 +6,8 @@ import main.java.com.example.Game;
 
 public class HelpMethods {
 
-	public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvlData) {
-		if (!IsSolid(x, y, lvlData))
+	public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvlData) { //Checks if the character can move or if it collides
+		if (!IsSolid(x, y, lvlData)) 
 			if (!IsSolid(x + width, y + height, lvlData))
 				if (!IsSolid(x + width, y, lvlData))
 					if (!IsSolid(x, y + height, lvlData))

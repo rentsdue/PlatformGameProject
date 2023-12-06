@@ -1,10 +1,11 @@
 package main.java.com.example;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import javax.swing.JPanel;
-import inputs.*;
+import inputs.KeyboardInputs;
+import inputs.MouseInputs;
 import static main.java.com.example.Game.*;
-
 
 public class GamePanel extends JPanel {
 
