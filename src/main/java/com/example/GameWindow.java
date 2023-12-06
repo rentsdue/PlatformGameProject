@@ -6,46 +6,32 @@ import java.awt.event.WindowFocusListener;
 import javax.swing.JFrame;
 
 public class GameWindow {
-    private JFrame jframe;
-    private static int width = 400;
-    private static int height = 400;
+	private JFrame jframe;
 
-    public GameWindow(GamePanel gamePanel) {
-        jframe = new JFrame();
+	public GameWindow(GamePanel gamePanel) {
 
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jframe.add(gamePanel);
-        jframe.setLocationRelativeTo(null);
-        jframe.setResizable(false);
-        jframe.pack();
-        jframe.setVisible(true);
-        jframe.addWindowFocusListener(new WindowFocusListener() {
+		jframe = new JFrame();
 
-            @Override //Work on this later
-            public void windowGainedFocus(WindowEvent e) {
-                
-            }
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jframe.add(gamePanel);
+		jframe.setLocationRelativeTo(null);
+		jframe.setResizable(false);
+		jframe.pack();
+		jframe.setVisible(true);
+		jframe.addWindowFocusListener(new WindowFocusListener() {
 
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-                gamePanel.getGame().windowFocusLost();
-            }
-            
-        }); {
+			@Override
+			public void windowLostFocus(WindowEvent e) {
+				gamePanel.getGame().windowFocusLost();
+			}
 
-        };
-    }
+			@Override
+			public void windowGainedFocus(WindowEvent e) {
+				// TODO Auto-generated method stub
 
-    public JFrame getJFrame() {
-        return jframe;
-    }
+			}
+		});
 
-    // Getters
-    public static int getWidth() {
-        return width;
-    }
+	}
 
-    public static int getHeight() {
-        return height;
-    }
 }
