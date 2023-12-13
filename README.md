@@ -1,6 +1,6 @@
 ## Getting Started
 
-This is a basic structure for a platform game. Currently it is very incomplete but soon, it will be very entertaining!
+This is a basic structure for a platform game. Currently it is very incomplete but soon, it will have all of the capabilities of a platformer!
 
 ## Folder Structure
 
