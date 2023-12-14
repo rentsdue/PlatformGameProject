@@ -62,6 +62,9 @@ public class Playing extends State implements Statemethods {
 		case KeyEvent.VK_SPACE:
 			player.setJump(true);
 			break;
+		case KeyEvent.VK_UP:
+			player.setJump(true);
+			break;
 		case KeyEvent.VK_W:
 			player.setJump(true);
 			break;
@@ -87,6 +90,9 @@ public class Playing extends State implements Statemethods {
             player.setRight(false);
             break;
 		case KeyEvent.VK_SPACE:
+			player.setJump(false);
+			break;
+		case KeyEvent.VK_UP:
 			player.setJump(false);
 			break;
 		case KeyEvent.VK_W:
