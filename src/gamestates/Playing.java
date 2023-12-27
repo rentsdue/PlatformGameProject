@@ -13,7 +13,7 @@ public class Playing extends State implements Statemethods {
 	private Player player;
 	private LevelManager levelManager;
 	private PauseOverlay pauseOverlay;
-	private boolean paused=true; //Shows the pause screen
+	private boolean paused=false; //Shows the pause screen, but set to false so that it doesn't appear immediately
 
 	public Playing(Game game) {
 		super(game);
@@ -41,7 +41,6 @@ public class Playing extends State implements Statemethods {
 	public void draw(Graphics g) {
 		levelManager.draw(g);
 		player.render(g);
-		pauseOverlay.draw(g);
 
 		if (paused) {
 			pauseOverlay.draw(g);
@@ -58,6 +57,12 @@ public class Playing extends State implements Statemethods {
 	public void mouseClicked(MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON1)
 			player.setAttacking(true);
+	}
+
+	public void mouseDragged(MouseEvent e) {
+		if (paused) {
+			pauseOverlay.mouseDragged(e);
+		}
 	}
 
 	@Override
@@ -84,8 +89,8 @@ public class Playing extends State implements Statemethods {
 		case KeyEvent.VK_W:
 			player.setJump(true);
 			break;
-		case KeyEvent.VK_BACK_SPACE:
-			Gamestate.state = Gamestate.MENU;
+		case KeyEvent.VK_ESCAPE:
+			paused= !paused;
 			break;
 		}
 	}
