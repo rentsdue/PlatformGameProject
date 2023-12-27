@@ -24,14 +24,17 @@ public class Playing extends State implements Statemethods {
 		levelManager = new LevelManager(game);
 		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE));
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
-		pauseOverlay= new PauseOverlay();
+		pauseOverlay= new PauseOverlay(this);
 	}
 
 	@Override
 	public void update() {
-		levelManager.update();
-		player.update();
-		pauseOverlay.update();
+		if (!paused) {
+			levelManager.update();
+			player.update();
+		} else {
+			pauseOverlay.update();
+		}
 	}
 
 	@Override
@@ -40,7 +43,16 @@ public class Playing extends State implements Statemethods {
 		player.render(g);
 		pauseOverlay.draw(g);
 
+		if (paused) {
+			pauseOverlay.draw(g);
+		}
 	}
+
+	public void unpauseGame() {
+		paused=false;
+	}
+
+	//Key/Mouse Events
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -132,7 +144,7 @@ public class Playing extends State implements Statemethods {
 	}
 
 	public Player getPlayer() {
-		return player;
+		return this.player;
 	}
 
 }
