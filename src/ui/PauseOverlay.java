@@ -72,6 +72,7 @@ public class PauseOverlay {
         menuB.update();
         replayB.update();
         unpauseB.update();
+        volumeB.update();
     }
 
     public void draw(Graphics g) {

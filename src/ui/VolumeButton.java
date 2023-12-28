@@ -15,15 +15,14 @@ public class VolumeButton extends PauseButton{
     
     public VolumeButton(int x, int y, int width, int height) {
         super (x+width/2, y, VOLUME_WIDTH, height);
-        bounds.x-=width/2;
-        buttonX= x+width/2;
 
         this.x=x; //Initializing section
         this.width=width;
 
         minX=x+VOLUME_WIDTH/2; //Defining bounds of the volume slider
         maxX=x+width-VOLUME_WIDTH/2;
-
+        bounds.x-=VOLUME_WIDTH/2;
+        buttonX= x+width/2;
         loadImgs();
     }
 
@@ -65,7 +64,7 @@ public class VolumeButton extends PauseButton{
             buttonX=x;
         }
 
-        bounds.x=buttonX;
+        bounds.x=buttonX-VOLUME_WIDTH/2;
     }
 
     //Getters and setters
