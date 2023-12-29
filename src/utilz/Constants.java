@@ -5,6 +5,7 @@ import main.java.com.example.Game;
 public class Constants {
 
 	public static class UI {
+		
 		public static class Buttons {
 			public static final int B_WIDTH_DEFAULT=140;
 			public static final int B_HEIGHT_DEFAULT=56;
@@ -70,6 +71,41 @@ public class Constants {
 			default:
 				return 1;
 			}
+		}
+	}
+
+	public static class EnemyConstants {
+			//Enemy States
+			public static final int ENEMY_CRAB=0;
+			public static final int IDLE=0;
+			public static final int RUNNING=1;
+			public static final int ATTACK=2;
+			public static final int HIT=3;
+			public static final int DEAD=4;
+			
+			//Dimensions
+			public static final int DEFAULT_WIDTH=72;
+			public static final int DEFAULT_HEIGHT=32;
+			public static final int ACTUAL_WIDTH=(int)(DEFAULT_WIDTH*Game.SCALE);
+			public static final int ACTUAL_HEIGHT=(int)(DEFAULT_HEIGHT*Game.SCALE);
+		
+			public static int GetSpriteAmount(int enemy_type, int enemy_state) {
+				switch (enemy_type) {
+				case ENEMY_CRAB:
+					switch(enemy_state) {
+						case IDLE:
+							return 9;
+						case RUNNING:
+							return 6;
+						case ATTACK: 
+							return 7;
+						case HIT:
+							return 4;
+						case DEAD:
+							return 5;
+					}
+			}
+			return 0;
 		}
 	}
 

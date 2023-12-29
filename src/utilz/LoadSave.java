@@ -1,15 +1,22 @@
 package utilz;
 
+import static utilz.Constants.EnemyConstants.ENEMY_CRAB;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
+import entities.*;
+import main.java.com.example.Game;
 
 public class LoadSave {
     public static final String PLAYER_ATLAS= "player_sprites.png"; //Sprites
     public static final String LEVEL_ATLAS="outside_sprites.png";
+    public static final String ENEMY_SPRITE="enemy_sprite.png";
 
     public static final String LEVEL_ONE_DATA="level_one_data_long.png"; //Levels
     
@@ -57,6 +64,20 @@ public class LoadSave {
         }
         return lvlData;
     }
-   
+
+    public static ArrayList<Crab> getCrabs() {
+        BufferedImage img=GetSpriteAtlas(LEVEL_ONE_DATA);
+        ArrayList<Crab> list= new ArrayList<>();
+        for (int j=0; j<img.getHeight(); j++) {
+            for (int i=0; i<img.getWidth(); i++) {
+                Color color= new Color(img.getRGB(i, j));
+                int value=color.getGreen();
+                if (value==ENEMY_CRAB) {
+                    list.add(new Crab(i*Game.TILES_SIZE, j*Game.TILES_SIZE));
+                }
+            }
+        }
+        return list;
+    }
     
 }

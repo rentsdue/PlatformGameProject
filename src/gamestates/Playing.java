@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-import entities.Player;
+import entities.*;
 import levels.LevelManager;
 import main.java.com.example.*;
 import ui.PauseOverlay;
@@ -15,6 +15,7 @@ import utilz.LoadSave;
 public class Playing extends State implements Statemethods {
 	private Player player;
 	private LevelManager levelManager;
+	private EnemyManager enemyManager;
 	private PauseOverlay pauseOverlay;
 	private boolean paused=false; //Shows the pause screen, but set to false so that it doesn't appear immediately
 
@@ -35,6 +36,7 @@ public class Playing extends State implements Statemethods {
 
 	private void initClasses() {
 		levelManager = new LevelManager(game);
+		enemyManager= new EnemyManager(this);
 		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE));
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
 		pauseOverlay= new PauseOverlay(this);
@@ -45,6 +47,7 @@ public class Playing extends State implements Statemethods {
 		if (!paused) {
 			levelManager.update();
 			player.update();
+			enemyManager.update();
 			checkCloseToBorder();
 		} else {
 			pauseOverlay.update();
@@ -74,6 +77,7 @@ public class Playing extends State implements Statemethods {
 		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
 		levelManager.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
+		enemyManager.draw(g, xLvlOffset);
 
 		if (paused) {
 			g.setColor(new Color(0, 0, 0, 100));
