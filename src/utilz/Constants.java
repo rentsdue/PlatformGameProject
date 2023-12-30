@@ -84,11 +84,14 @@ public class Constants {
 			public static final int DEAD=4;
 			
 			//Dimensions
-			public static final int DEFAULT_WIDTH=72;
-			public static final int DEFAULT_HEIGHT=32;
-			public static final int ACTUAL_WIDTH=(int)(DEFAULT_WIDTH*Game.SCALE);
-			public static final int ACTUAL_HEIGHT=(int)(DEFAULT_HEIGHT*Game.SCALE);
-		
+			public static final int CRAB_DEFAULT_WIDTH=72;
+			public static final int CRAB_DEFAULT_HEIGHT=32;
+			public static final int CRAB_ACTUAL_WIDTH=(int)(CRAB_DEFAULT_WIDTH*Game.SCALE);
+			public static final int CRAB_ACTUAL_HEIGHT=(int)(CRAB_DEFAULT_HEIGHT*Game.SCALE);
+
+			public static final int CRAB_DRAWOFFSET_X=(int)(26*Game.SCALE);
+			public static final int CRAB_DRAWOFFSET_Y=(int)(9*Game.SCALE);
+
 			public static int GetSpriteAmount(int enemy_type, int enemy_state) {
 				switch (enemy_type) {
 				case ENEMY_CRAB:

@@ -22,12 +22,12 @@ public class EnemyManager {
 
     private void addEnemies() {
         crabList=LoadSave.getCrabs();
-        System.out.println("Crab Size:" + crabList.size());
+        System.out.println("Number of Crabs: " + crabList.size());
     }
 
-    public void update() {
+    public void update(int[][] lvlData) {
         for (Crab crab: crabList) {
-            crab.update();
+            crab.update(lvlData);
         }
     }
 
@@ -37,7 +37,7 @@ public class EnemyManager {
 
     private void drawCrabs(Graphics g, int xLvlOffset) {
         for (Crab crab: crabList) {
-            g.drawImage(crabArray[crab.getEnemyState()][crab.getAniIndex()], (int) crab.getHitBox().x-xLvlOffset, (int) crab.getHitBox().y, ACTUAL_WIDTH, ACTUAL_HEIGHT, null);
+            g.drawImage(crabArray[crab.getEnemyState()][crab.getAniIndex()], (int) crab.getHitBox().x-xLvlOffset-CRAB_DRAWOFFSET_X, (int) crab.getHitBox().y-CRAB_DRAWOFFSET_Y, CRAB_ACTUAL_WIDTH, CRAB_ACTUAL_HEIGHT, null);
         }
     }
 
@@ -46,7 +46,7 @@ public class EnemyManager {
         BufferedImage temp=LoadSave.GetSpriteAtlas(LoadSave.ENEMY_SPRITE);
         for (int j=0; j<crabArray.length; j++) {
             for (int i=0; i<crabArray[j].length; i++) {
-                crabArray[j][i]=temp.getSubimage(i*DEFAULT_WIDTH, j*DEFAULT_HEIGHT, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+                crabArray[j][i]=temp.getSubimage(i*CRAB_DEFAULT_WIDTH, j*CRAB_DEFAULT_HEIGHT, CRAB_DEFAULT_WIDTH, CRAB_DEFAULT_HEIGHT);
                 
             }
         }

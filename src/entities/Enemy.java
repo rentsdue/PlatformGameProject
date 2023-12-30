@@ -1,17 +1,24 @@
 package entities;
-import static utilz.Constants.EnemyConstants.GetSpriteAmount;
+import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.Directions.*;
+
+import main.java.com.example.Game;
 
 public abstract class Enemy extends Entity {
-    private int aniIndex, enemyState, enemyType;
-    private int aniTick, aniSpeed=25;
-    
+    protected int aniIndex, enemyState, enemyType;
+    protected int aniTick, aniSpeed=25;
+    protected boolean firstUpdate=true, inAir;
+    protected float fallSpeed, gravity=0.04f*Game.SCALE;
+    protected float walkSpeed=0.35f*Game.SCALE;
+    protected int walkDir=LEFT;
+
     public Enemy(float x, float y, int width, int height, int enemyType) {
         super(x, y, width, height);
         this.enemyType=enemyType;
         initHitBox(x, y, width, height);
     }
 
-    private void updateAnimationTick() {
+    protected void updateAnimationTick() {
         aniTick++;
         if (aniTick >=aniSpeed) {
             aniTick=0;
@@ -21,13 +28,17 @@ public abstract class Enemy extends Entity {
             }
         } 
     }
-
-    public void update() {
-        updateAnimationTick();
-    }
+    
+    
+   protected void changeWalkDir() {
+        if (walkDir==LEFT) {
+            walkDir=RIGHT;
+        } else {
+            walkDir=LEFT;
+        }
+   }
 
     //Getters and setters
-
     public int getAniIndex() {
         return this.aniIndex;
     }
