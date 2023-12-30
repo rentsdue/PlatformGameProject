@@ -25,9 +25,9 @@ public class EnemyManager {
         System.out.println("Number of Crabs: " + crabList.size());
     }
 
-    public void update(int[][] lvlData) {
+    public void update(int[][] lvlData, Player player) {
         for (Crab crab: crabList) {
-            crab.update(lvlData);
+            crab.update(lvlData, player);
         }
     }
 
@@ -47,7 +47,6 @@ public class EnemyManager {
         for (int j=0; j<crabArray.length; j++) {
             for (int i=0; i<crabArray[j].length; i++) {
                 crabArray[j][i]=temp.getSubimage(i*CRAB_DEFAULT_WIDTH, j*CRAB_DEFAULT_HEIGHT, CRAB_DEFAULT_WIDTH, CRAB_DEFAULT_HEIGHT);
-                
             }
         }
     }
