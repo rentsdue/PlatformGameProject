@@ -46,14 +46,14 @@ public class Constants {
 		public static final int RUNNING = 1;
 		public static final int JUMP = 2;
 		public static final int FALLING = 3;
-		public static final int GROUND = 4;
-		public static final int HIT = 5;
-		public static final int ATTACK_1 = 6;
-		public static final int ATTACK_JUMP_1 = 7;
-		public static final int ATTACK_JUMP_2 = 8;
+		public static final int ATTACK = 4;
+		public static final int HIT=5;
+		public static final int DEAD=6;
 
 		public static int GetSpriteAmount(int player_action) {
 			switch (player_action) {
+			case DEAD:
+				return 8;
 			case RUNNING:
 				return 6;
 			case IDLE:
@@ -61,12 +61,8 @@ public class Constants {
 			case HIT:
 				return 4;
 			case JUMP:
-			case ATTACK_1:
-			case ATTACK_JUMP_1:
-			case ATTACK_JUMP_2:
+			case ATTACK:
 				return 3;
-			case GROUND:
-				return 2;
 			case FALLING:
 			default:
 				return 1;
@@ -82,6 +78,25 @@ public class Constants {
 			public static final int ATTACK=2;
 			public static final int HIT=3;
 			public static final int DEAD=4;
+
+			//Enemy Interactions
+			public static int GetMaxHealth(int enemy_Type) {
+				switch (enemy_Type) {
+					case ENEMY_CRAB:
+						return 10;
+					default:
+						return 1;
+				}
+			}
+
+			public static int GetEnemyDamage(int enemy_Type) {
+				switch (enemy_Type) {
+					case ENEMY_CRAB:
+						return 15;
+					default:
+						return 0;
+				}
+			}
 			
 			//Dimensions
 			public static final int CRAB_DEFAULT_WIDTH=72;
