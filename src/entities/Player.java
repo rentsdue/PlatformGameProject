@@ -3,8 +3,12 @@ package entities;
 import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethods.*;
 import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Float;
 import java.awt.image.BufferedImage;
 
+import gamestates.Playing;
 import main.java.com.example.Game;
 import utilz.LoadSave;
 
@@ -26,21 +30,79 @@ public class Player extends Entity {
 	private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
 	private boolean inAir = false;
 
+	//Status Bar UI
+	private BufferedImage statusBarImg;
+
+	private int statusBarWidth = (int) (192 * Game.SCALE);
+	private int statusBarHeight = (int) (58 * Game.SCALE);
+	private int statusBarX = (int) (10 * Game.SCALE);
+	private int statusBarY = (int) (10 * Game.SCALE);
+
+	private int healthBarWidth = (int) (150 * Game.SCALE);
+	private int healthBarHeight = (int) (4 * Game.SCALE);
+	private int healthBarXStart = (int) (34 * Game.SCALE);
+	private int healthBarYStart = (int) (14 * Game.SCALE);
+
+	private int maxHealth = 10;
+	private int currentHealth = maxHealth;
+	private int healthWidth = healthBarWidth;
+
+	// Attack Box
+	private Rectangle2D.Float attackBox;
+
+	private int flipX = 0;
+	private int flipW = 1;
+
+	private boolean attackChecked;
+	private Playing playing;
+
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		loadAnimations();
 		initHitBox(x, y, (int) (20 * Game.SCALE), (int) (27 * Game.SCALE));
+		initAttackBox();
+	}
 
+	private void initAttackBox() {
+		attackBox= new Rectangle2D.Float(x, y, (int) (20*Game.SCALE), (int) (20*Game.SCALE));
 	}
 
 	public void update() {
+		updateHealthBar();
+		updateAttackBox();
 		updatePos();
 		updateAnimationTick();
 		setAnimation();
 	}
 
-	public void render(Graphics g, int xLvlOffset) {
-		g.drawImage(animations[playerAction][aniIndex], (int) (hitBox.x - xDrawOffset)- xLvlOffset, (int) (hitBox.y - yDrawOffset), width, height, null);
+	private void updateAttackBox() {
+		if (right) {
+			attackBox.x=hitBox.x+hitBox.width+(int)(10*Game.SCALE);
+		} else if (left) {
+			attackBox.x=hitBox.x-hitBox.width-(int)(10*Game.SCALE);
+		}
+		attackBox.y=hitBox.y+(Game.SCALE*10);
+	}
+
+	private void updateHealthBar() {
+		healthWidth= (int)(currentHealth/(float) maxHealth)*healthBarWidth;
+	}
+
+	public void render(Graphics g, int LvlOffset) {
+		g.drawImage(animations[playerAction][aniIndex], (int) (hitBox.x - xDrawOffset)- LvlOffset, (int) (hitBox.y - yDrawOffset), width, height, null);
+		drawAttackBox(g, LvlOffset);
+		drawUI(g);
+	}
+
+	private void drawAttackBox(Graphics g, int xLvlOffset) {
+		g.setColor(Color.red);
+		g.drawRect((int) attackBox.x-xLvlOffset, (int) attackBox.y, (int) attackBox.width, (int) attackBox.height);
+	}
+
+	private void drawUI(Graphics g) {
+		g.drawImage(statusBarImg, statusBarX, statusBarY, statusBarWidth, statusBarHeight, null);
+		g.setColor(Color.red);
+		g.fillRect(healthBarXStart+statusBarX, healthBarYStart+statusBarY, healthBarWidth, healthBarHeight);
 	}
 
 	private void updateAnimationTick() {
@@ -146,25 +208,31 @@ public class Player extends Entity {
 		} else {
 			hitBox.x = GetEntityXPosNextToWall(hitBox, xSpeed);
 		}
+	}
 
+	public void changeHealth(int value) {
+		currentHealth+=value;
+		if (currentHealth<=0) {
+			currentHealth=0;
+		} else if (currentHealth>=maxHealth) {
+			currentHealth=maxHealth;
+		}
 	}
 
 	private void loadAnimations() {
-
 		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
-
 		animations = new BufferedImage[9][6];
 		for (int j = 0; j < animations.length; j++)
 			for (int i = 0; i < animations[j].length; i++)
 				animations[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
 
+		statusBarImg=LoadSave.GetSpriteAtlas(LoadSave.HEALTH_POWER_BAR);
 	}
 
 	public void loadLvlData(int[][] lvlData) {
 		this.lvlData = lvlData;
 		if (!IsEntityOnFloor(hitBox, lvlData))
 			inAir = true;
-
 	}
 
 	public void resetDirBooleans() {
