@@ -1,7 +1,6 @@
 package ui;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
-import java.awt.event.*;
 
 import utilz.LoadSave;
 import static utilz.Constants.UI.PauseButtons.*;

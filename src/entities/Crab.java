@@ -43,26 +43,26 @@ public class Crab extends Enemy {
             updateInAir(lvlData);
         } else {
             switch(enemyState) {
-                case IDLE:
-                    newState(RUNNING);
+            case IDLE:
+                newState(RUNNING);
+                break;
+            case RUNNING:
+                if (canSeePlayer(lvlData, player)) {
+                    turnTowardsPlayer(player);
+                }
+                if (isPlayerCloseForAttack(player)) {
+                    newState(ATTACK);
+                }
+                move(lvlData);
+                break;    
+            case ATTACK:
+                if (aniIndex == 0)
+					attackChecked = false;
+				if (aniIndex == 3 && !attackChecked)
+					checkPlayerHit(attackBox, player);
                     break;
-                case RUNNING:
-                    if (canSeePlayer(lvlData, player)) {
-                        turnTowardsPlayer(player);
-                    }
-                    if (isPlayerCloseForAttack(player)) {
-                        newState(ATTACK);
-                    }
-                    move(lvlData);
-                    break;
-                case ATTACK:
-                    if (aniIndex == 0)
-					    attackChecked = false;
-				    if (aniIndex == 3 && !attackChecked)
-					    checkPlayerHit(attackBox, player);
-                    break;
-			    case HIT:
-				    break;
+			case HIT:
+				break;
             }
         }
     }

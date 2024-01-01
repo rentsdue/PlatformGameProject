@@ -5,7 +5,6 @@ import static utilz.HelpMethods.*;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Float;
 import java.awt.image.BufferedImage;
 
 import gamestates.Playing;
@@ -87,7 +86,6 @@ public class Player extends Entity {
 			return;
 		attackChecked = true;
 		playing.checkEnemyHit(attackBox);
-
 	}
 
 	private void updateAttackBox() {
@@ -111,7 +109,7 @@ public class Player extends Entity {
 	private void drawUI(Graphics g) {
 		g.drawImage(statusBarImg, statusBarX, statusBarY, statusBarWidth, statusBarHeight, null);
 		g.setColor(Color.red);
-		g.fillRect(healthBarXStart+statusBarX, healthBarYStart+statusBarY, healthBarWidth, healthBarHeight);
+		g.fillRect(healthBarXStart+statusBarX, healthBarYStart+statusBarY, healthWidth, healthBarHeight);
 	}
 
 	private void updateAnimationTick() {
@@ -122,6 +120,7 @@ public class Player extends Entity {
 			if (aniIndex >= GetSpriteAmount(playerAction)) {
 				aniIndex = 0;
 				attacking = false;
+				attackChecked=false;
 			}
 
 		}
@@ -168,7 +167,7 @@ public class Player extends Entity {
 		
 
 		if (!inAir) {
-			if ((!left && !right && !inAir) || (right && left))
+			if ((!left && !right) || (right && left))
 				return;
 		}
 
@@ -178,6 +177,7 @@ public class Player extends Entity {
 			xSpeed -= playerSpeed;
 			flipX=width;
 			flipW=-1;
+
 		if (right)
 			xSpeed += playerSpeed;
 			flipX=0;
@@ -211,13 +211,11 @@ public class Player extends Entity {
 			return;
 		inAir = true;
 		airSpeed = jumpSpeed;
-
 	}
 
 	private void resetInAir() {
 		inAir = false;
 		airSpeed = 0;
-
 	}
 
 	private void updateXPos(float xSpeed) {
@@ -256,8 +254,6 @@ public class Player extends Entity {
 	public void resetDirBooleans() {
 		left = false;
 		right = false;
-		up = false;
-		down = false;
 	}
 
 	public void setAttacking(boolean attacking) {
