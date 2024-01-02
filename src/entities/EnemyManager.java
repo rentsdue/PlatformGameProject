@@ -1,6 +1,7 @@
 package entities;
 
 import gamestates.Playing;
+import levels.Level;
 import utilz.LoadSave;
 
 import static utilz.Constants.EnemyConstants.*;
@@ -18,19 +19,23 @@ public class EnemyManager {
     public EnemyManager(Playing playing) {
         this.playing=playing;
         loadEnemyImgs();
-        addEnemies();
     }
 
-    private void addEnemies() {
-        crabList=LoadSave.getCrabs();
+    public void loadEnemies(Level level) {
+        crabList=level.getCrabList();
         System.out.println("Number of Crabs: " + crabList.size());
     }
 
     public void update(int[][] lvlData, Player player) {
+        boolean isAnyActive=false;
         for (Crab crab: crabList) {
             if (crab.isActive()) {
                 crab.update(lvlData, player);
+                isAnyActive=true;
             }
+        }
+        if (!isAnyActive) {
+            playing.setLevelCompleted(true);
         }
     }
 
@@ -42,8 +47,8 @@ public class EnemyManager {
         for (Crab crab: crabList) {
             if (crab.isActive()) {
                 g.drawImage(crabArray[crab.getEnemyState()][crab.getAniIndex()], (int) crab.getHitBox().x-xLvlOffset-CRAB_DRAWOFFSET_X+crab.flipX(), (int) crab.getHitBox().y-CRAB_DRAWOFFSET_Y, CRAB_ACTUAL_WIDTH*crab.flipW(), CRAB_ACTUAL_HEIGHT, null);
-                crab.drawHitBox(g, xLvlOffset);
-                crab.drawAttackBox(g, xLvlOffset);
+                /*crab.drawHitBox(g, xLvlOffset);
+                crab.drawAttackBox(g, xLvlOffset);*/
             }
         }
     }

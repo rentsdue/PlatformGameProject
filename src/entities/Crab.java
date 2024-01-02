@@ -49,8 +49,7 @@ public class Crab extends Enemy {
             case RUNNING:
                 if (canSeePlayer(lvlData, player)) {
                     turnTowardsPlayer(player);
-                }
-                if (IsPlayerCloseForAttack(player)) {
+                if (IsPlayerCloseForAttack(player)) 
                     newState(ATTACK);
                 }
                 move(lvlData);

@@ -10,8 +10,7 @@ import java.awt.image.BufferedImage;
 import entities.*;
 import levels.LevelManager;
 import main.java.com.example.*;
-import ui.GameOverOverlay;
-import ui.PauseOverlay;
+import ui.*;
 import utilz.LoadSave;
 
 public class Playing extends State implements Statemethods {
@@ -20,42 +19,65 @@ public class Playing extends State implements Statemethods {
 	private EnemyManager enemyManager;
 	private PauseOverlay pauseOverlay;
 	private GameOverOverlay gameOverOverlay;
+	private LevelCompletedOverlay levelCompletedOverlay;
 	private boolean paused=false; //Shows the pause screen, but set to false so that it doesn't appear immediately
 
 	private int xLvlOffset;
 	private int leftBorder= (int) (0.5*Game.GAME_WIDTH);
 	private int rightBorder=  (int) (0.5*Game.GAME_WIDTH); //If these need to be modified just in case, the 2 numbers need to add up to 1.
-	private int lvlTilesWide= LoadSave.GetLevelData()[0].length;
-	private int maxTilesOffset= lvlTilesWide-Game.TILES_IN_WIDTH;
-	private int maxLvlOffsetX= maxTilesOffset*Game.TILES_SIZE;
+	private int maxLvlOffsetX;
 
 	private BufferedImage backgroundImg;
 	private boolean gameOver;
+	private boolean lvlCompleted;
 
 	public Playing(Game game) {
 		super(game);
 		initClasses();
 		backgroundImg=LoadSave.GetSpriteAtlas(LoadSave.CAVE_BACKGROUND);
+		calcLvlOffset();
+		loadStartLevel();
+	}
+
+	private void loadStartLevel() {
+		enemyManager.loadEnemies(levelManager.getCurrentLevel());
+	}
+
+	public void loadNextLevel() {
+		resetAll();
+		levelManager.loadNextLevel();
+		player.setSpawn(levelManager.getCurrentLevel().getSpawnPoint());
+	}
+
+	private void calcLvlOffset() {
+		maxLvlOffsetX=levelManager.getCurrentLevel().getLvlOffset();
 	}
 
 	private void initClasses() {
 		levelManager = new LevelManager(game);
 		enemyManager= new EnemyManager(this);
+
 		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE), this);
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
+		player.setSpawn(levelManager.getCurrentLevel().getSpawnPoint());
+
+
 		pauseOverlay= new PauseOverlay(this);
 		gameOverOverlay= new GameOverOverlay(this);
+		levelCompletedOverlay= new LevelCompletedOverlay(this);
 	}
 
 	@Override
 	public void update() {
-		if (!paused && !gameOver) {
+		if (paused) {
+			pauseOverlay.update();
+		} else if (lvlCompleted) {
+			levelCompletedOverlay.update();
+		} else if (!gameOver) {
 			levelManager.update();
 			player.update();
 			enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
 			checkCloseToBorder();
-		} else {
-			pauseOverlay.update();
 		}
 	}
 
@@ -90,12 +112,15 @@ public class Playing extends State implements Statemethods {
 			pauseOverlay.draw(g);
 		}  else if (gameOver) {
 			gameOverOverlay.draw(g);
+		} else if (lvlCompleted) {
+			levelCompletedOverlay.draw(g);
 		}
 	}
 
 	public void resetAll() {
 		gameOver = false;
 		paused = false;
+		lvlCompleted= false;
 		player.resetAll();
 		enemyManager.resetAllEnemies();
 	}
@@ -195,6 +220,8 @@ public class Playing extends State implements Statemethods {
 		if (!gameOver) {
 			if (paused) {
 				pauseOverlay.mousePressed(e);
+			} else if (lvlCompleted) {
+				levelCompletedOverlay.mousePressed(e);
 			}
 		}
 	}
@@ -204,6 +231,8 @@ public class Playing extends State implements Statemethods {
 		if (!gameOver) {
 			if (paused) {
 				pauseOverlay.mouseReleased(e);
+			} else if (lvlCompleted) {
+				levelCompletedOverlay.mouseReleased(e);
 			}
 		}
 	}
@@ -213,6 +242,8 @@ public class Playing extends State implements Statemethods {
 		if (!gameOver) {
 			if (paused) {
 				pauseOverlay.mouseMoved(e);
+			} else if (lvlCompleted) {
+				levelCompletedOverlay.mouseMoved(e);
 			}
 		}
 	}
@@ -225,8 +256,21 @@ public class Playing extends State implements Statemethods {
 		player.resetDirBooleans();
 	}
 
+	//Getters and setters
+
 	public Player getPlayer() {
 		return this.player;
 	}
 
+	public EnemyManager getEnemyManager() {
+		return this.enemyManager;
+	}
+
+	public void setMaxLvlOffset(int lvlOffset) {
+		this.maxLvlOffsetX=lvlOffset;
+	}
+
+	public void setLevelCompleted(boolean lvlCompleted) {
+		this.lvlCompleted=lvlCompleted;
+	}
 }
