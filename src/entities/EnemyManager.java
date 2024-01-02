@@ -42,8 +42,8 @@ public class EnemyManager {
         for (Crab crab: crabList) {
             if (crab.isActive()) {
                 g.drawImage(crabArray[crab.getEnemyState()][crab.getAniIndex()], (int) crab.getHitBox().x-xLvlOffset-CRAB_DRAWOFFSET_X+crab.flipX(), (int) crab.getHitBox().y-CRAB_DRAWOFFSET_Y, CRAB_ACTUAL_WIDTH*crab.flipW(), CRAB_ACTUAL_HEIGHT, null);
-                // Used for testing crab.drawHitbox(g, xLvlOffset);
-                //crab.drawAttackBox(g, xLvlOffset);
+                crab.drawHitBox(g, xLvlOffset);
+                crab.drawAttackBox(g, xLvlOffset);
             }
         }
     }

@@ -60,7 +60,7 @@ public class Crab extends Enemy {
 					attackChecked = false;
 				if (aniIndex == 3 && !attackChecked)
 					checkPlayerHit(attackBox, player);
-                    break;
+                break;
 			case HIT:
 				break;
             }
