@@ -87,7 +87,7 @@ public class HelpMethods {
 		return true;
 	}
 
-	public static boolean isSightClear(int[][] lvlData, Rectangle2D.Float firstHitBox, Rectangle2D.Float secondHitBox, int yTile) {
+	public static boolean IsSightClear(int[][] lvlData, Rectangle2D.Float firstHitBox, Rectangle2D.Float secondHitBox, int yTile) {
 		int firstXTile = (int) (firstHitBox.x / Game.TILES_SIZE);
 		int secondXTile = (int) (secondHitBox.x / Game.TILES_SIZE);
 

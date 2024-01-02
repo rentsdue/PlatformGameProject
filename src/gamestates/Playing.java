@@ -23,8 +23,8 @@ public class Playing extends State implements Statemethods {
 	private boolean paused=false; //Shows the pause screen, but set to false so that it doesn't appear immediately
 
 	private int xLvlOffset;
-	private int leftBorder= (int) (0.2*Game.GAME_WIDTH);
-	private int rightBorder=  (int) (0.8*Game.GAME_WIDTH); //If these need to be modified just in case, the 2 numbers need to add up to 1.
+	private int leftBorder= (int) (0.5*Game.GAME_WIDTH);
+	private int rightBorder=  (int) (0.5*Game.GAME_WIDTH); //If these need to be modified just in case, the 2 numbers need to add up to 1.
 	private int lvlTilesWide= LoadSave.GetLevelData()[0].length;
 	private int maxTilesOffset= lvlTilesWide-Game.TILES_IN_WIDTH;
 	private int maxLvlOffsetX= maxTilesOffset*Game.TILES_SIZE;
