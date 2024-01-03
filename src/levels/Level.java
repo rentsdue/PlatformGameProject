@@ -16,12 +16,18 @@ public class Level {
     private int lvlTilesWide;
     private int maxTilesOffset;
     private int maxLvlOffsetX;
+    private Point spawnPoint;
 
     public Level(BufferedImage img) {
         this.img=img;
         createLevelData();
         createEnemies();
         calcLvlOffsets();
+        calcPlayerSpawn();
+    }
+
+    private void calcPlayerSpawn() {
+        spawnPoint=GetPlayerSpawn(img);
     }
 
     private void calcLvlOffsets() {
@@ -52,5 +58,9 @@ public class Level {
 
     public ArrayList<Crab> getCrabList() {
         return this.crabs;
+    }
+
+    public Point getSpawnPoint() {
+        return this.spawnPoint;
     }
 }

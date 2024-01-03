@@ -46,6 +46,7 @@ public class Playing extends State implements Statemethods {
 	public void loadNextLevel() {
 		resetAll();
 		levelManager.loadNextLevel();
+		player.setSpawnPoint(levelManager.getCurrentLevel().getSpawnPoint());
 	}
 
 	private void calcLvlOffset() {
@@ -58,7 +59,7 @@ public class Playing extends State implements Statemethods {
 
 		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE), this);
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
-
+		player.setSpawnPoint(levelManager.getCurrentLevel().getSpawnPoint());
 
 		pauseOverlay= new PauseOverlay(this);
 		gameOverOverlay= new GameOverOverlay(this);
