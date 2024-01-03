@@ -15,7 +15,7 @@ public class Crab extends Enemy {
 
     public Crab(float x, float y) {
         super(x, y, CRAB_ACTUAL_WIDTH, CRAB_ACTUAL_HEIGHT, ENEMY_CRAB);
-        initHitBox(x, y, (int) (22*Game.SCALE), (int)(19*Game.SCALE));
+        initHitBox(22, 19);
         initAttackBox();
     }
 
@@ -42,7 +42,7 @@ public class Crab extends Enemy {
         if (inAir) {
             updateInAir(lvlData);
         } else {
-            switch(enemyState) {
+            switch(state) {
             case IDLE:
                 newState(RUNNING);
                 break;
