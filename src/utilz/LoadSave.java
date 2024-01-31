@@ -1,20 +1,12 @@
 package utilz;
-
-import static utilz.Constants.EnemyConstants.ENEMY_CRAB;
-
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-
-import entities.*;
-import main.java.com.example.Game;
 
 public class LoadSave {
     public static final String PLAYER_ATLAS= "player_sprites.png"; //Sprites
@@ -34,6 +26,9 @@ public class LoadSave {
     public static final String URM_BUTTONS="urm_buttons.png";
     public static final String VOLUME_BUTTONS="volume_buttons.png";
     public static final String COMPLETED_IMG="completed_sprite.png";
+
+    public static final String POTION_ATLAS="potions_sprites.png";
+    public static final String OBJECT_ATLAS="objects_sprites.png";
 
     public static BufferedImage GetSpriteAtlas(String fileName) {
         BufferedImage img=null;
