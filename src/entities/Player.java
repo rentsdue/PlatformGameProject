@@ -1,8 +1,8 @@
 package entities;
 
 import static utilz.Constants.PlayerConstants.*;
-import static utilz.Constants.*;
 import static utilz.HelpMethods.*;
+import static utilz.Constants.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -15,8 +15,8 @@ import main.java.com.example.Game;
 import utilz.LoadSave;
 
 public class Player extends Entity {
+
 	private BufferedImage[][] animations;
-	
 	private boolean moving = false, attacking = false;
 	private boolean left, right, jump;
 	private int[][] lvlData;
@@ -25,7 +25,7 @@ public class Player extends Entity {
 
 	// Jumping / Gravity
 	private float jumpSpeed = -2.25f * Game.SCALE;
-	private float airSpeedAfterCollision = 0.5f * Game.SCALE;
+	private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
 
 	// StatusBarUI
 	private BufferedImage statusBarImg;
@@ -43,27 +43,29 @@ public class Player extends Entity {
 
 	private int flipX = 0;
 	private int flipW = 1;
+
+	private boolean attackChecked;
 	private Playing playing;
 
 	public Player(float x, float y, int width, int height, Playing playing) {
 		super(x, y, width, height);
 		this.playing = playing;
-		this.state=IDLE;
-		this.maxHealth=100;
-		this.currentHealth=maxHealth;
-		this.walkSpeed=1.0f*Game.SCALE;
+		this.state = IDLE;
+		this.maxHealth = 100;
+		this.currentHealth = 35;
+		this.walkSpeed = Game.SCALE * 1.0f;
 		loadAnimations();
 		initHitBox(20, 27);
 		initAttackBox();
 	}
 
-	public void setSpawnPoint(Point spawn) {
-		this.x=spawn.x;
-		this.y=spawn.y;
-		hitBox.x=x;
-		hitBox.y=y;
+	public void setSpawn(Point spawn) {
+		this.x = spawn.x;
+		this.y = spawn.y;
+		hitBox.x = x;
+		hitBox.y = y;
 	}
-	
+
 	private void initAttackBox() {
 		attackBox = new Rectangle2D.Float(x, y, (int) (20 * Game.SCALE), (int) (20 * Game.SCALE));
 	}
@@ -79,10 +81,17 @@ public class Player extends Entity {
 		updateAttackBox();
 
 		updatePos();
+		if (moving)
+			checkPotionTouched();
 		if (attacking)
 			checkAttack();
+		
 		updateAnimationTick();
 		setAnimation();
+	}
+
+	private void checkPotionTouched() {
+		playing.checkPotionTouched(hitBox);
 	}
 
 	private void checkAttack() {
@@ -90,7 +99,7 @@ public class Player extends Entity {
 			return;
 		attackChecked = true;
 		playing.checkEnemyHit(attackBox);
-
+		playing.checkObjectHit(attackBox);
 	}
 
 	private void updateAttackBox() {
@@ -108,12 +117,10 @@ public class Player extends Entity {
 
 	public void render(Graphics g, int lvlOffset) {
 		g.drawImage(animations[state][aniIndex], (int) (hitBox.x - xDrawOffset) - lvlOffset + flipX, (int) (hitBox.y - yDrawOffset), width * flipW, height, null);
-		//drawHitBox(g, lvlOffset);
-		//drawAttackBox(g, lvlOffset);
+//		drawHitbox(g, lvlOffset);
+//		drawAttackBox(g, lvlOffset);
 		drawUI(g);
 	}
-
-
 
 	private void drawUI(Graphics g) {
 		g.drawImage(statusBarImg, statusBarX, statusBarY, statusBarWidth, statusBarHeight, null);
@@ -131,9 +138,7 @@ public class Player extends Entity {
 				attacking = false;
 				attackChecked = false;
 			}
-
 		}
-
 	}
 
 	private void setAnimation() {
@@ -205,7 +210,7 @@ public class Player extends Entity {
 				if (airSpeed > 0)
 					resetInAir();
 				else
-					airSpeed = airSpeedAfterCollision;
+					airSpeed = fallSpeedAfterCollision;
 				updateXPos(xSpeed);
 			}
 
@@ -219,7 +224,6 @@ public class Player extends Entity {
 			return;
 		inAir = true;
 		airSpeed = jumpSpeed;
-
 	}
 
 	private void resetInAir() {
@@ -241,6 +245,10 @@ public class Player extends Entity {
 			currentHealth = 0;
 		else if (currentHealth >= maxHealth)
 			currentHealth = maxHealth;
+	}
+
+	public void changePower(int value) {
+		System.out.println("Added power!");
 	}
 
 	private void loadAnimations() {

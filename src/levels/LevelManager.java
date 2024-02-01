@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import gamestates.Gamestate;
 import main.java.com.example.Game;
-import utilz.HelpMethods;
 import utilz.LoadSave;
 
 public class LevelManager {
@@ -35,6 +34,7 @@ public class LevelManager {
 		game.getPlaying().getEnemyManager().loadEnemies(newLevel);
 		game.getPlaying().getPlayer().loadLvlData(newLevel.getLevelData());
 		game.getPlaying().setMaxLvlOffset(newLevel.getLvlOffset());
+		game.getPlaying().getObjectManager().loadObjects(newLevel);
 	}
 
 	private void buildAllLevels() {
