@@ -67,11 +67,11 @@ public class LevelManager {
 	}
 
 	public Level getCurrentLevel() {
-		return levels.get(lvlIndex);
+		return this.levels.get(lvlIndex);
 	}
 
 	public int getAmountOfLevels() {
-		return levels.size();
+		return this.levels.size();
 	}
 
 }

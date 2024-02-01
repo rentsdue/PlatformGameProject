@@ -277,7 +277,7 @@ public class Player extends Entity {
 	}
 
 	public boolean isLeft() {
-		return left;
+		return this.left;
 	}
 
 	public void setLeft(boolean left) {
@@ -285,7 +285,7 @@ public class Player extends Entity {
 	}
 
 	public boolean isRight() {
-		return right;
+		return this.right;
 	}
 
 	public void setRight(boolean right) {

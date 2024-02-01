@@ -163,10 +163,22 @@ public class Playing extends State implements Statemethods {
 			case KeyEvent.VK_A:
 				player.setLeft(true);
 				break;
+			case KeyEvent.VK_LEFT:
+				player.setLeft(true);
+				break;
 			case KeyEvent.VK_D:
 				player.setRight(true);
 				break;
+			case KeyEvent.VK_RIGHT:
+				player.setRight(true);
+				break;
 			case KeyEvent.VK_SPACE:
+				player.setJump(true);
+				break;
+			case KeyEvent.VK_UP:
+				player.setJump(true);
+				break;
+			case KeyEvent.VK_W:
 				player.setJump(true);
 				break;
 			case KeyEvent.VK_ESCAPE:
@@ -182,10 +194,22 @@ public class Playing extends State implements Statemethods {
 			case KeyEvent.VK_A:
 				player.setLeft(false);
 				break;
+			case KeyEvent.VK_LEFT:
+				player.setLeft(false);
+				break;
 			case KeyEvent.VK_D:
 				player.setRight(false);
 				break;
+			case KeyEvent.VK_RIGHT:
+				player.setRight(false);
+				break;
 			case KeyEvent.VK_SPACE:
+				player.setJump(false);
+				break;
+			case KeyEvent.VK_UP:
+				player.setJump(false);
+				break;
+			case KeyEvent.VK_W:
 				player.setJump(false);
 				break;
 			}
@@ -245,15 +269,15 @@ public class Playing extends State implements Statemethods {
 	}
 
 	public Player getPlayer() {
-		return player;
+		return this.player;
 	}
 
 	public EnemyManager getEnemyManager() {
-		return enemyManager;
+		return this.enemyManager;
 	}
 
 	public ObjectManager getObjectManager() {
-		return objectManager;
+		return this.objectManager;
 	}
 
 }

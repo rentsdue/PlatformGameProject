@@ -1,18 +1,40 @@
+# Platform Game - Inspired by [KaarinGaming's Platformer Tutorial](https://github.com/KaarinGaming/PlatformerTutorial/)
+
+This platform game is a project inspired by the fantastic work done by KaarinGaming in the Platformer Tutorial repository. The original repository provided valuable insights and guidance, serving as a foundation for the development of this platform game.
+
+## Overview
+
+This platform game aims to showcase various game development concepts, including player controls, level design, enemy interactions, and object management. The project is implemented in Java and uses the Swing library for graphical rendering.
+
+## Features
+
+- **Player Controls:** Responsive and intuitive controls for character movement, jumping, and attacking.
+- **Level Design:** Engaging levels with obstacles, enemies, and interactive elements.
+- **Enemy Interactions:** Dynamic enemy behavior and combat interactions.
+- **Object Management:** Efficient handling of game objects, including potions, containers, and other entities.
+
 ## Getting Started
 
-This is a basic structure for a platform game. Currently it is very incomplete but soon, it will have all of the capabilities of a platformer!
+1. Clone the repository:
 
-## Folder Structure
+    ```bash
+    git clone https://github.com/your-username/your-platformer-game.git
+    ```
 
-The workspace contains two folders by default, where:
+2. Open the project in your preferred Java development environment.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+3. Run the game by executing the `Game` class.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Credits
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+This project is inspired by [KaarinGaming's Platformer Tutorial](https://github.com/KaarinGaming/PlatformerTutorial/). Special thanks to KaarinGaming for their comprehensive tutorial and open-source contributions.
 
-## Dependency Management
+## Contributing
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Contributions are welcome! Feel free to submit bug reports, feature requests, or even pull requests to help improve the project.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE), allowing for both personal and commercial use.
+
+---
