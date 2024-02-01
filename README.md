@@ -23,7 +23,7 @@ This platform game aims to showcase various game development concepts, including
 
 2. Open the project in your preferred Java development environment.
 
-3. Run the game by executing the `Game` class.
+3. Run the game by executing the main class.
 
 ## Credits
 
