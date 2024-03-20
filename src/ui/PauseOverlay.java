@@ -24,7 +24,7 @@ public class PauseOverlay {
     private Playing playing;
     
     public PauseOverlay(Playing playing) {
-        this.playing=playing;
+        this.playing = playing;
         loadBackground();
         createSoundButtons();
         createUrmButtons();
@@ -33,16 +33,16 @@ public class PauseOverlay {
 
     //How the Sound and URM buttons are made
     private void createVolumeButton() {
-        int vX= (int) (309*Game.SCALE);
-        int vY= (int) (278*Game.SCALE);
-        volumeB= new VolumeButton(vX, vY, SLIDER_WIDTH, VOLUME_HEIGHT);
+        int vX = (int) (309 * Game.SCALE);
+        int vY = (int) (278 * Game.SCALE);
+        volumeB = new VolumeButton(vX, vY, SLIDER_WIDTH, VOLUME_HEIGHT);
     }
 
     private void createUrmButtons() {
-        int menuX= (int) (313*Game.SCALE);
-        int replayX= (int) (387*Game.SCALE);
-        int unpauseX= (int) (462*Game.SCALE);
-        int bY= (int) (325*Game.SCALE);
+        int menuX = (int) (313 * Game.SCALE);
+        int replayX = (int) (387 * Game.SCALE);
+        int unpauseX = (int) (462 * Game.SCALE);
+        int bY = (int) (325 * Game.SCALE);
 
         menuB= new UrmButton(menuX, bY, URM_SIZE, URM_SIZE, 2);
         replayB= new UrmButton(replayX, bY, URM_SIZE, URM_SIZE, 1);
@@ -50,19 +50,19 @@ public class PauseOverlay {
     }
 
     private void createSoundButtons() {
-        int soundX= (int)(450*Game.SCALE);
-        int musicY= (int)(140*Game.SCALE);
-        int sfxY= (int)(186*Game.SCALE);
-        musicButton= new SoundButton(soundX, musicY, SOUND_SIZE, SOUND_SIZE);
-        sfxButton= new SoundButton(soundX, sfxY, SOUND_SIZE, SOUND_SIZE);
+        int soundX = (int) (450 * Game.SCALE);
+        int musicY = (int) (140 * Game.SCALE);
+        int sfxY = (int) (186 * Game.SCALE);
+        musicButton = new SoundButton(soundX, musicY, SOUND_SIZE, SOUND_SIZE);
+        sfxButton = new SoundButton(soundX, sfxY, SOUND_SIZE, SOUND_SIZE);
     }
 
     private void loadBackground() {
-        backgroundImg=LoadSave.GetSpriteAtlas(LoadSave.PAUSE_BACKGROUND);
-        bgW= (int) (backgroundImg.getWidth()*Game.SCALE);
-        bgH= (int) (backgroundImg.getHeight()*Game.SCALE);
-        bgX=Game.GAME_WIDTH/2 - bgW/2;
-        bgY=(int)(25*Game.SCALE);
+        backgroundImg = LoadSave.GetSpriteAtlas (LoadSave.PAUSE_BACKGROUND);
+        bgW = (int) (backgroundImg.getWidth() * Game.SCALE);
+        bgH = (int) (backgroundImg.getHeight() * Game.SCALE);
+        bgX = Game.GAME_WIDTH / 2 - bgW / 2;
+        bgY = (int)(25*Game.SCALE);
         
     }
 

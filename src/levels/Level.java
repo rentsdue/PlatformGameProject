@@ -34,21 +34,21 @@ public class Level {
     }
 
     private void calcPlayerSpawn() {
-        spawnPoint=GetPlayerSpawn(img);
+        spawnPoint = GetPlayerSpawn(img);
     }
 
     private void calcLvlOffsets() {
-        lvlTilesWide=img.getWidth();
-        maxTilesOffset=lvlTilesWide-Game.TILES_IN_WIDTH;
-        maxLvlOffsetX=Game.TILES_SIZE*maxTilesOffset;
+        lvlTilesWide = img.getWidth();
+        maxTilesOffset = lvlTilesWide-Game.TILES_IN_WIDTH;
+        maxLvlOffsetX = Game.TILES_SIZE*maxTilesOffset;
     }
 
     private void createEnemies() {
-        crabs=GetCrabs(img);
+        crabs = GetCrabs(img);
     }
 
     private void createLevelData() {
-        lvlData= GetLevelData(img);
+        lvlData = GetLevelData(img);
     }
 
     public void createContainers() {

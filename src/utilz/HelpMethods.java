@@ -129,11 +129,11 @@ public class HelpMethods {
 
 	public static ArrayList<Crab> GetCrabs(BufferedImage img) {
         ArrayList<Crab> list= new ArrayList<>();
-        for (int j=0; j<img.getHeight(); j++) {
+        for (int j = 0; j < img.getHeight(); j++) {
             for (int i=0; i<img.getWidth(); i++) {
                 Color color= new Color(img.getRGB(i, j));
                 int value=color.getGreen();
-                if (value==ENEMY_CRAB) {
+                if (value == ENEMY_CRAB) {
                     list.add(new Crab(i*Game.TILES_SIZE, j*Game.TILES_SIZE));
                 }
             }

@@ -6,15 +6,15 @@ public class PauseButton {
     protected Rectangle bounds;
 
     public PauseButton(int x, int y, int width, int height) {
-        this.x=x;
-        this.y=y;
-        this.width=width;
-        this.height=height;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
         createBounds();
     }
 
     public int getX() {
-        return x;
+        return this.x;
     }
 
     public void setX(int x) {
@@ -22,7 +22,7 @@ public class PauseButton {
     }
 
     public int getY() {
-        return y;
+        return this.y;
     }
 
     public void setY(int y) {
@@ -30,7 +30,7 @@ public class PauseButton {
     }
 
     public int getWidth() {
-        return width;
+        return this.width;
     }
 
     public void setWidth(int width) {
@@ -38,7 +38,7 @@ public class PauseButton {
     }
 
     public int getHeight() {
-        return height;
+        return this.height;
     }
 
     public void setHeight(int height) {
@@ -46,7 +46,7 @@ public class PauseButton {
     }
 
     public Rectangle getBounds() {
-        return bounds;
+        return this.bounds;
     }
 
     public void setBounds(Rectangle bounds) {
