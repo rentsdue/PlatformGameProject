@@ -173,7 +173,7 @@ public class Playing extends State implements Statemethods {
 				player.setRight(true);
 				break;
 			case KeyEvent.VK_SPACE:
-				player.setJump(true);
+				player.setAttacking(true);
 				break;
 			case KeyEvent.VK_UP:
 				player.setJump(true);

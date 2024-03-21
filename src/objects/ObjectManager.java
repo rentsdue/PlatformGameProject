@@ -14,8 +14,8 @@ public class ObjectManager {
 
 	private Playing playing;
 	private BufferedImage[][] potionImgs, containerImgs;
-	private ArrayList<Potion> potions;
-	private ArrayList<GameContainer> containers;
+	private ArrayList <Potion> potions;
+	private ArrayList <GameContainer> containers;
 
 	public ObjectManager(Playing playing) {
 		this.playing = playing;

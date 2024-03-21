@@ -31,12 +31,12 @@ public class Crab extends Enemy {
     }
 
     private void updateAttackBox() {
-        attackBox.x=hitBox.x-attackBoxOffsetX;
-        attackBox.y=hitBox.y;
+        attackBox.x = hitBox.x - attackBoxOffsetX;
+        attackBox.y = hitBox.y;
     }
 
     private void updateBehavior(int[][] lvlData, Player player) {
-        if(firstUpdate) {
+        if (firstUpdate) {
             firstUpdateCheck(lvlData);
         }
         if (inAir) {
