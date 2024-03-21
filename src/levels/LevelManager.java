@@ -13,21 +13,21 @@ public class LevelManager {
 	private Game game;
 	private BufferedImage[] levelSprite;
 	private ArrayList<Level> levels;
-	private int lvlIndex=0;
+	private int lvlIndex = 0;
 
 	public LevelManager(Game game) {
 		this.game = game;
 		importOutsideSprites();
-		levels= new ArrayList<Level>();
+		levels = new ArrayList<Level>();
 		buildAllLevels();
 	}
 
 	public void loadNextLevel() {
 		lvlIndex++;
-		if (lvlIndex>=levels.size()) {
-			lvlIndex=0;
+		if (lvlIndex >= levels.size()) {
+			lvlIndex = 0;
 			System.out.println("Well done player! All levels are complete!");
-			Gamestate.state=Gamestate.MENU;
+			Gamestate.state = Gamestate.MENU;
 		}
 
 		Level newLevel= levels.get(lvlIndex);
@@ -38,7 +38,7 @@ public class LevelManager {
 	}
 
 	private void buildAllLevels() {
-		BufferedImage[] allLevels=LoadSave.GetAllLevels();
+		BufferedImage[] allLevels = LoadSave.GetAllLevels();
 		for (BufferedImage img: allLevels) {
 			levels.add(new Level(img));
 		}
@@ -58,7 +58,7 @@ public class LevelManager {
 		for (int j = 0; j < Game.TILES_IN_HEIGHT; j++)
 			for (int i = 0; i < levels.get(lvlIndex).getLevelData()[0].length; i++) {
 				int index = levels.get(lvlIndex).getSpriteIndex(i, j);
-				g.drawImage(levelSprite[index], Game.TILES_SIZE * i-xLvlOffset, Game.TILES_SIZE * j, Game.TILES_SIZE, Game.TILES_SIZE, null);
+				g.drawImage(levelSprite[index], Game.TILES_SIZE * i - xLvlOffset, Game.TILES_SIZE * j, Game.TILES_SIZE, Game.TILES_SIZE, null);
 			}
 	}
 

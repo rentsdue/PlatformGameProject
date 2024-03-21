@@ -7,6 +7,7 @@ import java.awt.geom.Rectangle2D;
 import main.java.com.example.Game;
 
 public abstract class Entity {
+
     protected float x, y;
     protected int aniTick, aniIndex;
     protected int width, height;
@@ -24,10 +25,10 @@ public abstract class Entity {
     protected Rectangle2D.Float attackBox;
     
     public Entity(float x, float y, int width, int height) {
-        this.x=x;
-        this.y=y;
-        this.width=width;
-        this.height=height;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
 
     protected void drawHitBox(Graphics g, int xLvlOffset) {
@@ -37,12 +38,12 @@ public abstract class Entity {
     }
 
     protected void initHitBox(int width, int height) {
-        hitBox= new Rectangle2D.Float(x, y, (int) (width*Game.SCALE), (int) (height*Game.SCALE));
+        hitBox= new Rectangle2D.Float(x, y, (int) (width * Game.SCALE), (int) (height * Game.SCALE));
     }
 
     protected void drawAttackBox(Graphics g, int xLvlOffset) {
         g.setColor(Color.red);
-        g.drawRect((int) attackBox.x-xLvlOffset, (int) attackBox.y, (int) attackBox.width, (int) attackBox.height);
+        g.drawRect((int) attackBox.x - xLvlOffset, (int) attackBox.y, (int) attackBox.width, (int) attackBox.height);
     }
 
     //Getters and setters
@@ -59,7 +60,7 @@ public abstract class Entity {
     }
 
     public void setState(int state){
-        this.state=state;
+        this.state = state;
     }
 
 }

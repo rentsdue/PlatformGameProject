@@ -11,6 +11,7 @@ import static utilz.Constants.*;
 import main.java.com.example.Game;
 
 public abstract class Enemy extends Entity {
+	
 	protected int enemyType;
 	protected boolean firstUpdate = true;
 	
@@ -119,8 +120,13 @@ public abstract class Enemy extends Entity {
 				aniIndex = 0;
 
 				switch (state) {
-				case ATTACK, HIT -> state = IDLE;
-				case DEAD -> active = false;
+				    case ATTACK:
+					case HIT:
+						state = IDLE;
+						break;
+					case DEAD:
+						active = false;
+						break;
 				}
 			}
 		}

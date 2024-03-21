@@ -18,6 +18,6 @@ public class State {
 		return mb.getBounds().contains(e.getX(), e.getY());
 	}
 	public Game getGame() {
-		return game;
+		return this.game;
 	}
 }
