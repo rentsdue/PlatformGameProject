@@ -21,7 +21,7 @@ public class Player extends Entity {
 	private boolean left, right, jump;
 	private int[][] lvlData;
 	private float xDrawOffset = 21 * Game.SCALE;
-	private float yDrawOffset = 4 * Game.SCALE;
+	private float yDrawOffset = 7 * Game.SCALE; //Change this so that sprite actually "touches" the floor
 
 	// Jumping / Gravity
 	private float jumpSpeed = -2.25f * Game.SCALE;
@@ -117,8 +117,8 @@ public class Player extends Entity {
 
 	public void render(Graphics g, int lvlOffset) {
 		g.drawImage(animations[state][aniIndex], (int) (hitBox.x - xDrawOffset) - lvlOffset + flipX, (int) (hitBox.y - yDrawOffset), width * flipW, height, null);
-//		drawHitbox(g, lvlOffset);
-//		drawAttackBox(g, lvlOffset);
+		// drawHitBox(g, lvlOffset);
+		// drawAttackBox(g, lvlOffset);
 		drawUI(g);
 	}
 
