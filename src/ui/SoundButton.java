@@ -17,29 +17,29 @@ public class SoundButton extends PauseButton{
     }
     
     private void loadSoundImgs() {
-        BufferedImage temp=LoadSave.GetSpriteAtlas(LoadSave.SOUND_BUTTONS);
-        soundImgs= new BufferedImage[2][3];
-        for (int j=0; j<soundImgs.length; j++) {
-            for (int i=0; i<soundImgs[j].length; i++) {
-                soundImgs[j][i]=temp.getSubimage(i*SOUND_SIZE_DEFAULT, j*SOUND_SIZE_DEFAULT, SOUND_SIZE_DEFAULT, SOUND_SIZE_DEFAULT);
+        BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.SOUND_BUTTONS);
+        soundImgs = new BufferedImage[2][3];
+        for (int j = 0; j < soundImgs.length; j++) {
+            for (int i = 0; i<soundImgs[j].length; i++) {
+                soundImgs[j][i] = temp.getSubimage(i*SOUND_SIZE_DEFAULT, j*SOUND_SIZE_DEFAULT, SOUND_SIZE_DEFAULT, SOUND_SIZE_DEFAULT);
             }
         }
     }
 
     public void update() {
         if (muted) { 
-            rowIndex=1;
+            rowIndex = 1;
         } else {
-            rowIndex=0;
+            rowIndex = 0;
         }
 
-        columnIndex=0; //Allows for manipulation of buttons
+        columnIndex = 0; //Allows for manipulation of buttons
         if (mouseOver) {
-            columnIndex=1;
+            columnIndex = 1;
         } 
 
         if (mousePressed) {
-            columnIndex=2;
+            columnIndex = 2;
         }
     }
 
@@ -48,14 +48,14 @@ public class SoundButton extends PauseButton{
     }
 
     public void resetBools() {
-        mouseOver=false;
-        mousePressed=false;
+        mouseOver = false;
+        mousePressed = false;
     }
 
     //Getters and setters
 
     public boolean isMouseOver() {
-        return mouseOver;
+        return this.mouseOver;
     }
 
     public void setMouseOver(boolean mouseOver) {

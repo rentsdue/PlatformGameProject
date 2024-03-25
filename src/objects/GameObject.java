@@ -59,15 +59,15 @@ public class GameObject {
 	}
 
 	public int getObjType() {
-		return objType;
+		return this.objType;
 	}
 
 	public Rectangle2D.Float getHitBox() {
-		return hitBox;
+		return this.hitBox;
 	}
 
 	public boolean isActive() {
-		return active;
+		return this.active;
 	}
 
 	public void setActive(boolean active) {
@@ -79,15 +79,15 @@ public class GameObject {
 	}
 
 	public int getxDrawOffset() {
-		return xDrawOffset;
+		return this.xDrawOffset;
 	}
 
 	public int getyDrawOffset() {
-		return yDrawOffset;
+		return this.yDrawOffset;
 	}
 
 	public int getAniIndex() {
-		return aniIndex;
+		return this.aniIndex;
 	}
 
 }
