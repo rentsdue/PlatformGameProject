@@ -83,10 +83,10 @@ public class HelpMethods {
 	}
 
 	public static boolean IsFloor(Rectangle2D.Float hitBox, float xSpeed, int[][] lvlData) {
-		if (xSpeed>0) {
-			return IsSolid(hitBox.x+hitBox.width+xSpeed, hitBox.y+hitBox.height+1, lvlData);
+		if (xSpeed > 0) {
+			return IsSolid(hitBox.x + hitBox.width + xSpeed, hitBox.y + hitBox.height + 1, lvlData);
 		} else {
-			return IsSolid(hitBox.x+xSpeed, hitBox.y+hitBox.height+1, lvlData);
+			return IsSolid(hitBox.x + xSpeed, hitBox.y + hitBox.height + 1, lvlData);
 		}
 	}
 
@@ -142,16 +142,16 @@ public class HelpMethods {
     }
 
 	public static Point GetPlayerSpawn(BufferedImage img) {
-        for (int j=0; j<img.getHeight(); j++) {
-            for (int i=0; i<img.getWidth(); i++) {
-                Color color= new Color(img.getRGB(i, j));
-                int value=color.getGreen();
-                if (value==100) {
-                    return new Point(i*Game.TILES_SIZE, j*Game.TILES_SIZE);
+        for (int j = 0; j < img.getHeight(); j++) {
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getGreen();
+                if (value == 100) {
+                    return new Point(i * Game.TILES_SIZE, j * Game.TILES_SIZE);
                 }
             }
         }
-		return new Point(1*Game.TILES_SIZE, 1*Game.TILES_SIZE);
+		return new Point(1 * Game.TILES_SIZE, 1 * Game.TILES_SIZE);
 	}
 
 	public static ArrayList<Potion> GetPotions(BufferedImage img) {
