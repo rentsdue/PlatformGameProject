@@ -1,6 +1,6 @@
 package utilz;
 
-import static utilz.Constants.EnemyConstants.ENEMY_CRAB;
+import static utilz.Constants.EnemyConstants.ENEMY_MELEE;
 import static utilz.Constants.ObjectConstants.*;
 
 import java.awt.Color;
@@ -9,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import entities.Crab;
+import entities.Melee;
 import main.java.com.example.Game;
 import objects.GameContainer;
 import objects.Potion;
@@ -39,7 +39,7 @@ public class HelpMethods {
 	}
 
 	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
-		int value = lvlData[yTile][xTile];
+		int value = lvlData [yTile][xTile];
 
 		if (value >= 48 || value < 0 || value != 11)
 			return true;
@@ -127,14 +127,14 @@ public class HelpMethods {
         return lvlData;
     }
 
-	public static ArrayList<Crab> GetCrabs(BufferedImage img) {
-        ArrayList<Crab> list= new ArrayList<>();
+	public static ArrayList<Melee> GetMelees(BufferedImage img) {
+        ArrayList<Melee> list= new ArrayList<>();
         for (int j = 0; j < img.getHeight(); j++) {
             for (int i=0; i<img.getWidth(); i++) {
                 Color color= new Color(img.getRGB(i, j));
                 int value=color.getGreen();
-                if (value == ENEMY_CRAB) {
-                    list.add(new Crab(i*Game.TILES_SIZE, j*Game.TILES_SIZE));
+                if (value == ENEMY_MELEE) {
+                    list.add(new Melee(i*Game.TILES_SIZE, j*Game.TILES_SIZE));
                 }
             }
         }

@@ -5,7 +5,7 @@ import static utilz.HelpMethods.*;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import entities.Crab;
+import entities.Melee;
 import main.java.com.example.Game;
 import objects.GameContainer;
 import objects.Potion;
@@ -15,7 +15,7 @@ public class Level {
     
     private int[][] lvlData;
     private BufferedImage img;
-    private ArrayList<Crab> crabs;
+    private ArrayList<Melee> melees;
     private ArrayList<Potion> potions;
 	private ArrayList<GameContainer> containers;
     private int lvlTilesWide;
@@ -44,7 +44,7 @@ public class Level {
     }
 
     private void createEnemies() {
-        crabs = GetCrabs(img);
+        melees = GetMelees(img);
     }
 
     private void createLevelData() {
@@ -71,8 +71,8 @@ public class Level {
         return this.maxLvlOffsetX;
     }
 
-    public ArrayList<Crab> getCrabList() {
-        return this.crabs;
+    public ArrayList<Melee> getMeleeList() {
+        return this.melees;
     }
 
     public Point getSpawnPoint() {

@@ -45,10 +45,10 @@ public class Constants {
 	public static class UI {
 		
 		public static class Buttons {
-			public static final int B_WIDTH_DEFAULT = 140;
+			public static final int B_WIDTH_DEFAULT = 140; //Button width/height in pixels
 			public static final int B_HEIGHT_DEFAULT = 56;
-			public static final int B_WIDTH = (int) (B_WIDTH_DEFAULT*Game.SCALE);
-			public static final int B_HEIGHT = (int) (B_HEIGHT_DEFAULT*Game.SCALE);
+			public static final int B_WIDTH = (int) (B_WIDTH_DEFAULT * Game.SCALE);
+			public static final int B_HEIGHT = (int) (B_HEIGHT_DEFAULT * Game.SCALE);
 		}
 
 		public static class PauseButtons {
@@ -110,7 +110,7 @@ public class Constants {
 
 	public static class EnemyConstants {
 			//Enemy States
-			public static final int ENEMY_CRAB = 0;
+			public static final int ENEMY_MELEE = 0;
 			public static final int IDLE = 0;
 			public static final int RUNNING = 1;
 			public static final int ATTACK = 2;
@@ -120,7 +120,7 @@ public class Constants {
 			//Enemy Interactions
 			public static int GetMaxHealth(int enemy_Type) {
 				switch (enemy_Type) {
-					case ENEMY_CRAB:
+					case ENEMY_MELEE:
 						return 10;
 					default:
 						return 1;
@@ -129,7 +129,7 @@ public class Constants {
 
 			public static int GetEnemyDamage(int enemy_Type) {
 				switch (enemy_Type) {
-					case ENEMY_CRAB:
+					case ENEMY_MELEE:
 						return 15;
 					default:
 						return 0;
@@ -137,17 +137,17 @@ public class Constants {
 			}
 			
 			//Dimensions
-			public static final int CRAB_DEFAULT_WIDTH = 72;
-			public static final int CRAB_DEFAULT_HEIGHT = 32;
-			public static final int CRAB_ACTUAL_WIDTH= (int) (CRAB_DEFAULT_WIDTH * Game.SCALE);
-			public static final int CRAB_ACTUAL_HEIGHT= (int) (CRAB_DEFAULT_HEIGHT * Game.SCALE);
+			public static final int MELEE_DEFAULT_WIDTH = 72;
+			public static final int MELEE_DEFAULT_HEIGHT = 32;
+			public static final int MELEE_ACTUAL_WIDTH = (int) (MELEE_DEFAULT_WIDTH * Game.SCALE);
+			public static final int MELEE_ACTUAL_HEIGHT = (int) (MELEE_DEFAULT_HEIGHT * Game.SCALE);
 
-			public static final int CRAB_DRAWOFFSET_X=(int)(26 * Game.SCALE);
-			public static final int CRAB_DRAWOFFSET_Y=(int)(9 * Game.SCALE);
+			public static final int MELEE_DRAWOFFSET_X =(int) (26 * Game.SCALE);
+			public static final int MELEE_DRAWOFFSET_Y =(int) (9 * Game.SCALE);
 
 			public static int GetSpriteAmount(int enemy_type, int enemy_state) {
 				switch (enemy_type) {
-				case ENEMY_CRAB:
+				case ENEMY_MELEE:
 					switch(enemy_state) {
 						case IDLE:
 							return 9;

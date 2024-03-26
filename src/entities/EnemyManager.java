@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class EnemyManager {
     private Playing playing;
-    private BufferedImage[][] crabArray;
-    private ArrayList<Crab> crabList= new ArrayList<>();
+    private BufferedImage[][] meleeArray;
+    private ArrayList<Melee> meleeList= new ArrayList<>();
     
     public EnemyManager(Playing playing) {
         this.playing = playing;
@@ -22,15 +22,15 @@ public class EnemyManager {
     }
 
     public void loadEnemies(Level level) {
-        crabList = level.getCrabList();
-        System.out.println("Number of Crabs: " + crabList.size());
+        meleeList = level.getMeleeList();
+        System.out.println("Number of Melees: " + meleeList.size());
     }
 
     public void update(int[][] lvlData, Player player) {
         boolean isAnyActive = false;
-        for (Crab crab: crabList) {
-            if (crab.isActive()) {
-                crab.update(lvlData, player);
+        for (Melee melee: meleeList) {
+            if (melee.isActive()) {
+                melee.update(lvlData, player);
                 isAnyActive = true;
             }
         }
@@ -40,41 +40,41 @@ public class EnemyManager {
     }
 
     public void draw(Graphics g, int xLvlOffset) {
-        drawCrabs(g, xLvlOffset);
+        drawMeleeUnits(g, xLvlOffset);
     }
 
-    private void drawCrabs(Graphics g, int xLvlOffset) {
-        for (Crab crab: crabList) {
-            if (crab.isActive()) {
-                g.drawImage(crabArray[crab.getState()][crab.getAniIndex()], (int) crab.getHitBox().x - xLvlOffset - CRAB_DRAWOFFSET_X + crab.flipX(), (int) crab.getHitBox().y - CRAB_DRAWOFFSET_Y, CRAB_ACTUAL_WIDTH * crab.flipW(), CRAB_ACTUAL_HEIGHT, null);
-                /*crab.drawHitBox(g, xLvlOffset);
-                crab.drawAttackBox(g, xLvlOffset);*/
+    private void drawMeleeUnits(Graphics g, int xLvlOffset) {
+        for (Melee melee: meleeList) {
+            if (melee.isActive()) {
+                g.drawImage(meleeArray[melee.getState()][melee.getAniIndex()], (int) melee.getHitBox().x - xLvlOffset - MELEE_DRAWOFFSET_X + melee.flipX(), (int) melee.getHitBox().y - MELEE_DRAWOFFSET_Y, MELEE_ACTUAL_WIDTH * melee.flipW(), MELEE_ACTUAL_HEIGHT, null);
+                /*melee.drawHitBox(g, xLvlOffset);
+                melee.drawAttackBox(g, xLvlOffset);*/
             }
         }
     }
 
     public void checkEnemyHit(Rectangle2D.Float attackBox) {
-		for (Crab crab : crabList)
-			if (crab.isActive())
-				if (attackBox.intersects(crab.getHitBox())) {
-					crab.hurt(10);
+		for (Melee melee : meleeList)
+			if (melee.isActive())
+				if (attackBox.intersects(melee.getHitBox())) {
+					melee.hurt(10);
 					return;
 				}
 	}
 
     private void loadEnemyImgs() {
-        crabArray= new BufferedImage[5][9];
+        meleeArray= new BufferedImage[5][9];
         BufferedImage temp=LoadSave.GetSpriteAtlas(LoadSave.ENEMY_SPRITE);
-        for (int j = 0; j < crabArray.length; j++) {
-            for (int i = 0; i < crabArray[j].length; i++) {
-                crabArray[j][i]=temp.getSubimage(i * CRAB_DEFAULT_WIDTH, j * CRAB_DEFAULT_HEIGHT, CRAB_DEFAULT_WIDTH, CRAB_DEFAULT_HEIGHT);
+        for (int j = 0; j < meleeArray.length; j++) {
+            for (int i = 0; i < meleeArray[j].length; i++) {
+                meleeArray[j][i]=temp.getSubimage(i * MELEE_DEFAULT_WIDTH, j * MELEE_DEFAULT_HEIGHT, MELEE_DEFAULT_WIDTH, MELEE_DEFAULT_HEIGHT);
             }
         }
     }
 
     public void resetAllEnemies() {
-        for (Crab crab: crabList) {
-            crab.resetEnemy();
+        for (Melee melee: meleeList) {
+            melee.resetEnemy();
         }
     }
 }

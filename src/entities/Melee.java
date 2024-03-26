@@ -8,13 +8,13 @@ import java.awt.geom.Rectangle2D;
 
 import main.java.com.example.Game;
 
-public class Crab extends Enemy {
+public class Melee extends Enemy { //Need to change crab animation soon
 
     private Rectangle2D.Float attackBox;
     private int attackBoxOffsetX;
 
-    public Crab(float x, float y) {
-        super(x, y, CRAB_ACTUAL_WIDTH, CRAB_ACTUAL_HEIGHT, ENEMY_CRAB);
+    public Melee(float x, float y) {
+        super(x, y, MELEE_ACTUAL_WIDTH, MELEE_ACTUAL_HEIGHT, ENEMY_MELEE);
         initHitBox(22, 19);
         initAttackBox();
     }
