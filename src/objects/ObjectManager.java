@@ -41,7 +41,7 @@ public class ObjectManager {
 
 	public void checkObjectHit(Rectangle2D.Float attackbox) {
 		for (GameContainer gc : containers)
-			if (gc.isActive()) {
+			if (gc.isActive() & !gc.doAnimation) { //Ensures that the "multiple potion" bug is gone
 				if (gc.getHitBox().intersects(attackbox)) {
 					gc.setAnimation(true);
 					int type = 0;
@@ -53,9 +53,9 @@ public class ObjectManager {
 			}
 	}
 
-	public void loadObjects(Level newLevel) {
-		potions = newLevel.getPotions();
-		containers = newLevel.getContainers();
+	public void loadObjects(Level newLevel) { //Copies objectManager potions/containers into new arraylist in level, but new objects added to objectmanager will not be added to level arraylist
+		potions = new ArrayList<>(newLevel.getPotions());
+		containers = new ArrayList<>(newLevel.getContainers());
 	}
 
 	private void loadImgs() {
@@ -112,11 +112,16 @@ public class ObjectManager {
 	}
 
 	public void resetAllObjects() {
+		System.out.println("ArrayList sizes before: " + potions.size() + ", " + containers.size());
+		loadObjects(playing.getLevelManager().getCurrentLevel());
+
 		for (Potion p : potions)
 			p.reset();
 
 		for (GameContainer gc : containers)
 			gc.reset();
+
+		System.out.println("ArrayList sizes after: " + potions.size() + ", " + containers.size());
 	}
 
 }

@@ -13,6 +13,7 @@ import entities.Melee;
 import main.java.com.example.Game;
 import objects.GameContainer;
 import objects.Potion;
+import objects.Spike;
 
 public class HelpMethods {
 
@@ -179,6 +180,11 @@ public class HelpMethods {
 
 		return list;
 	}
+
+    public static ArrayList<Spike> GetSpikes(BufferedImage img) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'GetSpikes'");
+    }
 
 }
 

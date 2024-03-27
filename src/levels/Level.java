@@ -7,8 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import entities.Melee;
 import main.java.com.example.Game;
-import objects.GameContainer;
-import objects.Potion;
+import objects.*;
 import utilz.HelpMethods;
 
 public class Level {
@@ -17,6 +16,7 @@ public class Level {
     private BufferedImage img;
     private ArrayList<Melee> melees;
     private ArrayList<Potion> potions;
+    private ArrayList<Spike> spikes;
 	private ArrayList<GameContainer> containers;
     private int lvlTilesWide;
     private int maxTilesOffset;
@@ -29,8 +29,13 @@ public class Level {
         createEnemies();
         createPotions();
         createContainers();
+        createSpikes();
         calcLvlOffsets();
         calcPlayerSpawn();
+    }
+
+    private void createSpikes() {
+        spikes = HelpMethods.GetSpikes(img);
     }
 
     private void calcPlayerSpawn() {

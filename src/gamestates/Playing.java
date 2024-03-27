@@ -280,4 +280,12 @@ public class Playing extends State implements Statemethods {
 		return this.objectManager;
 	}
 
+	public LevelManager getLevelManager() {
+		return this.levelManager;
+	}
+
+	public void setLevelManager(LevelManager levelManager) {
+		this.levelManager = levelManager;
+	}
+
 }
