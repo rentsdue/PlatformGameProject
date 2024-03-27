@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import entities.Player;
 import gamestates.Playing;
 import levels.Level;
 import utilz.LoadSave;
@@ -14,8 +15,10 @@ public class ObjectManager {
 
 	private Playing playing;
 	private BufferedImage[][] potionImgs, containerImgs;
+	private BufferedImage spikeImg;
 	private ArrayList <Potion> potions;
 	private ArrayList <GameContainer> containers;
+	private ArrayList <Spike> spikes;
 
 	public ObjectManager(Playing playing) {
 		this.playing = playing;
@@ -53,9 +56,18 @@ public class ObjectManager {
 			}
 	}
 
+	public void checkSpikesTouched(Player p) {
+		for (Spike s: spikes) {
+			if (s.getHitBox().intersects(p.getHitBox())){
+				p.kill();
+			}
+		}
+	}
+
 	public void loadObjects(Level newLevel) { //Copies objectManager potions/containers into new arraylist in level, but new objects added to objectmanager will not be added to level arraylist
 		potions = new ArrayList<>(newLevel.getPotions());
 		containers = new ArrayList<>(newLevel.getContainers());
+		spikes = newLevel.getSpikes();
 	}
 
 	private void loadImgs() {
@@ -72,6 +84,8 @@ public class ObjectManager {
 		for (int j = 0; j < containerImgs.length; j++)
 			for (int i = 0; i < containerImgs[j].length; i++)
 				containerImgs[j][i] = containerSprite.getSubimage(40 * i, 30 * j, 40, 30);
+
+		spikeImg = LoadSave.GetSpriteAtlas(LoadSave.TRAPS);
 	}
 
 	public void update() {
@@ -84,9 +98,16 @@ public class ObjectManager {
 				gc.update();
 	}
 
-	public void draw(Graphics g, int xLvlOffset) {
+	public void draw(Graphics g, int xLvlOffset) { //Draws objects onto screen
 		drawPotions(g, xLvlOffset);
 		drawContainers(g, xLvlOffset);
+		drawSpikes(g, xLvlOffset);
+	}
+
+	private void drawSpikes(Graphics g, int xLvlOffset) {
+		for (Spike s: spikes) {
+			g.drawImage(spikeImg, (int) (s.getHitBox().x - xLvlOffset), (int) (s.getHitBox().y - s.getyDrawOffset()), SPIKE_WIDTH, SPIKE_HEIGHT, null);
+		}
 	}
 
 	private void drawContainers(Graphics g, int xLvlOffset) {

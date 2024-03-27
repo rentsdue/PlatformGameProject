@@ -68,6 +68,7 @@ public class Level {
         return lvlData [y][x];
     }
 
+    //Getters and setters
     public int [][] getLevelData() {
         return this.lvlData;
     }
@@ -91,5 +92,13 @@ public class Level {
 	public ArrayList<GameContainer> getContainers() {
 		return this.containers;
 	}
+
+    public ArrayList<Spike> getSpikes() {
+        return this.spikes;
+    }
+
+    public void setSpikes(ArrayList<Spike> spikes) {
+        this.spikes = spikes;
+    }
 
 }

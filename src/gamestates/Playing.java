@@ -131,10 +131,6 @@ public class Playing extends State implements Statemethods {
 		objectManager.resetAllObjects();
 	}
 
-	public void setGameOver(boolean gameOver) {
-		this.gameOver = gameOver;
-	}
-
 	public void checkObjectHit(Rectangle2D.Float attackBox) {
 		objectManager.checkObjectHit(attackBox);
 	}
@@ -146,6 +142,10 @@ public class Playing extends State implements Statemethods {
 	public void checkPotionTouched(Rectangle2D.Float hitBox) {
 		objectManager.checkObjectTouched(hitBox);
 	}
+
+	public void checkSpikesTouched(Player p) {
+        objectManager.checkSpikesTouched(p);
+    }
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -252,20 +252,25 @@ public class Playing extends State implements Statemethods {
 		}
 	}
 
-	public void setLevelCompleted(boolean levelCompleted) {
-		this.lvlCompleted = levelCompleted;
-	}
-
-	public void setMaxLvlOffset(int lvlOffset) {
-		this.maxLvlOffsetX = lvlOffset;
-	}
-
 	public void unpauseGame() {
 		paused = false;
 	}
 
 	public void windowFocusLost() {
 		player.resetDirBooleans();
+	}
+
+	//Getters and setters
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+
+	public void setLevelCompleted(boolean levelCompleted) {
+		this.lvlCompleted = levelCompleted;
+	}
+
+	public void setMaxLvlOffset(int lvlOffset) {
+		this.maxLvlOffsetX = lvlOffset;
 	}
 
 	public Player getPlayer() {
