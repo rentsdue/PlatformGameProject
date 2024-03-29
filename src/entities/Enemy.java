@@ -5,10 +5,10 @@ import static utilz.HelpMethods.*;
 
 import java.awt.geom.Rectangle2D;
 
+import main.java.com.example.Game;
+
 import static utilz.Constants.Directions.*;
 import static utilz.Constants.*;
-
-import main.java.com.example.Game;
 
 public abstract class Enemy extends Entity {
 	

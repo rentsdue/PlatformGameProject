@@ -1,9 +1,10 @@
 package gamestates;
 
-import main.java.com.example.*;
 import ui.MenuButton;
 
 import java.awt.event.MouseEvent;
+
+import main.java.com.example.Game;
 
 
 public class State {

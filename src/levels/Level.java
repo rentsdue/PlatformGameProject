@@ -17,6 +17,7 @@ public class Level {
     private ArrayList<Melee> melees;
     private ArrayList<Potion> potions;
     private ArrayList<Spike> spikes;
+    private ArrayList<Cannon> cannons;
 	private ArrayList<GameContainer> containers;
     private int lvlTilesWide;
     private int maxTilesOffset;
@@ -30,8 +31,13 @@ public class Level {
         createPotions();
         createContainers();
         createSpikes();
+        createCannons();
         calcLvlOffsets();
         calcPlayerSpawn();
+    }
+
+    private void createCannons() {
+        cannons = HelpMethods.GetCannons(img);
     }
 
     private void createSpikes() {
@@ -99,6 +105,14 @@ public class Level {
 
     public void setSpikes(ArrayList<Spike> spikes) {
         this.spikes = spikes;
+    }
+
+    public ArrayList<Cannon> getCannons() {
+        return this.cannons;
+    }
+
+    public void setCannons(ArrayList<Cannon> cannons) {
+        this.cannons = cannons;
     }
 
 }

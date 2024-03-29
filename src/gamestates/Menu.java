@@ -2,10 +2,12 @@ package gamestates;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
+import main.java.com.example.Game;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import main.java.com.example.*;
 import ui.MenuButton;
 import utilz.LoadSave;
 

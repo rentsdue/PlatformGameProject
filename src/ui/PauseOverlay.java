@@ -9,10 +9,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import gamestates.*;
+import main.java.com.example.Game;
 
 import java.awt.event.*;
 
-import main.java.com.example.Game;
 import utilz.LoadSave;
 
 public class PauseOverlay {
