@@ -15,6 +15,7 @@ import objects.*;
 
 public class HelpMethods {
 
+	//"Can" help methods
 	public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvlData) { //Checks if the character can move or if it collides
 		if (!IsSolid(x, y, lvlData)) 
 			if (!IsSolid(x + width, y + height, lvlData))
@@ -22,6 +23,26 @@ public class HelpMethods {
 					if (!IsSolid(x, y + height, lvlData))
 						return true;
 		return false;
+	}
+
+	public static boolean CanCannonSeePlayer(int[][] lvlData, Rectangle2D.Float firstHitBox, Rectangle2D.Float secondHitBox, int yTile) {
+		int firstXTile = (int) (firstHitBox.x / Game.TILES_SIZE);
+		int secondXTile = (int) (secondHitBox.x / Game.TILES_SIZE);
+
+		if (firstXTile > secondXTile)
+			return IsAllTilesClear(secondXTile, firstXTile, yTile, lvlData);
+		else
+			return IsAllTilesClear(firstXTile, secondXTile, yTile, lvlData);
+	}
+
+	//"Is" help methods
+
+	public static boolean IsAllTilesClear(int xStart, int xEnd, int y, int[][] lvlData) {
+		for (int i = 0; i < xEnd - xStart; i++) {
+			if (IsTileSolid(xStart + i, y, lvlData)) 
+				return false;
+		}
+		return true;
 	}
 
 	private static boolean IsSolid(float x, float y, int[][] lvlData) {
@@ -45,7 +66,45 @@ public class HelpMethods {
 		return false;
 	}
 
+	public static boolean IsEntityOnFloor(Rectangle2D.Float hitBox, int[][] lvlData) {
+		// Check the pixel below bottomleft and bottomright
+		if (!IsSolid(hitBox.x, hitBox.y + hitBox.height + 1, lvlData))
+			if (!IsSolid(hitBox.x + hitBox.width, hitBox.y + hitBox.height + 1, lvlData))
+				return false;
 
+		return true;
+
+	}
+
+	public static boolean IsFloor(Rectangle2D.Float hitBox, float xSpeed, int[][] lvlData) {
+		if (xSpeed > 0) {
+			return IsSolid(hitBox.x + hitBox.width + xSpeed, hitBox.y + hitBox.height + 1, lvlData);
+		} else {
+			return IsSolid(hitBox.x + xSpeed, hitBox.y + hitBox.height + 1, lvlData);
+		}
+	}
+
+	public static boolean IsAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
+		if (IsAllTilesClear(xStart, xEnd, y, lvlData)) {
+			for (int i = 0; i < xEnd - xStart; i++) {
+				if (!IsTileSolid(xStart + i, y + 1, lvlData))
+					return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean IsSightClear(int[][] lvlData, Rectangle2D.Float firstHitBox, Rectangle2D.Float secondHitBox, int yTile) {
+		int firstXTile = (int) (firstHitBox.x / Game.TILES_SIZE);
+		int secondXTile = (int) (secondHitBox.x / Game.TILES_SIZE);
+
+		if (firstXTile > secondXTile)
+			return IsAllTilesWalkable(secondXTile, firstXTile, yTile, lvlData);
+		else
+			return IsAllTilesWalkable(firstXTile, secondXTile, yTile, lvlData);
+	}
+
+	//"Getting" help methods
 	public static float GetEntityXPosNextToWall(Rectangle2D.Float hitBox, float xSpeed) {
 		int currentTile = (int) (hitBox.x / Game.TILES_SIZE);
 		if (xSpeed > 0) {
@@ -68,46 +127,6 @@ public class HelpMethods {
 		} else
 			// Jumping
 			return currentTile * Game.TILES_SIZE;
-
-	}
-
-	public static boolean IsEntityOnFloor(Rectangle2D.Float hitBox, int[][] lvlData) {
-		// Check the pixel below bottomleft and bottomright
-		if (!IsSolid(hitBox.x, hitBox.y + hitBox.height + 1, lvlData))
-			if (!IsSolid(hitBox.x + hitBox.width, hitBox.y + hitBox.height + 1, lvlData))
-				return false;
-
-		return true;
-
-	}
-
-	public static boolean IsFloor(Rectangle2D.Float hitBox, float xSpeed, int[][] lvlData) {
-		if (xSpeed > 0) {
-			return IsSolid(hitBox.x + hitBox.width + xSpeed, hitBox.y + hitBox.height + 1, lvlData);
-		} else {
-			return IsSolid(hitBox.x + xSpeed, hitBox.y + hitBox.height + 1, lvlData);
-		}
-	}
-
-	public static boolean IsAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
-		for (int i = 0; i < xEnd - xStart; i++) {
-			if (IsTileSolid(xStart + i, y, lvlData))
-				return false;
-			if (!IsTileSolid(xStart + i, y + 1, lvlData))
-				return false;
-		}
-
-		return true;
-	}
-
-	public static boolean IsSightClear(int[][] lvlData, Rectangle2D.Float firstHitBox, Rectangle2D.Float secondHitBox, int yTile) {
-		int firstXTile = (int) (firstHitBox.x / Game.TILES_SIZE);
-		int secondXTile = (int) (secondHitBox.x / Game.TILES_SIZE);
-
-		if (firstXTile > secondXTile)
-			return IsAllTilesWalkable(secondXTile, firstXTile, yTile, lvlData);
-		else
-			return IsAllTilesWalkable(firstXTile, secondXTile, yTile, lvlData);
 
 	}
 

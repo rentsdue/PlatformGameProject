@@ -73,7 +73,7 @@ public abstract class Enemy extends Entity {
 	protected boolean canSeePlayer(int[][] lvlData, Player player) {
 		int playerTileY = (int) (player.getHitBox().y / Game.TILES_SIZE);
 		if (playerTileY == tileY)
-			if (IsPlayerInRange(player)) {
+			if (isPlayerInRange(player)) {
 				if (IsSightClear(lvlData, hitBox, player.hitBox, tileY))
 					return true;
 			}
@@ -81,7 +81,7 @@ public abstract class Enemy extends Entity {
 		return false;
 	}
 
-	protected boolean IsPlayerInRange(Player player) {
+	protected boolean isPlayerInRange(Player player) {
 		int absValue = (int) Math.abs(player.hitBox.x - hitBox.x);
 		return absValue <= attackDistance * 5;
 	}
