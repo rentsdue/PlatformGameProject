@@ -60,6 +60,7 @@ public class GameObject {
 		g.drawRect((int) hitBox.x - xLvlOffset, (int) hitBox.y, (int) hitBox.width, (int) hitBox.height);
 	}
 
+	//Getters and setters for gameobject
 	public int getObjType() {
 		return this.objType;
 	}
@@ -90,6 +91,10 @@ public class GameObject {
 
 	public int getAniIndex() {
 		return this.aniIndex;
+	}
+
+	public int getAniTick() {
+		return this.aniTick;
 	}
 
 }

@@ -37,6 +37,10 @@ public class HelpMethods {
 
 	//"Is" help methods
 
+	public static boolean IsProjectileHittingLevel(Projectile p, int[][] lvlData) {
+		return IsSolid(p.getHitBox().x + p.getHitBox().width / 2, p.getHitBox().y + p.getHitBox().height / 2, lvlData);
+	}
+
 	public static boolean IsAllTilesClear(int xStart, int xEnd, int y, int[][] lvlData) {
 		for (int i = 0; i < xEnd - xStart; i++) {
 			if (IsTileSolid(xStart + i, y, lvlData)) 
@@ -73,7 +77,6 @@ public class HelpMethods {
 				return false;
 
 		return true;
-
 	}
 
 	public static boolean IsFloor(Rectangle2D.Float hitBox, float xSpeed, int[][] lvlData) {

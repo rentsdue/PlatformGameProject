@@ -19,8 +19,7 @@ public class ObjectManager {
 	private Playing playing;
 	private BufferedImage[][] potionImgs, containerImgs;
 	private BufferedImage[] cannonImgs;
-	private BufferedImage spikeImg;
-	private BufferedImage ballImg;
+	private BufferedImage spikeImg, ballImg;
 	private ArrayList<Potion> potions;
 	private ArrayList<GameContainer> containers;
 	private ArrayList<Spike> spikes;
@@ -118,32 +117,35 @@ public class ObjectManager {
 	}
 
 	private void updateProjectiles(int[][] lvlData, Player player) {
-		for (Projectile p: projectiles) {
+		for (Projectile p : projectiles)
 			if (p.isActive()) {
 				p.updatePosition();
+				if (p.getHitBox().intersects(player.getHitBox())) {
+					player.changeHealth(-25);
+					p.setActive(false);
+				} else if (IsProjectileHittingLevel(p, lvlData))
+					p.setActive(false);
 			}
-		}
 	}
 
 	private void updateCannons(int[][] lvlData, Player player) {
-		for (Cannon c: cannons) {
-			if (c.getTileY() == player.getTileY()) {
-				if (IsPlayerInRange(c, player)) {
-					if (IsPlayerInFrontOfCannon(c, player)) {
-						if (CanCannonSeePlayer(lvlData, player.getHitBox(), c.getHitBox(), c.getTileY())) {
-							shootCannon(c);
-						}
-					}
-				}
-			}
+		for (Cannon c : cannons) {
+			if (!c.doAnimation)
+				if (c.getTileY() == player.getTileY())
+					if (IsPlayerInRange(c, player))
+						if (IsPlayerInFrontOfCannon(c, player))
+							if (CanCannonSeePlayer(lvlData, player.getHitBox(), c.getHitBox(), c.getTileY()))
+								c.setAnimation(true);
+
 			c.update();
+			if (c.getAniIndex() == 4 && c.getAniTick() == 0)
+				shootCannon(c);
 		}
 	}
 
 	private void shootCannon(Cannon c) {
-		c.setAnimation(true);
 		int dir = 1;
-		if (c.objType == CANNON_RIGHT) {
+		if (c.objType == CANNON_LEFT) {
 			dir = -1;
 		}
 		projectiles.add(new Projectile((int) c.getHitBox().x, (int) c.getHitBox().y, dir));
@@ -223,7 +225,7 @@ public class ObjectManager {
 	}
 
 	public void resetAllObjects() {
-		System.out.println("ArrayList sizes before: " + potions.size() + ", " + containers.size());
+		//System.out.println("ArrayList sizes before: " + potions.size() + ", " + containers.size());
 		loadObjects(playing.getLevelManager().getCurrentLevel());
 
 		for (Potion p : potions)

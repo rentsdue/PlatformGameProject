@@ -4,6 +4,8 @@ import static utilz.Constants.Projectiles.*;
 
 import java.awt.geom.Rectangle2D;
 
+import main.java.com.example.Game;
+
 public class Projectile {
 
     private Rectangle2D.Float hitBox;
@@ -11,7 +13,14 @@ public class Projectile {
     private boolean active = true;
 
     public Projectile(int x, int y, int dir) {
-        hitBox = new Rectangle2D.Float(x, y, BALL_WIDTH, BALL_HEIGHT);
+        int xOffset = (int) (-3 * Game.SCALE);
+        int yOffset = (int) (5 * Game.SCALE);
+
+        if (dir == 1) {
+            xOffset = (int) (29* Game.SCALE);
+        }
+
+        hitBox = new Rectangle2D.Float(x + xOffset, y + yOffset, BALL_WIDTH, BALL_HEIGHT);
         this.dir = dir;
     }
 
