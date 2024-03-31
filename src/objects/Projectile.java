@@ -3,14 +3,17 @@ package objects;
 import static utilz.Constants.Projectiles.*;
 
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 import main.java.com.example.Game;
+import utilz.LoadSave;
 
 public class Projectile {
 
     private Rectangle2D.Float hitBox;
     private int dir;
     private boolean active = true;
+    private BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PROJECTILE);;
 
     public Projectile(int x, int y, int dir) {
         int xOffset = (int) (-3 * Game.SCALE);
@@ -20,7 +23,7 @@ public class Projectile {
             xOffset = (int) (29* Game.SCALE);
         }
 
-        hitBox = new Rectangle2D.Float(x + xOffset, y + yOffset, BALL_WIDTH, BALL_HEIGHT);
+        hitBox = new Rectangle2D.Float(x + xOffset, y + yOffset, PROJECTILE_WIDTH, PROJECTILE_HEIGHT);
         this.dir = dir;
     }
 
@@ -56,6 +59,10 @@ public class Projectile {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public BufferedImage getImage() {
+        return this.img;
     }
     
 }

@@ -9,29 +9,36 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 public class LoadSave {
-    public static final String PLAYER_ATLAS = "player_sprites.png"; //Sprites
-    public static final String LEVEL_ATLAS = "outside_sprites.png";
+    
+    //Players and enemy-related stuff
+    public static final String PLAYER_ATLAS = "player_sprites.png";
     public static final String ENEMY_SPRITE = "enemy_sprite.png";
     public static final String HEALTH_POWER_BAR = "health_power_bar.png";
 
-    public static final String LEVEL_ONE_DATA = "1.png"; //Levels
-    
-    public static final String MENU_BACKGROUND = "menu_background.png"; //Backgrounds
+    //Level-related stuff
+    public static final String LEVEL_ATLAS = "outside_sprites.png";
+    public static final String LEVEL_ONE_DATA = "1.png"; 
+
+    //Backgrounds and UI
+    public static final String MENU_BACKGROUND = "menu_background.png"; 
     public static final String GAME_BACKGROUND = "game_background.png";
     public static final String PAUSE_BACKGROUND = "pause_menu.png";
     public static final String CAVE_BACKGROUND = "cave_background.png";
+    public static final String DEATH_SCREEN = "death_screen.png";
 
-    public static final String MENU_BUTTONS = "button_atlas.png"; //Buttons
+    //Buttons
+    public static final String MENU_BUTTONS = "button_atlas.png"; 
     public static final String SOUND_BUTTONS = "sound_button.png";
     public static final String URM_BUTTONS = "urm_buttons.png";
     public static final String VOLUME_BUTTONS = "volume_buttons.png";
     public static final String COMPLETED_IMG = "completed_sprite.png";
 
+    //Objects
     public static final String POTION_ATLAS = "potions_sprites.png";
     public static final String OBJECT_ATLAS = "objects_sprites.png";
     public static final String TRAPS = "traps.png";
     public static final String CANNON_ATLAS = "cannon_atlas.png";
-    public static final String BALL = "ball.png";
+    public static final String PROJECTILE = "projectile.png";
 
     public static BufferedImage GetSpriteAtlas(String fileName) {
         BufferedImage img = null;

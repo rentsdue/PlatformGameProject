@@ -1,6 +1,7 @@
 package objects;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -100,7 +101,7 @@ public class ObjectManager {
 			cannonImgs[i] = temp.getSubimage(i * 40, 0, 40, 26);
 		}
 
-		ballImg = LoadSave.GetSpriteAtlas(LoadSave.BALL);
+		ballImg = LoadSave.GetSpriteAtlas(LoadSave.PROJECTILE);
 	}
 
 	public void update(int[][] lvlData, Player player) {
@@ -178,10 +179,32 @@ public class ObjectManager {
 	private void drawProjectiles(Graphics g, int xLvlOffset) {
 		for (Projectile p : projectiles) {
 			if (p.isActive()) {
-				g.drawImage(ballImg, (int) (p.getHitBox().x - xLvlOffset), (int) (p.getHitBox().y), BALL_WIDTH, BALL_HEIGHT, null);
+				BufferedImage projectileImage = p.getImage();
+				int drawX = (int) (p.getHitBox().x - xLvlOffset);
+				int drawY = (int) (p.getHitBox().y);
+				int width = PROJECTILE_WIDTH;
+				int height = PROJECTILE_HEIGHT;
+	
+				if (p.getDir() == -1) { // If projectile is moving left, flip the image
+					BufferedImage flippedProjectileImage = flipImage(projectileImage);
+					g.drawImage(flippedProjectileImage, drawX, drawY, width, height, null);
+				} else {
+					g.drawImage(projectileImage, drawX, drawY, width, height, null);
+				}
 			}
 		}
 	}
+	
+	private BufferedImage flipImage(BufferedImage img) {
+		int width = img.getWidth();
+		int height = img.getHeight();
+		BufferedImage flippedImage = new BufferedImage(width, height, img.getType());
+		Graphics2D g = flippedImage.createGraphics();
+		g.drawImage(img, width, 0, -width, height, null); // Flip horizontally
+		g.dispose();
+		return flippedImage;
+	}
+	
 
 	private void drawCannons(Graphics g, int xLvlOffset) {
 		for (Cannon c: cannons) {
