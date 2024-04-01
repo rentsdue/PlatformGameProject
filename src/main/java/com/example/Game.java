@@ -1,20 +1,23 @@
 package main.java.com.example;
 
 import java.awt.Graphics;
-import gamestates.Gamestate;
-import gamestates.Menu;
-import gamestates.Playing;
+
+import gamestates.*;
+import ui.AudioOptions;
 
 public class Game implements Runnable {
 
 	private GameWindow gameWindow;
 	private GamePanel gamePanel;
 	private Thread gameThread;
-	private final int FPS_SET = 120;
-	private final int UPS_SET = 200;
 
+	private GameOptions gameOptions;
+	private AudioOptions audioOptions;
 	private Playing playing;
 	private Menu menu;
+
+	private final int FPS_SET = 120;
+	private final int UPS_SET = 200;
 
 	public final static int TILES_DEFAULT_SIZE = 32;
 	public final static float SCALE = 1.5f;
@@ -37,8 +40,10 @@ public class Game implements Runnable {
 	}
 
 	private void initClasses() {
+		audioOptions = new AudioOptions();
 		menu = new Menu(this);
 		playing = new Playing(this);
+		gameOptions = new GameOptions(this);
 	}
 
 	private void startGameLoop() {
@@ -55,6 +60,8 @@ public class Game implements Runnable {
 			playing.update();
 			break;
 		case OPTIONS:
+			gameOptions.update();
+			break;
 		case QUIT:
 		default:
 			System.exit(0);
@@ -70,6 +77,9 @@ public class Game implements Runnable {
 			break;
 		case PLAYING:
 			playing.draw(g);
+			break;
+		case OPTIONS:
+			gameOptions.draw(g);
 			break;
 		default:
 			break;
@@ -126,11 +136,43 @@ public class Game implements Runnable {
 			playing.getPlayer().resetDirBooleans();
 	}
 
+	//Getters and setters
 	public Menu getMenu() {
-		return menu;
+		return this.menu;
+	}
+
+	public void setMenu(Menu menu) {
+		this.menu = menu;
 	}
 
 	public Playing getPlaying() {
-		return playing;
+		return this.playing;
+	}
+
+	public void setPlaying(Playing playing) {
+		this.playing = playing;
+	}
+
+	public AudioOptions getAudioOptions() {
+		return this.audioOptions;
+	}
+
+	public void setAudioOptions(AudioOptions audioOptions) {
+		this.audioOptions = audioOptions;
+	}
+
+	public GameWindow getGameWindow() {
+		return this.gameWindow;
+	}
+	public void setGameWindow(GameWindow gameWindow) {
+		this.gameWindow = gameWindow;
+	}
+
+	public GameOptions getGameOptions() {
+		return this.gameOptions;
+	}
+
+	public void setGameOptions(GameOptions gameOptions) {
+		this.gameOptions = gameOptions;
 	}
 }
