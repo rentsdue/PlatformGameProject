@@ -51,12 +51,18 @@ public class MenuButton {
         }
     }
 
+    public void resetBools() {
+        mouseOver = false;
+        mousePressed = false;
+    }
+
+    //Getters and setters
     public boolean isMouseOver() {
         return this.mouseOver;
     }
 
     public void setMouseOver(boolean mouseOver) {
-        this.mouseOver=mouseOver;
+        this.mouseOver = mouseOver;
     }
 
     public boolean isMousePressed() {
@@ -64,16 +70,15 @@ public class MenuButton {
     }
 
     public void setMousePressed(boolean mousePressed) {
-        this.mousePressed=mousePressed;
+        this.mousePressed = mousePressed;
     }
 
     public void applyGamestate() {
-        Gamestate.state=state;
+        Gamestate.state = state;
     }
 
-    public void resetBools() {
-        mouseOver = false;
-        mousePressed = false;
+    public Gamestate getGamestate() {
+        return this.state;
     }
 
     public Rectangle getBounds() {

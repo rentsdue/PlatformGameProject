@@ -9,6 +9,7 @@ import static utilz.Constants.UI.UrmButtons.*;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+import audio.AudioPlayer;
 import gamestates.Gamestate;
 import gamestates.Playing;
 import main.java.com.example.Game;
@@ -53,10 +54,7 @@ public class GameOverOverlay {
     }
 
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            playing.resetAll();
-            Gamestate.state = Gamestate.MENU;
-        }
+        
     }
 
     private boolean isIn(UrmButton b, MouseEvent e) {
@@ -77,13 +75,14 @@ public class GameOverOverlay {
 		if (isIn(menu, e)) {
 			if (menu.isMousePressed()) {
 				playing.resetAll();
-				Gamestate.state = Gamestate.MENU;
+                playing.setGamestate(Gamestate.MENU);
 			}
 		} else if (isIn(play, e))
 			if (play.isMousePressed())
 				playing.resetAll();
-
-		menu.resetBools();
+                playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex()); //Change this later if needed
+		
+        menu.resetBools();
 		play.resetBools();
 	}
 

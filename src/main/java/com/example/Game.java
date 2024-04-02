@@ -2,6 +2,7 @@ package main.java.com.example;
 
 import java.awt.Graphics;
 
+import audio.AudioPlayer;
 import gamestates.*;
 import ui.AudioOptions;
 
@@ -15,6 +16,7 @@ public class Game implements Runnable {
 	private AudioOptions audioOptions;
 	private Playing playing;
 	private Menu menu;
+	private AudioPlayer audioPlayer;
 
 	private final int FPS_SET = 120;
 	private final int UPS_SET = 200;
@@ -40,7 +42,8 @@ public class Game implements Runnable {
 	}
 
 	private void initClasses() {
-		audioOptions = new AudioOptions();
+		audioOptions = new AudioOptions(this);
+		audioPlayer = new AudioPlayer();
 		menu = new Menu(this);
 		playing = new Playing(this);
 		gameOptions = new GameOptions(this);
@@ -174,5 +177,13 @@ public class Game implements Runnable {
 
 	public void setGameOptions(GameOptions gameOptions) {
 		this.gameOptions = gameOptions;
+	}
+
+	public AudioPlayer getAudioPlayer() {
+		return this.audioPlayer;
+	}
+
+	public void setAudioPlayer(AudioPlayer audioPlayer) {
+		this.audioPlayer = audioPlayer;
 	}
 }

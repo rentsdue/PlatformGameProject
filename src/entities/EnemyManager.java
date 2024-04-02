@@ -64,10 +64,10 @@ public class EnemyManager {
 
     private void loadEnemyImgs() {
         meleeArray= new BufferedImage[5][9];
-        BufferedImage temp=LoadSave.GetSpriteAtlas(LoadSave.ENEMY_SPRITE);
+        BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.ENEMY_SPRITE);
         for (int j = 0; j < meleeArray.length; j++) {
             for (int i = 0; i < meleeArray[j].length; i++) {
-                meleeArray[j][i]=temp.getSubimage(i * MELEE_DEFAULT_WIDTH, j * MELEE_DEFAULT_HEIGHT, MELEE_DEFAULT_WIDTH, MELEE_DEFAULT_HEIGHT);
+                meleeArray[j][i] = temp.getSubimage(i * MELEE_DEFAULT_WIDTH, j * MELEE_DEFAULT_HEIGHT, MELEE_DEFAULT_WIDTH, MELEE_DEFAULT_HEIGHT);
             }
         }
     }
