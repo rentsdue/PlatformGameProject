@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import audio.AudioPlayer;
 import gamestates.Gamestate;
 import gamestates.Playing;
 import main.java.com.example.Game;
@@ -71,11 +72,16 @@ public class LevelCompletedOverlay {
 		if (isIn(menu, e)) {
 			if (menu.isMousePressed()) {
 				playing.resetAll();
-				Gamestate.state = Gamestate.MENU;
+				playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
+				playing.getGame().getAudioPlayer().stopSong();
+				playing.getGame().getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
+				playing.setGamestate(Gamestate.MENU);
 			}
 		} else if (isIn(next, e))
 			if (next.isMousePressed())
+				playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
 				playing.loadNextLevel();
+				playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
 
 		menu.resetBools();
 		next.resetBools();

@@ -6,6 +6,7 @@ import static utilz.Constants.UI.UrmButtons.*;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import audio.AudioPlayer;
 import gamestates.*;
 import main.java.com.example.Game;
 
@@ -104,11 +105,15 @@ public class PauseOverlay {
             if (menuB.isMousePressed()) {
                 Gamestate.state = Gamestate.MENU;
                 playing.unpauseGame();
+                playing.getGame().getAudioPlayer().stopSong();
+                playing.getGame().getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
             }
         }  else if (isIn(e, replayB)) {
             if (replayB.isMousePressed()) {
                 playing.resetAll();
                 playing.unpauseGame();
+                playing.getGame().getAudioPlayer().stopSong();
+                playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
             }
         }  else if (isIn(e, unpauseB)) {
             if (unpauseB.isMousePressed()) {

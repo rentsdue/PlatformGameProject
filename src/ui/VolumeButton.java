@@ -23,15 +23,15 @@ public class VolumeButton extends PauseButton{
         minX = x + VOLUME_WIDTH / 2; //Defining bounds of the volume slider
         maxX = x + width - VOLUME_WIDTH / 2;
         bounds.x -= VOLUME_WIDTH / 2;
-        buttonX= x + width / 2;
+        buttonX = x + width / 2;
         loadImgs();
     }
 
     private void loadImgs() {
-        BufferedImage temp= LoadSave.GetSpriteAtlas(LoadSave.VOLUME_BUTTONS);
+        BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.VOLUME_BUTTONS);
         imgs= new BufferedImage[3];
         for (int i = 0; i < imgs.length; i++) {
-            imgs[i] = temp.getSubimage(i*VOLUME_DEFAULT_WIDTH, 0, VOLUME_DEFAULT_WIDTH, VOLUME_DEFAULT_HEIGHT);
+            imgs[i] = temp.getSubimage(i * VOLUME_DEFAULT_WIDTH, 0, VOLUME_DEFAULT_WIDTH, VOLUME_DEFAULT_HEIGHT);
         }
         slider = temp.getSubimage(3 * VOLUME_DEFAULT_WIDTH, 0, SLIDER_DEFAULT_WIDTH, VOLUME_DEFAULT_HEIGHT);
     }

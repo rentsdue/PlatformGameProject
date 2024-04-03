@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-import audio.AudioPlayer;
 import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;

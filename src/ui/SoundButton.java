@@ -71,7 +71,7 @@ public class SoundButton extends PauseButton{
     }
 
     public boolean isMuted() {
-        return muted;
+        return this.muted;
     }
 
     public void setMuted(boolean muted) {

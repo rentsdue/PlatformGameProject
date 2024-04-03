@@ -9,20 +9,22 @@ import javax.sound.sampled.*;
 public class AudioPlayer {
     
     //Background music constants (add more if needed later)
-    public static final int MAIN_MUSIC = 0; 
+    public static int MAIN_MUSIC = 0;
+    public static int LVL_1_MUSIC = 1;
+    public static int LVL_2_MUSIC = 2; 
 
     //In-game sound effects
-    public static final int DIE = 0;
-    public static final int JUMP = 1;
-    public static final int GAMEOVER = 2;
-    public static final int LVL_COMPLETED = 3;
-    public static final int ATTACK_1 = 4;
-    public static final int ATTACK_2 = 5;
-    public static final int ATTACK_3 = 6;
+    public static int DIE = 0;
+    public static int JUMP = 1;
+    public static int GAMEOVER = 2;
+    public static int LVL_COMPLETED = 3;
+    public static int ATTACK_1 = 4;
+    public static int ATTACK_2 = 5;
+    public static int ATTACK_3 = 6;
 
     private Clip[] songs, soundEffects;
     private int currentSongId = 0;
-    private float volume = 1f;
+    private float volume = 0.5f;
     private boolean songMute, effectMute;
     private Random rand = new Random();
 
@@ -33,8 +35,8 @@ public class AudioPlayer {
     }
 
     private void loadSongs() {
-        String[] names = {"main_music"};
-        songs = new Clip[names.length];
+        String[] names = {"main_music", "lvl1music", "lvl2music"};
+        songs = new Clip [names.length];
         for (int i = 0; i < songs.length; i++) {
             songs[i] = getClip(names[i]);
         }
@@ -76,13 +78,13 @@ public class AudioPlayer {
         currentSongId = song;
         updateSongVolume();
         songs[currentSongId].setMicrosecondPosition(0);
-        soundEffects[currentSongId].loop(Clip.LOOP_CONTINUOUSLY);
+        songs[currentSongId].loop(Clip.LOOP_CONTINUOUSLY);
         
     }
 
     public void playEffect(int effect){
         soundEffects[effect].setMicrosecondPosition(0);
-        songs[currentSongId].start();
+        soundEffects[effect].start();
     }
 
     public void playAttackSound() {
@@ -115,17 +117,23 @@ public class AudioPlayer {
     }
 
     public void stopSong() {
-        if(songs[currentSongId].isActive()) {
+        if (songs[currentSongId].isActive()) {
             songs[currentSongId].stop();
+        }
+    }
+
+    public void stopEffect(int effect) {
+        if (soundEffects[effect].isActive()) {
+            soundEffects[effect].stop();
         }
     }
 
     public void setLevelSong(int lvlIndex) {
         //We don't need this method for now if all of the songs are the same for each level
         if (lvlIndex % 2 == 0)
-			playSong(MAIN_MUSIC);
+			playSong(LVL_1_MUSIC);
 		else
-			playSong(MAIN_MUSIC);
+			playSong(LVL_2_MUSIC);
     }
 
     public void lvlCompleted() {
