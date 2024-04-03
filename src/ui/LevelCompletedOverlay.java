@@ -72,21 +72,20 @@ public class LevelCompletedOverlay {
 		if (isIn(menu, e)) {
 			if (menu.isMousePressed()) {
 				playing.resetAll();
-				playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
-				playing.getGame().getAudioPlayer().stopSong();
-				playing.getGame().getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
-				playing.setGamestate(Gamestate.MENU);
+                playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
+                playing.setGamestate(Gamestate.MENU);
+                playing.getGame().getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
 			}
 		} else if (isIn(next, e))
-			if (next.isMousePressed())
-				playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
-				playing.loadNextLevel();
-				playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
-
-		menu.resetBools();
+			if (next.isMousePressed()) {
+                playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
+                playing.loadNextLevel();
+                playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex()); //Change this later if needed
+            }
+        menu.resetBools();
 		next.resetBools();
 	}
-
+	
 	public void mousePressed(MouseEvent e) {
 		if (isIn(menu, e))
 			menu.setMousePressed(true);

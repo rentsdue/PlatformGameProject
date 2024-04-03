@@ -155,5 +155,10 @@ public class AudioPlayer {
         }
         return null;
     }
+
+    public int getCurrentSongId() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCurrentSongId'");
+    }
     
 }

@@ -151,12 +151,7 @@ public class Playing extends State implements Statemethods {
         objectManager.checkSpikesTouched(p);
     }
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		if (!gameOver)
-			if (e.getButton() == MouseEvent.BUTTON1)
-				player.setAttacking(true);
-	}
+
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -207,9 +202,6 @@ public class Playing extends State implements Statemethods {
 			case KeyEvent.VK_RIGHT:
 				player.setRight(false);
 				break;
-			case KeyEvent.VK_SPACE:
-				player.setJump(false);
-				break;
 			case KeyEvent.VK_UP:
 				player.setJump(false);
 				break;
@@ -218,6 +210,14 @@ public class Playing extends State implements Statemethods {
 				break;
 			}
 
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if (!gameOver) {
+			if (e.getButton() == MouseEvent.BUTTON3)
+				player.powerAttack();
+		} 
 	}
 
 	public void mouseDragged(MouseEvent e) {
