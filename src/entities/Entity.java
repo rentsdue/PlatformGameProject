@@ -63,4 +63,9 @@ public abstract class Entity {
         this.state = state;
     }
 
+    public int getCurrentHealth() {
+        return this.currentHealth;
+    }
+    
+
 }

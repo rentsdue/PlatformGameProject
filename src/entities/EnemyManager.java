@@ -23,7 +23,7 @@ public class EnemyManager {
 
     public void loadEnemies(Level level) {
         meleeList = level.getMeleeList();
-        System.out.println("Number of Melees: " + meleeList.size());
+       // System.out.println("Number of Melees: " + meleeList.size());
     }
 
     public void update(int[][] lvlData, Player player) {
@@ -55,11 +55,14 @@ public class EnemyManager {
 
     public void checkEnemyHit(Rectangle2D.Float attackBox) {
 		for (Melee melee : meleeList)
-			if (melee.isActive())
-				if (attackBox.intersects(melee.getHitBox())) {
-					melee.hurt(10);
-					return;
-				}
+            if (melee.getCurrentHealth() > 0) {
+                if (melee.isActive()) {
+                    if (attackBox.intersects(melee.getHitBox())) {
+                        melee.hurt(10);
+                        return;
+                }
+			}
+        }
 	}
 
     private void loadEnemyImgs() {
