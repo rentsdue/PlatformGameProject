@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import audio.AudioPlayer;
 import gamestates.Gamestate;
 import main.java.com.example.Game;
 import utilz.LoadSave;
@@ -26,8 +27,10 @@ public class LevelManager {
 		lvlIndex++;
 		if (lvlIndex >= levels.size()) {
 			lvlIndex = 0;
-			System.out.println("Well done player! All levels are complete!");
-			Gamestate.state = Gamestate.MENU;
+			//System.out.println("Well done player! All levels are complete!");
+			game.getPlaying().setGamestate(Gamestate.MENU);
+			game.getAudioPlayer().stopSong();
+			game.getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
 		}
 
 		Level newLevel= levels.get(lvlIndex);

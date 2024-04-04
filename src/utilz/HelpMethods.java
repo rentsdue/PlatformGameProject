@@ -149,13 +149,13 @@ public class HelpMethods {
     }
 
 	public static ArrayList<Melee> GetMelees(BufferedImage img) {
-        ArrayList<Melee> list= new ArrayList<>();
+        ArrayList<Melee> list = new ArrayList<>();
         for (int j = 0; j < img.getHeight(); j++) {
-            for (int i=0; i<img.getWidth(); i++) {
-                Color color= new Color(img.getRGB(i, j));
-                int value=color.getGreen();
+            for (int i=0; i< img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getGreen();
                 if (value == ENEMY_MELEE) {
-                    list.add(new Melee(i*Game.TILES_SIZE, j*Game.TILES_SIZE));
+                    list.add(new Melee(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
                 }
             }
         }

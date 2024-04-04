@@ -169,7 +169,7 @@ public class Constants {
 			public static final int MELEE_ACTUAL_HEIGHT = (int) (MELEE_DEFAULT_HEIGHT * Game.SCALE);
 
 			public static final int MELEE_DRAWOFFSET_X =(int) (26 * Game.SCALE);
-			public static final int MELEE_DRAWOFFSET_Y =(int) (9 * Game.SCALE);
+			public static final int MELEE_DRAWOFFSET_Y = (int) (11 * Game.SCALE);
 
 			public static int GetSpriteAmount(int enemy_type, int enemy_state) {
 				switch (enemy_type) {

@@ -12,7 +12,7 @@ public class LoadSave {
     
     //Players and enemy-related stuff
     public static final String PLAYER_ATLAS = "player_sprites.png";
-    public static final String ENEMY_SPRITE = "enemy_sprite.png";
+    public static final String ENEMY_SPRITE = "enemy_melee_sprite.png";
     public static final String HEALTH_POWER_BAR = "health_power_bar.png";
 
     //Level-related stuff

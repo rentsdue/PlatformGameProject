@@ -25,7 +25,7 @@ public class Level {
     private Point spawnPoint;
 
     public Level(BufferedImage img) {
-        this.img=img;
+        this.img = img;
         createLevelData();
         createEnemies();
         createPotions();
