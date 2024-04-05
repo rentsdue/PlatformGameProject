@@ -26,11 +26,11 @@ public class LevelManager {
 	public void loadNextLevel() {
 		lvlIndex++;
 		if (lvlIndex >= levels.size()) {
+			game.getAudioPlayer().stopSong();
+			game.getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
 			lvlIndex = 0;
 			//System.out.println("Well done player! All levels are complete!");
 			game.getPlaying().setGamestate(Gamestate.MENU);
-			game.getAudioPlayer().stopSong();
-			game.getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
 		}
 
 		Level newLevel= levels.get(lvlIndex);
