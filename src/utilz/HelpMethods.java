@@ -87,6 +87,13 @@ public class HelpMethods {
 		}
 	}
 
+	public static boolean IsFloor(Rectangle2D.Float hitbox, int[][] lvlData) {
+		if (!IsSolid(hitbox.x + hitbox.width, hitbox.y + hitbox.height + 1, lvlData))
+			if (!IsSolid(hitbox.x, hitbox.y + hitbox.height + 1, lvlData))
+				return false;
+		return true;
+	}
+
 	public static boolean IsAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
 		if (IsAllTilesClear(xStart, xEnd, y, lvlData)) {
 			for (int i = 0; i < xEnd - xStart; i++) {
@@ -97,9 +104,14 @@ public class HelpMethods {
 		return true;
 	}
 
-	public static boolean IsSightClear(int[][] lvlData, Rectangle2D.Float firstHitBox, Rectangle2D.Float secondHitBox, int yTile) {
-		int firstXTile = (int) (firstHitBox.x / Game.TILES_SIZE);
-		int secondXTile = (int) (secondHitBox.x / Game.TILES_SIZE);
+	public static boolean IsSightClear(int[][] lvlData, Rectangle2D.Float enemyBox, Rectangle2D.Float playerBox, int yTile) {
+		int firstXTile = (int) (enemyBox.x / Game.TILES_SIZE);
+
+		int secondXTile;
+		if (IsSolid(playerBox.x, playerBox.y + playerBox.height + 1, lvlData))
+			secondXTile = (int) (playerBox.x / Game.TILES_SIZE);
+		else
+			secondXTile = (int) ((playerBox.x + playerBox.width) / Game.TILES_SIZE);
 
 		if (firstXTile > secondXTile)
 			return IsAllTilesWalkable(secondXTile, firstXTile, yTile, lvlData);
@@ -107,7 +119,22 @@ public class HelpMethods {
 			return IsAllTilesWalkable(firstXTile, secondXTile, yTile, lvlData);
 	}
 
+	public static boolean IsEntityInWater(Rectangle2D.Float hitbox, int[][] lvlData) {
+		// Will only check if entity touch top water. Can't reach bottom water if not
+		// touched top water.
+		if (GetTileValue(hitbox.x, hitbox.y + hitbox.height, lvlData) != 48)
+			if (GetTileValue(hitbox.x + hitbox.width, hitbox.y + hitbox.height, lvlData) != 48)
+				return false;
+		return true;
+	}
+
 	//"Getting" help methods
+	private static int GetTileValue(float xPos, float yPos, int[][] lvlData) {
+		int xCord = (int) (xPos / Game.TILES_SIZE);
+		int yCord = (int) (yPos / Game.TILES_SIZE);
+		return lvlData[yCord][xCord];
+	}
+
 	public static float GetEntityXPosNextToWall(Rectangle2D.Float hitBox, float xSpeed) {
 		int currentTile = (int) (hitBox.x / Game.TILES_SIZE);
 		if (xSpeed > 0) {

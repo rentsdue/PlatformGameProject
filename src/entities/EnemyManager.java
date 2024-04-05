@@ -26,11 +26,11 @@ public class EnemyManager {
        // System.out.println("Number of Melees: " + meleeList.size());
     }
 
-    public void update(int[][] lvlData, Player player) {
+    public void update(int[][] lvlData, Playing playing) {
         boolean isAnyActive = false;
         for (Melee melee: meleeList) {
             if (melee.isActive()) {
-                melee.update(lvlData, player);
+                melee.update(lvlData, playing);
                 isAnyActive = true;
             }
         }

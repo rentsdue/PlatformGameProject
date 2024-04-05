@@ -6,6 +6,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import entities.Enemy;
 import entities.Player;
 import gamestates.Playing;
 import levels.Level;
@@ -67,6 +68,14 @@ public class ObjectManager {
 		for (Spike s: spikes) {
 			if (s.getHitBox().intersects(p.getHitBox())){
 				p.kill();
+			}
+		}
+	}
+
+	public void checkSpikesTouched(Enemy e) {
+		for (Spike s : spikes) {
+			if (s.getHitBox().intersects(e.getHitBox())) {
+				e.hurt(200);
 			}
 		}
 	}

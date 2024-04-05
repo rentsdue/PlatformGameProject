@@ -87,6 +87,7 @@ public class Player extends Entity {
 	}
 
 	public void update() {
+
 		updateHealthBar();
 		updatePowerBar();
 
@@ -97,19 +98,37 @@ public class Player extends Entity {
 				aniIndex = 0;
 				playing.setPlayerDying(true);
 				playing.getGame().getAudioPlayer().playEffect(AudioPlayer.DIE);
+				if (!IsEntityOnFloor(hitBox, lvlData)) {
+					inAir = true;
+					airSpeed = 0;
+				}
 			} else if (aniIndex == GetSpriteAmount(DEAD) - 1 && aniTick >= ANI_SPEED - 1) {
 				playing.setGameOver(true);
 				playing.getGame().getAudioPlayer().stopSong();
 				playing.getGame().getAudioPlayer().playEffect(AudioPlayer.GAMEOVER);	
 			} else {
 				updateAnimationTick();
+				if (inAir) {
+					if (CanMoveHere(hitBox.x, hitBox.y + airSpeed, hitBox.width, hitBox.height, lvlData)) {
+						hitBox.y += airSpeed;
+						airSpeed += GRAVITY;
+					} else
+						inAir = false;
+				}
+					
 			}
 			return;
 		}
 
 		updateAttackBox();
-
-		updatePos();
+		if (state == HIT) {
+			if (aniIndex <= GetSpriteAmount(state) - 3)
+				pushBack(pushBackDir, lvlData, 1.25f);
+			updatePushBackDrawOffset();
+		} else {
+			updatePos();
+		}
+			
 		if (moving) {
 			checkPotionTouched();
 			checkSpikesTouched();
