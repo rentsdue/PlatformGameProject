@@ -153,6 +153,16 @@ public abstract class Enemy extends Entity {
         attackBox.y = hitBox.y;
     }
 
+	protected void updateAttackBoxFlip() {
+		if (walkDir == RIGHT)
+			attackBox.x = hitBox.x + hitBox.width;
+		else
+			attackBox.x = hitBox.x - attackBoxOffsetX;
+
+		attackBox.y = hitBox.y;
+	}
+
+
 	protected void changeWalkDir() {
 		if (walkDir == LEFT)
 			walkDir = RIGHT;
@@ -160,6 +170,22 @@ public abstract class Enemy extends Entity {
 			walkDir = LEFT;
 
 	}
+
+	public int flipX() {
+        if (walkDir == RIGHT) {
+            return width;
+        } else {
+            return 0;
+        }
+    }
+
+    public int flipW() {
+        if (walkDir == RIGHT) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 
 	public void resetEnemy() {
 		hitBox.x = x;
@@ -171,8 +197,13 @@ public abstract class Enemy extends Entity {
 		airSpeed = 0;
 	}
 
+	//Getters and setters
 	public boolean isActive() {
 		return this.active;
+	}
+
+	public float getPushDrawOffset() {
+		return this.pushDrawOffset;
 	}
 
 }

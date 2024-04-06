@@ -1,15 +1,6 @@
 package utilz;
 
-import static utilz.Constants.EnemyConstants.ENEMY_MELEE;
-import static utilz.Constants.ObjectConstants.*;
-
-import java.awt.Color;
-import java.awt.Point;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
-import entities.Melee;
 import main.java.com.example.Game;
 import objects.*;
 
@@ -159,102 +150,5 @@ public class HelpMethods {
 			return currentTile * Game.TILES_SIZE;
 
 	}
-
-	public static int[][] GetLevelData(BufferedImage img) {
-        int[][] lvlData= new int [img.getHeight()][img.getWidth()];
-        for (int j=0; j<img.getHeight(); j++) {
-            for (int i=0; i<img.getWidth(); i++) {
-                Color color= new Color(img.getRGB(i, j));
-                int value= color.getRed();
-                if (value>=48) {
-                    value=0;
-                }
-                lvlData[j][i]=value;
-            }
-        }
-        return lvlData;
-    }
-
-	public static ArrayList<Melee> GetMelees(BufferedImage img) {
-        ArrayList<Melee> list = new ArrayList<>();
-        for (int j = 0; j < img.getHeight(); j++) {
-            for (int i=0; i< img.getWidth(); i++) {
-                Color color = new Color(img.getRGB(i, j));
-                int value = color.getGreen();
-                if (value == ENEMY_MELEE) {
-                    list.add(new Melee(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
-                }
-            }
-        }
-        return list;
-    }
-
-	public static Point GetPlayerSpawn(BufferedImage img) {
-        for (int j = 0; j < img.getHeight(); j++) {
-            for (int i = 0; i < img.getWidth(); i++) {
-                Color color = new Color(img.getRGB(i, j));
-                int value = color.getGreen();
-                if (value == 100) {
-                    return new Point(i * Game.TILES_SIZE, j * Game.TILES_SIZE);
-                }
-            }
-        }
-		return new Point(1 * Game.TILES_SIZE, 1 * Game.TILES_SIZE);
-	}
-
-	public static ArrayList<Potion> GetPotions(BufferedImage img) {
-		ArrayList<Potion> list = new ArrayList<>();
-		for (int j = 0; j < img.getHeight(); j++)
-			for (int i = 0; i < img.getWidth(); i++) {
-				Color color = new Color(img.getRGB(i, j));
-				int value = color.getBlue();
-				if (value == RED_POTION || value == BLUE_POTION)
-					list.add(new Potion(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
-			}
-
-		return list;
-	}
-
-	public static ArrayList<GameContainer> GetContainers(BufferedImage img) {
-		ArrayList<GameContainer> list = new ArrayList<>();
-		for (int j = 0; j < img.getHeight(); j++)
-			for (int i = 0; i < img.getWidth(); i++) {
-				Color color = new Color(img.getRGB(i, j));
-				int value = color.getBlue();
-				if (value == BOX || value == BARREL)
-					list.add(new GameContainer(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
-			}
-
-		return list;
-	}
-
-    public static ArrayList<Spike> GetSpikes(BufferedImage img) {
-        ArrayList<Spike> list = new ArrayList<>();
-		for (int j = 0; j < img.getHeight(); j++) {
-			for (int i = 0; i < img.getWidth(); i++) {
-				Color color = new Color(img.getRGB(i, j));
-				int value = color.getBlue();
-				if (value == SPIKE) {
-					list.add(new Spike(i * Game.TILES_SIZE, j* Game.TILES_SIZE, value));
-				}
-			}
-		}
-		return list;
-    }
-
-	public static ArrayList<Cannon> GetCannons(BufferedImage img) {
-        ArrayList<Cannon> list = new ArrayList<>();
-		for (int j = 0; j < img.getHeight(); j++) {
-			for (int i = 0; i < img.getWidth(); i++) {
-				Color color = new Color(img.getRGB(i, j));
-				int value = color.getBlue();
-				if (value == CANNON_LEFT || value == CANNON_RIGHT) {
-					list.add(new Cannon(i * Game.TILES_SIZE, j* Game.TILES_SIZE, value));
-				}
-			}
-		}
-		return list;
-    }
-
 }
 

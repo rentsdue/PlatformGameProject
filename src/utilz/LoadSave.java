@@ -12,12 +12,19 @@ public class LoadSave {
     
     //Players and enemy-related stuff
     public static final String PLAYER_ATLAS = "player_sprites.png";
-    public static final String ENEMY_SPRITE = "enemy_melee_sprite.png";
+    public static final String MELEE_ATLAS = "enemy_melee_sprite.png";
+    public static final String PINKSTAR_ATLAS = "pinkstar_atlas.png";
+    public static final String SHARK_ATLAS = "shark_atlas.png";
     public static final String HEALTH_POWER_BAR = "health_power_bar.png";
 
     //Level-related stuff
     public static final String LEVEL_ATLAS = "outside_sprites.png";
-    public static final String LEVEL_ONE_DATA = "1.png"; 
+    public static final String WATER_TOP = "water_atlas_animation.png";
+	public static final String WATER_BOTTOM = "water.png";
+    public static final String WARSHIP = "warship.png";
+    public static final String TREE_ONE_ATLAS = "tree_one_atlas.png";
+	public static final String TREE_TWO_ATLAS = "tree_two_atlas.png";
+    public static final String GRASS_ATLAS = "grass_atlas.png";
 
     //Backgrounds and UI
     public static final String MENU_BACKGROUND = "menu_background.png"; 
@@ -59,8 +66,8 @@ public class LoadSave {
 	}
 
     public static BufferedImage[] GetAllLevels() {
-        URL url= LoadSave.class.getResource("/images/levels"); 
-        File file =null;
+        URL url = LoadSave.class.getResource("/images/levels"); 
+        File file = null;
 
         try {
             file = new File(url.toURI());
@@ -87,8 +94,8 @@ public class LoadSave {
         System.out.println("file sorted "+ f.getName()); 
         } */
 
-        BufferedImage[] imgs= new BufferedImage[filesSorted.length];
-        for (int i=0; i<imgs.length;i++) {
+        BufferedImage[] imgs = new BufferedImage[filesSorted.length];
+        for (int i = 0; i < imgs.length; i++) {
             try {
                 imgs[i]=ImageIO.read(filesSorted[i]);
             } catch (IOException e) {

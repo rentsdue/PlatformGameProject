@@ -25,6 +25,9 @@ public class Constants {
 		public static final int SPIKE = 4;
 		public static final int CANNON_LEFT = 5;
 		public static final int CANNON_RIGHT = 6;
+		public static final int TREE_ONE = 7;
+		public static final int TREE_TWO = 8;
+		public static final int TREE_THREE = 9;
 
 		public static final int RED_POTION_VALUE = 15;
 		public static final int BLUE_POTION_VALUE = 10;
@@ -65,6 +68,53 @@ public class Constants {
 				return 7;
 			}
 			return 1;
+		}
+
+		public static int GetTreeOffsetX(int treeType) {
+			switch (treeType) {
+			case TREE_ONE:
+				return (Game.TILES_SIZE / 2) - (GetTreeWidth(treeType) / 2);
+			case TREE_TWO:
+				return (int) (Game.TILES_SIZE / 2.5f);
+			case TREE_THREE:
+				return (int) (Game.TILES_SIZE / 1.65f);
+			}
+			return 0;
+		}
+
+		public static int GetTreeOffsetY(int treeType) {
+			switch (treeType) {
+			case TREE_ONE:
+				return -GetTreeHeight(treeType) + Game.TILES_SIZE * 2;
+			case TREE_TWO, TREE_THREE:
+				return -GetTreeHeight(treeType) + (int) (Game.TILES_SIZE / 1.25f);
+			}
+			return 0;
+
+		}
+
+		public static int GetTreeWidth(int treeType) {
+			switch (treeType) {
+			case TREE_ONE:
+				return (int) (39 * Game.SCALE);
+			case TREE_TWO:
+				return (int) (62 * Game.SCALE);
+			case TREE_THREE:
+				return -(int) (62 * Game.SCALE);
+			}
+			return 0;
+		}
+
+		public static int GetTreeHeight(int treeType) {
+			switch (treeType) {
+			case TREE_ONE:
+				return (int) (int) (92 * Game.SCALE);
+			case TREE_TWO:
+				return (int) (54 * Game.SCALE);
+			case TREE_THREE:
+				return (int) (54 * Game.SCALE);
+			}
+			return 0;
 		}
 	}
 
@@ -136,18 +186,43 @@ public class Constants {
 
 	public static class EnemyConstants {
 			//Enemy States
-			public static final int ENEMY_MELEE = 0;
-			public static final int IDLE = 0;
-			public static final int RUNNING = 1;
-			public static final int ATTACK = 2;
-			public static final int HIT = 3;
-			public static final int DEAD = 4;
+		public static final int MELEE = 0;
+		public static final int PINKSTAR = 1;
+		public static final int SHARK = 2;
+
+		public static final int IDLE = 0;
+		public static final int RUNNING = 1;
+		public static final int ATTACK = 2;
+		public static final int HIT = 3;
+		public static final int DEAD = 4;
+
+		public static final int MELEE_DEFAULT_WIDTH = 72;
+		public static final int MELEE_DEFAULT_HEIGHT = 32;
+		public static final int MELEE_ACTUAL_WIDTH = (int) (MELEE_DEFAULT_WIDTH * Game.SCALE);
+		public static final int MELEE_ACTUAL_HEIGHT = (int) (MELEE_DEFAULT_HEIGHT * Game.SCALE);
+		public static final int MELEE_DRAWOFFSET_X = (int) (26 * Game.SCALE);
+		public static final int MELEE_DRAWOFFSET_Y = (int) (9 * Game.SCALE);
+
+		public static final int PINKSTAR_DEFAULT_WIDTH = 34;
+		public static final int PINKSTAR_DEFAULT_HEIGHT = 30;
+		public static final int PINKSTAR_ACTUAL_WIDTH = (int) (PINKSTAR_DEFAULT_WIDTH * Game.SCALE);
+		public static final int PINKSTAR_ACTUAL_HEIGHT = (int) (PINKSTAR_DEFAULT_HEIGHT * Game.SCALE);
+		public static final int PINKSTAR_DRAWOFFSET_X = (int) (9 * Game.SCALE);
+		public static final int PINKSTAR_DRAWOFFSET_Y = (int) (7 * Game.SCALE);
+
+		public static final int SHARK_DEFAULT_WIDTH = 34;
+		public static final int SHARK_DEFAULT_HEIGHT = 30;
+		public static final int SHARK_ACTUAL_WIDTH = (int) (SHARK_DEFAULT_WIDTH * Game.SCALE);
+		public static final int SHARK_ACTUAL_HEIGHT = (int) (SHARK_DEFAULT_HEIGHT * Game.SCALE);
+		public static final int SHARK_DRAWOFFSET_X = (int) (8 * Game.SCALE);
+		public static final int SHARK_DRAWOFFSET_Y = (int) (6 * Game.SCALE);
+
 
 			//Enemy Interactions
 			public static int GetMaxHealth(int enemy_Type) {
 				switch (enemy_Type) {
-					case ENEMY_MELEE:
-						return 10;
+					case MELEE:
+						return 50;
 					default:
 						return 1;
 				}
@@ -155,25 +230,16 @@ public class Constants {
 
 			public static int GetEnemyDamage(int enemy_Type) {
 				switch (enemy_Type) {
-					case ENEMY_MELEE:
+					case MELEE:
 						return 15;
 					default:
 						return 0;
 				}
 			}
-			
-			//Dimensions
-			public static final int MELEE_DEFAULT_WIDTH = 72;
-			public static final int MELEE_DEFAULT_HEIGHT = 32;
-			public static final int MELEE_ACTUAL_WIDTH = (int) (MELEE_DEFAULT_WIDTH * Game.SCALE);
-			public static final int MELEE_ACTUAL_HEIGHT = (int) (MELEE_DEFAULT_HEIGHT * Game.SCALE);
-
-			public static final int MELEE_DRAWOFFSET_X =(int) (26 * Game.SCALE);
-			public static final int MELEE_DRAWOFFSET_Y = (int) (11 * Game.SCALE);
 
 			public static int GetSpriteAmount(int enemy_type, int enemy_state) {
 				switch (enemy_type) {
-				case ENEMY_MELEE:
+				case MELEE:
 					switch(enemy_state) {
 						case IDLE:
 							return 9;

@@ -19,8 +19,8 @@ import static utilz.HelpMethods.*;
 public class ObjectManager {
 
 	private Playing playing;
-	private BufferedImage[][] potionImgs, containerImgs;
-	private BufferedImage[] cannonImgs;
+	private BufferedImage[][] potionImgs, containerImgs, treeImgs;
+	private BufferedImage[] cannonImgs, grassImgs;
 	private BufferedImage spikeImg, ballImg;
 	private ArrayList<Potion> potions;
 	private ArrayList<GameContainer> containers;
@@ -28,8 +28,11 @@ public class ObjectManager {
 	private ArrayList<Cannon> cannons;
 	private ArrayList<Projectile> projectiles = new ArrayList<>();
 
+	private Level currentLevel;
+
 	public ObjectManager(Playing playing) {
 		this.playing = playing;
+		currentLevel = playing.getLevelManager().getCurrentLevel();
 		loadImgs();
 	}
 
@@ -81,10 +84,9 @@ public class ObjectManager {
 	}
 
 	public void loadObjects(Level newLevel) { //Copies objectManager potions/containers into new arraylist in level, but new objects added to objectmanager will not be added to level arraylist
+		currentLevel = newLevel;
 		potions = new ArrayList<>(newLevel.getPotions());
 		containers = new ArrayList<>(newLevel.getContainers());
-		spikes = newLevel.getSpikes();
-		cannons = newLevel.getCannons();
 		projectiles.clear();
 	}
 
@@ -109,11 +111,28 @@ public class ObjectManager {
 		for (int i = 0; i < cannonImgs.length; i++) {
 			cannonImgs[i] = temp.getSubimage(i * 40, 0, 40, 26);
 		}
-
 		ballImg = LoadSave.GetSpriteAtlas(LoadSave.PROJECTILE);
+		treeImgs = new BufferedImage[2][4];
+		BufferedImage treeOneImg = LoadSave.GetSpriteAtlas(LoadSave.TREE_ONE_ATLAS);
+		for (int i = 0; i < 4; i++) {
+			treeImgs[0][i] = treeOneImg.getSubimage(i * 39, 0, 39, 92);
+		}
+			
+
+		BufferedImage treeTwoImg = LoadSave.GetSpriteAtlas(LoadSave.TREE_TWO_ATLAS);
+		for (int i = 0; i < 4; i++) {
+			treeImgs[1][i] = treeTwoImg.getSubimage(i * 62, 0, 62, 54);
+		}
+			
+		BufferedImage grassTemp = LoadSave.GetSpriteAtlas(LoadSave.GRASS_ATLAS);
+		grassImgs = new BufferedImage[2];
+		for (int i = 0; i < grassImgs.length; i++) {
+			grassImgs[i] = grassTemp.getSubimage(32 * i, 0, 32, 32);
+		}
 	}
 
 	public void update(int[][] lvlData, Player player) {
+		updateBackgroundTrees();
 		for (Potion p : potions)
 			if (p.isActive())
 				p.update();
@@ -124,6 +143,11 @@ public class ObjectManager {
 
 		updateCannons(lvlData, player);
 		updateProjectiles(lvlData, player);
+	}
+
+	private void updateBackgroundTrees() {
+		for (BackgroundTree bt : currentLevel.getTrees())
+			bt.update();
 	}
 
 	private void updateProjectiles(int[][] lvlData, Player player) {
@@ -161,6 +185,7 @@ public class ObjectManager {
 		projectiles.add(new Projectile((int) c.getHitBox().x, (int) c.getHitBox().y, dir));
 	}
 
+	//"Is" methods
 	private boolean IsPlayerInFrontOfCannon(Cannon c, Player player) {
 		if (c.getObjType() == CANNON_LEFT) {
 			if (c.getHitBox().x > player.getHitBox().x) {
@@ -177,12 +202,19 @@ public class ObjectManager {
 		return absValue <= Game.TILES_SIZE * 5;
 	}
 
+	//Draw functions
 	public void draw(Graphics g, int xLvlOffset) { //Draws objects onto screen
 		drawPotions(g, xLvlOffset);
 		drawContainers(g, xLvlOffset);
 		drawSpikes(g, xLvlOffset);
 		drawCannons(g, xLvlOffset);
 		drawProjectiles(g, xLvlOffset);
+		drawGrass(g, xLvlOffset);
+	}
+
+	private void drawGrass(Graphics g, int xLvlOffset) {
+		for (Grass grass : currentLevel.getGrasses())
+			g.drawImage(grassImgs[grass.getType()], grass.getX() - xLvlOffset, grass.getY(), (int) (32 * Game.SCALE), (int) (32 * Game.SCALE), null);
 	}
 
 	private void drawProjectiles(Graphics g, int xLvlOffset) {
@@ -257,9 +289,7 @@ public class ObjectManager {
 	}
 
 	public void resetAllObjects() {
-		//System.out.println("ArrayList sizes before: " + potions.size() + ", " + containers.size());
 		loadObjects(playing.getLevelManager().getCurrentLevel());
-
 		for (Potion p : potions)
 			p.reset();
 
@@ -269,8 +299,6 @@ public class ObjectManager {
 		for (Cannon c: cannons) {
 			c.reset();
 		}
-
-		//System.out.println("ArrayList sizes after: " + potions.size() + ", " + containers.size());
 	}
 
 }
