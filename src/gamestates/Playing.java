@@ -26,11 +26,15 @@ public class Playing extends State implements Statemethods {
 	private GameOverOverlay gameOverOverlay;
 	private LevelCompletedOverlay levelCompletedOverlay;
 	private boolean paused = false;
+	private boolean drawShip = true;
+	private BufferedImage[] shipImgs;
 
 	private int xLvlOffset;
 	private int leftBorder = (int) (0.5 * Game.GAME_WIDTH); //This can be modified so long as they add up to 1
 	private int rightBorder = (int) (0.5 * Game.GAME_WIDTH);
 	private int maxLvlOffsetX;
+	private int shipAni, shipTick, shipDir = 1;
+	private float shipHeightDelta, shipHeightChange = 0.05f * Game.SCALE;
 
 	private BufferedImage backgroundImg;
 
@@ -40,11 +44,16 @@ public class Playing extends State implements Statemethods {
 		super(game);
 		initClasses();
 		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.CAVE_BACKGROUND);
+		shipImgs = new BufferedImage[4];
+		BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.WARSHIP);
+		for (int i = 0; i < shipImgs.length; i++)
+			shipImgs[i] = temp.getSubimage(i * 78, 0, 78, 72);
 		calcLvlOffset();
 		loadStartLevel();
 	}
 
 	public void loadNextLevel() {
+		levelManager.setLevelIndex(levelManager.getLevelIndex() + 1);
 		levelManager.loadNextLevel();
 		player.setSpawn(levelManager.getCurrentLevel().getSpawnPoint());
 		resetAll();
@@ -89,8 +98,8 @@ public class Playing extends State implements Statemethods {
 			player.update();
 			enemyManager.update(levelManager.getCurrentLevel().getLevelData());
 			checkCloseToBorder();
-			// if (drawShip)
-				//updateShipAni();
+			if (drawShip)
+				updateShipAni();
 		}
 	}
 
@@ -125,6 +134,25 @@ public class Playing extends State implements Statemethods {
 			gameOverOverlay.draw(g);
 		else if (lvlCompleted)
 			levelCompletedOverlay.draw(g);
+	}
+
+	private void updateShipAni() {
+		shipTick++;
+		if (shipTick >= 35) {
+			shipTick = 0;
+			shipAni++;
+			if (shipAni >= 4)
+				shipAni = 0;
+		}
+
+		shipHeightDelta += shipHeightChange * shipDir;
+		shipHeightDelta = Math.max(Math.min(10 * Game.SCALE, shipHeightDelta), 0);
+
+		if (shipHeightDelta == 0)
+			shipDir = 1;
+		else if (shipHeightDelta == 10 * Game.SCALE)
+			shipDir = -1;
+
 	}
 
 	public void resetAll() {

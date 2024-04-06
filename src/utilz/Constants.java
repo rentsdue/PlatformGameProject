@@ -201,7 +201,7 @@ public class Constants {
 		public static final int MELEE_ACTUAL_WIDTH = (int) (MELEE_DEFAULT_WIDTH * Game.SCALE);
 		public static final int MELEE_ACTUAL_HEIGHT = (int) (MELEE_DEFAULT_HEIGHT * Game.SCALE);
 		public static final int MELEE_DRAWOFFSET_X = (int) (26 * Game.SCALE);
-		public static final int MELEE_DRAWOFFSET_Y = (int) (9 * Game.SCALE);
+		public static final int MELEE_DRAWOFFSET_Y = (int) (11 * Game.SCALE);
 
 		public static final int PINKSTAR_DEFAULT_WIDTH = 34;
 		public static final int PINKSTAR_DEFAULT_HEIGHT = 30;

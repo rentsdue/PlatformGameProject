@@ -57,15 +57,11 @@ public class Level {
 
 	private void loadEntities(int greenValue, int x, int y) {
 		switch (greenValue) {
-		case MELEE:
-            melees.add(new Melee(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
-		case PINKSTAR:
-            pinkstars.add(new Pinkstar(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
-		case SHARK:
-            sharks.add(new Shark(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
-		case 100: 
-            spawnPoint = new Point(x * Game.TILES_SIZE, y * Game.TILES_SIZE);
-		}
+            case MELEE -> melees.add(new Melee(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+            case PINKSTAR -> pinkstars.add(new Pinkstar(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+            case SHARK -> sharks.add(new Shark(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+            case 100 -> spawnPoint = new Point(x * Game.TILES_SIZE, y * Game.TILES_SIZE);
+            }
 	}
 
     private void loadLevelData(int redValue, int x, int y) {
@@ -80,23 +76,19 @@ public class Level {
 
     private void loadObjects(int blueValue, int x, int y) {
 		switch (blueValue) {
-		case RED_POTION, BLUE_POTION:
-            potions.add(new Potion(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
-		case BOX, BARREL:
-            containers.add(new GameContainer(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
-		case SPIKE:
-            spikes.add(new Spike(x * Game.TILES_SIZE, y * Game.TILES_SIZE, SPIKE));
-		case CANNON_LEFT, CANNON_RIGHT:
-            cannons.add(new Cannon(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
-		case TREE_ONE, TREE_TWO, TREE_THREE:
-            trees.add(new BackgroundTree(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
+		case RED_POTION, BLUE_POTION -> potions.add(new Potion(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
+		case BOX, BARREL -> containers.add(new GameContainer(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
+		case SPIKE -> spikes.add(new Spike(x * Game.TILES_SIZE, y * Game.TILES_SIZE, SPIKE));
+		case CANNON_LEFT, CANNON_RIGHT -> cannons.add(new Cannon(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
+		case TREE_ONE, TREE_TWO, TREE_THREE -> trees.add(new BackgroundTree(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
 		}
 	}
+
 
     private void calcLvlOffsets() {
         lvlTilesWide = img.getWidth();
         maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
-        maxLvlOffsetX = Game.TILES_SIZE*maxTilesOffset;
+        maxLvlOffsetX = Game.TILES_SIZE * maxTilesOffset;
     }
 
     public int getSpriteIndex(int x, int y) {

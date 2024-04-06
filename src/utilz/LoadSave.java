@@ -79,7 +79,7 @@ public class LoadSave {
         File[] filesSorted = new File[files.length];
 
         for (int i=0; i<filesSorted.length; i++) {
-            for (int j=0; j<files.length; j++) {
+            for (int j = 0; j < files.length; j++) {
                 if (files[j].getName().equals((i + 1) + ".png")) {
                     filesSorted[i] = files[j];
                 }
@@ -97,7 +97,7 @@ public class LoadSave {
         BufferedImage[] imgs = new BufferedImage[filesSorted.length];
         for (int i = 0; i < imgs.length; i++) {
             try {
-                imgs[i]=ImageIO.read(filesSorted[i]);
+                imgs[i] = ImageIO.read(filesSorted[i]);
             } catch (IOException e) {
                 e.printStackTrace();
             }
