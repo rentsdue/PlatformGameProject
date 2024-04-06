@@ -75,20 +75,22 @@ public class Playing extends State implements Statemethods {
 
 	@Override
 	public void update() {
-		if (paused) {
+		if (paused)
 			pauseOverlay.update();
-		} else if (lvlCompleted) {
+		else if (lvlCompleted)
 			levelCompletedOverlay.update();
-		} else if (gameOver) {
+		else if (gameOver)
 			gameOverOverlay.update();
-		} else if (playerDying) {
+		else if (playerDying)
 			player.update();
-		} else if (!gameOver) {
+		else {
 			levelManager.update();
 			objectManager.update(levelManager.getCurrentLevel().getLevelData(), player);
 			player.update();
-			enemyManager.update(levelManager.getCurrentLevel().getLevelData(), this);
+			enemyManager.update(levelManager.getCurrentLevel().getLevelData());
 			checkCloseToBorder();
+			// if (drawShip)
+				//updateShipAni();
 		}
 	}
 

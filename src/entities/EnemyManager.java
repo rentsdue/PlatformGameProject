@@ -24,7 +24,7 @@ public class EnemyManager {
         this.currentLevel = level;
     }
 
-    public void update(int[][] lvlData, Playing playing) {
+    public void update(int[][] lvlData) {
         boolean isAnyActive = false;
         for (Melee melee: currentLevel.getMelees()) {
             if (melee.isActive()) {

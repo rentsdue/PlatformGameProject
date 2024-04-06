@@ -12,15 +12,25 @@ import utilz.LoadSave;
 public class LevelManager {
 
 	private Game game;
-	private BufferedImage[] levelSprite;
+	private BufferedImage[] levelSprite, waterSprite;
 	private ArrayList<Level> levels;
 	private int lvlIndex = 0;
+	private int aniTick, aniIndex;
 
 	public LevelManager(Game game) {
 		this.game = game;
 		importOutsideSprites();
+		createWater();
 		levels = new ArrayList<Level>();
 		buildAllLevels();
+	}
+
+	private void createWater() {
+		waterSprite = new BufferedImage[5];
+		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.WATER_TOP);
+		for (int i = 0; i < 4; i++)
+			waterSprite[i] = img.getSubimage(i * 32, 0, 32, 32);
+		waterSprite[4] = LoadSave.GetSpriteAtlas(LoadSave.WATER_BOTTOM);
 	}
 
 	public void loadNextLevel() {
@@ -57,18 +67,37 @@ public class LevelManager {
 			}
 	}
 
-	public void draw(Graphics g, int xLvlOffset) {
+	public void draw(Graphics g, int lvlOffset) {
 		for (int j = 0; j < Game.TILES_IN_HEIGHT; j++)
 			for (int i = 0; i < levels.get(lvlIndex).getLevelData()[0].length; i++) {
 				int index = levels.get(lvlIndex).getSpriteIndex(i, j);
-				g.drawImage(levelSprite[index], Game.TILES_SIZE * i - xLvlOffset, Game.TILES_SIZE * j, Game.TILES_SIZE, Game.TILES_SIZE, null);
+				int x = Game.TILES_SIZE * i - lvlOffset;
+				int y = Game.TILES_SIZE * j;
+				if (index == 48)
+					g.drawImage(waterSprite[aniIndex], x, y, Game.TILES_SIZE, Game.TILES_SIZE, null);
+				else if (index == 49)
+					g.drawImage(waterSprite[4], x, y, Game.TILES_SIZE, Game.TILES_SIZE, null);
+				else
+					g.drawImage(levelSprite[index], x, y, Game.TILES_SIZE, Game.TILES_SIZE, null);
 			}
 	}
 
 	public void update() {
-
+		updateWaterAnimation();
 	}
 
+	private void updateWaterAnimation() {
+		aniTick++;
+		if (aniTick >= 40) {
+			aniTick = 0;
+			aniIndex++;
+
+			if (aniIndex >= 4)
+				aniIndex = 0;
+		}
+	}
+
+	//Getters and setters
 	public Level getCurrentLevel() {
 		return this.levels.get(lvlIndex);
 	}
@@ -80,5 +109,9 @@ public class LevelManager {
     public int getLevelIndex() {
 		return this.lvlIndex;
     }
+
+	public void setLevelIndex(int lvlIndex) {
+		this.lvlIndex = lvlIndex;
+	}
 
 }

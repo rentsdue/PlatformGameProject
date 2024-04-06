@@ -24,8 +24,6 @@ public class ObjectManager {
 	private BufferedImage spikeImg, ballImg;
 	private ArrayList<Potion> potions;
 	private ArrayList<GameContainer> containers;
-	private ArrayList<Spike> spikes;
-	private ArrayList<Cannon> cannons;
 	private ArrayList<Projectile> projectiles = new ArrayList<>();
 
 	private Level currentLevel;
@@ -68,7 +66,7 @@ public class ObjectManager {
 	}
 
 	public void checkSpikesTouched(Player p) {
-		for (Spike s: spikes) {
+		for (Spike s: currentLevel.getSpikes()) {
 			if (s.getHitBox().intersects(p.getHitBox())){
 				p.kill();
 			}
@@ -76,7 +74,7 @@ public class ObjectManager {
 	}
 
 	public void checkSpikesTouched(Enemy e) {
-		for (Spike s : spikes) {
+		for (Spike s : currentLevel.getSpikes()) {
 			if (s.getHitBox().intersects(e.getHitBox())) {
 				e.hurt(200);
 			}
@@ -163,7 +161,7 @@ public class ObjectManager {
 	}
 
 	private void updateCannons(int[][] lvlData, Player player) {
-		for (Cannon c : cannons) {
+		for (Cannon c : currentLevel.getCannons()) {
 			if (!c.doAnimation)
 				if (c.getTileY() == player.getTileY())
 					if (IsPlayerInRange(c, player))
@@ -248,7 +246,7 @@ public class ObjectManager {
 	
 
 	private void drawCannons(Graphics g, int xLvlOffset) {
-		for (Cannon c: cannons) {
+		for (Cannon c: currentLevel.getCannons()) {
 			int x = (int) (c.getHitBox().x - xLvlOffset);
 			int width = CANNON_WIDTH;
 
@@ -261,7 +259,7 @@ public class ObjectManager {
 	}
 
 	private void drawSpikes(Graphics g, int xLvlOffset) {
-		for (Spike s: spikes) {
+		for (Spike s: currentLevel.getSpikes()) {
 			g.drawImage(spikeImg, (int) (s.getHitBox().x - xLvlOffset), (int) (s.getHitBox().y - s.getyDrawOffset()), SPIKE_WIDTH, SPIKE_HEIGHT, null);
 		}
 	}
@@ -296,7 +294,7 @@ public class ObjectManager {
 		for (GameContainer gc : containers)
 			gc.reset();
 		
-		for (Cannon c: cannons) {
+		for (Cannon c: currentLevel.getCannons()) {
 			c.reset();
 		}
 	}
