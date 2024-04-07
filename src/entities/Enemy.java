@@ -5,6 +5,7 @@ import static utilz.HelpMethods.*;
 
 import java.awt.geom.Rectangle2D;
 
+import gamestates.Playing;
 import main.java.com.example.Game;
 
 import static utilz.Constants.Directions.*;
@@ -14,19 +15,25 @@ public abstract class Enemy extends Entity {
 	
 	protected int enemyType;
 	protected boolean firstUpdate = true;
-	
 	protected int walkDir = LEFT;
 	protected int tileY;
 	protected float attackDistance = Game.TILES_SIZE;
+	protected Rectangle2D.Float attackBox;
 	protected boolean active = true;
-	
+	protected boolean attackChecked;
+	protected int attackBoxOffsetX;	
 
 	public Enemy(float x, float y, int width, int height, int enemyType) {
 		super(x, y, width, height);
 		this.enemyType = enemyType;
-		this.walkSpeed = 0.35f * Game.SCALE;
 		maxHealth = GetMaxHealth(enemyType);
 		currentHealth = maxHealth;
+		walkSpeed = 0.35f * Game.SCALE;
+	}
+
+	protected void initAttackBox(int w, int h, int attackBoxOffsetX) {
+		attackBox = new Rectangle2D.Float(x, y, (int) (w * Game.SCALE), (int) (h * Game.SCALE));
+		this.attackBoxOffsetX = (int) (Game.SCALE * attackBoxOffsetX);
 	}
 
 	protected void firstUpdateCheck(int[][] lvlData) {
@@ -111,6 +118,15 @@ public abstract class Enemy extends Entity {
 		attackChecked = true;
 	}
 
+	protected void inAirChecks(int[][] lvlData, Playing playing) {
+		if (state != HIT && state != DEAD) {
+			updateInAir(lvlData);
+			playing.getObjectManager().checkSpikesTouched(this);
+			if (IsEntityInWater(hitBox, lvlData))
+				hurt(maxHealth);
+		}
+	}
+
 	protected void updateAnimationTick() {
 		aniTick++;
 		if (aniTick >= ANI_SPEED) {
@@ -132,6 +148,21 @@ public abstract class Enemy extends Entity {
 		}
 	}
 
+	protected void updateAttackBox() {
+        attackBox.x = hitBox.x - attackBoxOffsetX;
+        attackBox.y = hitBox.y;
+    }
+
+	protected void updateAttackBoxFlip() {
+		if (walkDir == RIGHT)
+			attackBox.x = hitBox.x + hitBox.width;
+		else
+			attackBox.x = hitBox.x - attackBoxOffsetX;
+
+		attackBox.y = hitBox.y;
+	}
+
+
 	protected void changeWalkDir() {
 		if (walkDir == LEFT)
 			walkDir = RIGHT;
@@ -139,6 +170,22 @@ public abstract class Enemy extends Entity {
 			walkDir = LEFT;
 
 	}
+
+	public int flipX() {
+        if (walkDir == RIGHT) {
+            return width;
+        } else {
+            return 0;
+        }
+    }
+
+    public int flipW() {
+        if (walkDir == RIGHT) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 
 	public void resetEnemy() {
 		hitBox.x = x;
@@ -150,8 +197,13 @@ public abstract class Enemy extends Entity {
 		airSpeed = 0;
 	}
 
+	//Getters and setters
 	public boolean isActive() {
 		return this.active;
+	}
+
+	public float getPushDrawOffset() {
+		return this.pushDrawOffset;
 	}
 
 }

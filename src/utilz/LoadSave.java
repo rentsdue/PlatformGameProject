@@ -12,12 +12,19 @@ public class LoadSave {
     
     //Players and enemy-related stuff
     public static final String PLAYER_ATLAS = "player_sprites.png";
-    public static final String ENEMY_SPRITE = "enemy_melee_sprite.png";
+    public static final String JAPAN_ATLAS = "japan_sprite.png";
+    public static final String ITALY_ATLAS = "italy_sprite.png";
+    public static final String GERMANY_ATLAS = "germany_sprite.png";
     public static final String HEALTH_POWER_BAR = "health_power_bar.png";
 
     //Level-related stuff
     public static final String LEVEL_ATLAS = "outside_sprites.png";
-    public static final String LEVEL_ONE_DATA = "1.png"; 
+    public static final String WATER_TOP = "water_atlas_animation.png";
+	public static final String WATER_BOTTOM = "water.png";
+    public static final String WARSHIP = "warship.png";
+    public static final String TREE_ONE_ATLAS = "tree_one_atlas.png";
+	public static final String TREE_TWO_ATLAS = "tree_two_atlas.png";
+    public static final String GRASS_ATLAS = "grass_atlas.png";
 
     //Backgrounds and UI
     public static final String MENU_BACKGROUND = "menu_background.png"; 
@@ -59,8 +66,8 @@ public class LoadSave {
 	}
 
     public static BufferedImage[] GetAllLevels() {
-        URL url= LoadSave.class.getResource("/images/levels"); 
-        File file =null;
+        URL url = LoadSave.class.getResource("/images/levels"); 
+        File file = null;
 
         try {
             file = new File(url.toURI());
@@ -72,7 +79,7 @@ public class LoadSave {
         File[] filesSorted = new File[files.length];
 
         for (int i=0; i<filesSorted.length; i++) {
-            for (int j=0; j<files.length; j++) {
+            for (int j = 0; j < files.length; j++) {
                 if (files[j].getName().equals((i + 1) + ".png")) {
                     filesSorted[i] = files[j];
                 }
@@ -87,10 +94,10 @@ public class LoadSave {
         System.out.println("file sorted "+ f.getName()); 
         } */
 
-        BufferedImage[] imgs= new BufferedImage[filesSorted.length];
-        for (int i=0; i<imgs.length;i++) {
+        BufferedImage[] imgs = new BufferedImage[filesSorted.length];
+        for (int i = 0; i < imgs.length; i++) {
             try {
-                imgs[i]=ImageIO.read(filesSorted[i]);
+                imgs[i] = ImageIO.read(filesSorted[i]);
             } catch (IOException e) {
                 e.printStackTrace();
             }

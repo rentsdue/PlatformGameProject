@@ -26,11 +26,15 @@ public class Playing extends State implements Statemethods {
 	private GameOverOverlay gameOverOverlay;
 	private LevelCompletedOverlay levelCompletedOverlay;
 	private boolean paused = false;
+	private boolean drawShip = true;
+	private BufferedImage[] shipImgs;
 
 	private int xLvlOffset;
 	private int leftBorder = (int) (0.5 * Game.GAME_WIDTH); //This can be modified so long as they add up to 1
 	private int rightBorder = (int) (0.5 * Game.GAME_WIDTH);
 	private int maxLvlOffsetX;
+	private int shipAni, shipTick, shipDir = 1;
+	private float shipHeightDelta, shipHeightChange = 0.05f * Game.SCALE;
 
 	private BufferedImage backgroundImg;
 
@@ -40,15 +44,20 @@ public class Playing extends State implements Statemethods {
 		super(game);
 		initClasses();
 		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.CAVE_BACKGROUND);
+		shipImgs = new BufferedImage[4];
+		BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.WARSHIP);
+		for (int i = 0; i < shipImgs.length; i++)
+			shipImgs[i] = temp.getSubimage(i * 78, 0, 78, 72);
 		calcLvlOffset();
 		loadStartLevel();
 	}
 
 	public void loadNextLevel() {
-		
+		levelManager.setLevelIndex(levelManager.getLevelIndex() + 1);
 		levelManager.loadNextLevel();
 		player.setSpawn(levelManager.getCurrentLevel().getSpawnPoint());
 		resetAll();
+		drawShip = false;
 	}
 
 	private void loadStartLevel() {
@@ -76,20 +85,22 @@ public class Playing extends State implements Statemethods {
 
 	@Override
 	public void update() {
-		if (paused) {
+		if (paused)
 			pauseOverlay.update();
-		} else if (lvlCompleted) {
+		else if (lvlCompleted)
 			levelCompletedOverlay.update();
-		} else if (gameOver) {
+		else if (gameOver)
 			gameOverOverlay.update();
-		} else if (playerDying) {
+		else if (playerDying)
 			player.update();
-		} else if (!gameOver) {
+		else {
 			levelManager.update();
 			objectManager.update(levelManager.getCurrentLevel().getLevelData(), player);
 			player.update();
-			enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
+			enemyManager.update(levelManager.getCurrentLevel().getLevelData());
 			checkCloseToBorder();
+			if (drawShip)
+				updateShipAni();
 		}
 	}
 
@@ -111,11 +122,13 @@ public class Playing extends State implements Statemethods {
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
-		levelManager.draw(g, xLvlOffset);
-		player.render(g, xLvlOffset);
-		enemyManager.draw(g, xLvlOffset);
-		objectManager.draw(g, xLvlOffset);
-
+		if (drawShip)
+			g.drawImage(shipImgs[shipAni], (int) (100 * Game.SCALE) - xLvlOffset, (int) ((288 * Game.SCALE) + shipHeightDelta), (int) (78 * Game.SCALE), (int) (72 * Game.SCALE), null);
+			levelManager.draw(g, xLvlOffset);
+			objectManager.draw(g, xLvlOffset);
+			enemyManager.draw(g, xLvlOffset);
+			player.render(g, xLvlOffset);
+			objectManager.drawBackgroundTrees(g, xLvlOffset);
 		if (paused) {
 			g.setColor(new Color(0, 0, 0, 150));
 			g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
@@ -124,6 +137,25 @@ public class Playing extends State implements Statemethods {
 			gameOverOverlay.draw(g);
 		else if (lvlCompleted)
 			levelCompletedOverlay.draw(g);
+	}
+
+	private void updateShipAni() {
+		shipTick++;
+		if (shipTick >= 35) {
+			shipTick = 0;
+			shipAni++;
+			if (shipAni >= 4)
+				shipAni = 0;
+		}
+
+		shipHeightDelta += shipHeightChange * shipDir;
+		shipHeightDelta = Math.max(Math.min(10 * Game.SCALE, shipHeightDelta), 0);
+
+		if (shipHeightDelta == 0)
+			shipDir = 1;
+		else if (shipHeightDelta == 10 * Game.SCALE)
+			shipDir = -1;
+
 	}
 
 	public void resetAll() {

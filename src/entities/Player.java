@@ -3,6 +3,7 @@ package entities;
 import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethods.*;
 import static utilz.Constants.*;
+import static utilz.Constants.Directions.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -53,10 +54,13 @@ public class Player extends Entity {
 	private int flipX = 0;
 	private int flipW = 1;
 
+	private int attackDamage = PLAYER_DAMAGE;
+
 	private boolean attackChecked;
 	private Playing playing;
 
 	private int tileY = 0;
+
 	private boolean powerAttackActive;
 	private int powerAttackTick;
 	private int powerGrowSpeed = 15;
@@ -87,6 +91,7 @@ public class Player extends Entity {
 	}
 
 	public void update() {
+
 		updateHealthBar();
 		updatePowerBar();
 
@@ -97,22 +102,41 @@ public class Player extends Entity {
 				aniIndex = 0;
 				playing.setPlayerDying(true);
 				playing.getGame().getAudioPlayer().playEffect(AudioPlayer.DIE);
+				if (!IsEntityOnFloor(hitBox, lvlData)) {
+					inAir = true;
+					airSpeed = 0;
+				}
 			} else if (aniIndex == GetSpriteAmount(DEAD) - 1 && aniTick >= ANI_SPEED - 1) {
 				playing.setGameOver(true);
 				playing.getGame().getAudioPlayer().stopSong();
 				playing.getGame().getAudioPlayer().playEffect(AudioPlayer.GAMEOVER);	
 			} else {
 				updateAnimationTick();
+				if (inAir) {
+					if (CanMoveHere(hitBox.x, hitBox.y + airSpeed, hitBox.width, hitBox.height, lvlData)) {
+						hitBox.y += airSpeed;
+						airSpeed += GRAVITY;
+					} else
+						inAir = false;
+				}
+					
 			}
 			return;
 		}
 
 		updateAttackBox();
-
-		updatePos();
+		if (state == HIT) {
+			if (aniIndex <= GetSpriteAmount(state) - 3)
+				pushBack(pushBackDir, lvlData, 1.25f);
+			updatePushBackDrawOffset();
+		} else {
+			updatePos();
+		}
+			
 		if (moving) {
 			checkPotionTouched();
 			checkSpikesTouched();
+			checkInsideWater();
 			tileY = (int) (hitBox.y / Game.TILES_SIZE);
 			if (powerAttackActive) {
 				powerAttackTick++;
@@ -128,6 +152,12 @@ public class Player extends Entity {
 		}
 		updateAnimationTick();
 		setAnimation();
+	}
+
+	//Checking methods
+	public void checkInsideWater() {
+		if (IsEntityInWater(hitBox, playing.getLevelManager().getCurrentLevel().getLevelData()))
+			currentHealth = 0;
 	}
 
 	private void checkSpikesTouched() {
@@ -335,13 +365,30 @@ public class Player extends Entity {
 	}
 
 	public void changeHealth(int value) {
-		currentHealth += value;
+		if (value < 0) {
+			if (state == HIT)
+				return;
+			else
+				newState(HIT);
+		}
 
-		if (currentHealth <= 0)
-			currentHealth = 0;
-		else if (currentHealth >= maxHealth)
-			currentHealth = maxHealth;
+		currentHealth += value;
+		currentHealth = Math.max(Math.min(currentHealth, maxHealth), 0);
 	}
+
+	public void changeHealth(int value, Enemy e) {
+		if (state == HIT)
+			return;
+		changeHealth(value);
+		pushBackOffsetDir = UP;
+		pushDrawOffset = 0;
+
+		if (e.getHitBox().x < hitBox.x)
+			pushBackDir = RIGHT;
+		else
+			pushBackDir = LEFT;
+	}
+
 
 	public void kill() {
 		currentHealth = 0;
@@ -444,6 +491,14 @@ public class Player extends Entity {
 
 	public void setTileY(int tileY) {
 		this.tileY = tileY;
+	}
+
+	public int getAttackDamage() {
+		return this.attackDamage;
+	}
+
+	public void setAttackDamage(int attackDamage) {
+		this.attackDamage = attackDamage;
 	}
 
 }
