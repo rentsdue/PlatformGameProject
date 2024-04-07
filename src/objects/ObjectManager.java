@@ -286,6 +286,17 @@ public class ObjectManager {
 			}
 	}
 
+	public void drawBackgroundTrees(Graphics g, int xLvlOffset) {
+		for (BackgroundTree bt : currentLevel.getTrees()) {
+
+			int type = bt.getType();
+			if (type == 9)
+				type = 8;
+			g.drawImage(treeImgs[type - 7][bt.getAniIndex()], bt.getX() - xLvlOffset + GetTreeOffsetX(bt.getType()), (int) (bt.getY() + GetTreeOffsetY(bt.getType())), GetTreeWidth(bt.getType()),
+					GetTreeHeight(bt.getType()), null);
+		}
+	}
+
 	public void resetAllObjects() {
 		loadObjects(playing.getLevelManager().getCurrentLevel());
 		for (Potion p : potions)

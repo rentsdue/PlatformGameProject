@@ -6,10 +6,10 @@ import static utilz.HelpMethods.*;
 
 import gamestates.Playing;
 
-public class Shark extends Enemy {
+public class Germany extends Enemy {
 
-	public Shark(float x, float y) {
-		super(x, y, SHARK_ACTUAL_WIDTH, SHARK_ACTUAL_HEIGHT, SHARK);
+	public Germany(float x, float y) {
+		super(x, y, GERMANY_ACTUAL_WIDTH, GERMANY_ACTUAL_HEIGHT, GERMANY);
 		initHitBox(18, 22);
 		initAttackBox(20, 20, 20);
 	}

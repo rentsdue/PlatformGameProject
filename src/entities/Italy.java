@@ -6,15 +6,15 @@ import static utilz.Constants.Directions.*;
 
 import gamestates.Playing;
 
-public class Pinkstar extends Enemy {
+public class Italy extends Enemy {
 
 	private boolean preRoll = true;
 	private int tickSinceLastDmgToPlayer;
 	private int tickAfterRollInIdle;
 	private int rollDurationTick, rollDuration = 300;
 
-	public Pinkstar(float x, float y) {
-		super(x, y, PINKSTAR_ACTUAL_WIDTH, PINKSTAR_ACTUAL_HEIGHT, PINKSTAR);
+	public Italy(float x, float y) {
+		super(x, y, ITALY_ACTUAL_WIDTH, ITALY_ACTUAL_HEIGHT, ITALY);
 		initHitBox(17, 21);
 	}
 

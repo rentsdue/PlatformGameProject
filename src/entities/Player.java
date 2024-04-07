@@ -54,6 +54,8 @@ public class Player extends Entity {
 	private int flipX = 0;
 	private int flipW = 1;
 
+	private int attackDamage = PLAYER_DAMAGE;
+
 	private boolean attackChecked;
 	private Playing playing;
 
@@ -489,6 +491,14 @@ public class Player extends Entity {
 
 	public void setTileY(int tileY) {
 		this.tileY = tileY;
+	}
+
+	public int getAttackDamage() {
+		return this.attackDamage;
+	}
+
+	public void setAttackDamage(int attackDamage) {
+		this.attackDamage = attackDamage;
 	}
 
 }

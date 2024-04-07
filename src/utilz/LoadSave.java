@@ -12,9 +12,9 @@ public class LoadSave {
     
     //Players and enemy-related stuff
     public static final String PLAYER_ATLAS = "player_sprites.png";
-    public static final String MELEE_ATLAS = "enemy_melee_sprite.png";
-    public static final String PINKSTAR_ATLAS = "pinkstar_atlas.png";
-    public static final String SHARK_ATLAS = "shark_atlas.png";
+    public static final String JAPAN_ATLAS = "japan_sprite.png";
+    public static final String ITALY_ATLAS = "italy_sprite.png";
+    public static final String GERMANY_ATLAS = "germany_sprite.png";
     public static final String HEALTH_POWER_BAR = "health_power_bar.png";
 
     //Level-related stuff

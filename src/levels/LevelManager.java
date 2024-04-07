@@ -34,7 +34,6 @@ public class LevelManager {
 	}
 
 	public void loadNextLevel() {
-		lvlIndex++;
 		if (lvlIndex >= levels.size()) {
 			game.getAudioPlayer().stopSong();
 			game.getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);

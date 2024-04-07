@@ -13,7 +13,7 @@ public class Constants {
 
 		public static final int PROJECTILE_WIDTH = (int) (PROJECTILE_WIDTH_DEFAULT * Game.SCALE);
 		public static final int PROJECTILE_HEIGHT = (int) (PROJECTILE_HEIGHT_DEFAULT * Game.SCALE);
-		public static final float SPEED = 0.95f * Game.SCALE; //Can adjust later to increase difficulty
+		public static final float SPEED = 0.6f * Game.SCALE; //Can adjust later to increase difficulty
  	}
 
 	public static class ObjectConstants {
@@ -164,6 +164,8 @@ public class Constants {
 		public static final int HIT = 5;
 		public static final int DEAD = 6;
 
+		public static final int PLAYER_DAMAGE = 25;
+
 		public static int GetSpriteAmount(int player_action) {
 			switch (player_action) {
 			case DEAD:
@@ -186,9 +188,9 @@ public class Constants {
 
 	public static class EnemyConstants {
 			//Enemy States
-		public static final int MELEE = 0;
-		public static final int PINKSTAR = 1;
-		public static final int SHARK = 2;
+		public static final int JAPAN = 0;
+		public static final int ITALY = 1;
+		public static final int GERMANY = 2;
 
 		public static final int IDLE = 0;
 		public static final int RUNNING = 1;
@@ -196,26 +198,26 @@ public class Constants {
 		public static final int HIT = 3;
 		public static final int DEAD = 4;
 
-		public static final int MELEE_DEFAULT_WIDTH = 72;
-		public static final int MELEE_DEFAULT_HEIGHT = 32;
-		public static final int MELEE_ACTUAL_WIDTH = (int) (MELEE_DEFAULT_WIDTH * Game.SCALE);
-		public static final int MELEE_ACTUAL_HEIGHT = (int) (MELEE_DEFAULT_HEIGHT * Game.SCALE);
-		public static final int MELEE_DRAWOFFSET_X = (int) (26 * Game.SCALE);
-		public static final int MELEE_DRAWOFFSET_Y = (int) (11 * Game.SCALE);
+		public static final int JAPAN_DEFAULT_WIDTH = 72;
+		public static final int JAPAN_DEFAULT_HEIGHT = 32;
+		public static final int JAPAN_ACTUAL_WIDTH = (int) (JAPAN_DEFAULT_WIDTH * Game.SCALE);
+		public static final int JAPAN_ACTUAL_HEIGHT = (int) (JAPAN_DEFAULT_HEIGHT * Game.SCALE);
+		public static final int JAPAN_DRAWOFFSET_X = (int) (26 * Game.SCALE);
+		public static final int JAPAN_DRAWOFFSET_Y = (int) (7 * Game.SCALE);
 
-		public static final int PINKSTAR_DEFAULT_WIDTH = 34;
-		public static final int PINKSTAR_DEFAULT_HEIGHT = 30;
-		public static final int PINKSTAR_ACTUAL_WIDTH = (int) (PINKSTAR_DEFAULT_WIDTH * Game.SCALE);
-		public static final int PINKSTAR_ACTUAL_HEIGHT = (int) (PINKSTAR_DEFAULT_HEIGHT * Game.SCALE);
-		public static final int PINKSTAR_DRAWOFFSET_X = (int) (9 * Game.SCALE);
-		public static final int PINKSTAR_DRAWOFFSET_Y = (int) (7 * Game.SCALE);
+		public static final int ITALY_DEFAULT_WIDTH = 34;
+		public static final int ITALY_DEFAULT_HEIGHT = 30;
+		public static final int ITALY_ACTUAL_WIDTH = (int) (ITALY_DEFAULT_WIDTH * Game.SCALE);
+		public static final int ITALY_ACTUAL_HEIGHT = (int) (ITALY_DEFAULT_HEIGHT * Game.SCALE);
+		public static final int ITALY_DRAWOFFSET_X = (int) (9 * Game.SCALE);
+		public static final int ITALY_DRAWOFFSET_Y = (int) (3 * Game.SCALE);
 
-		public static final int SHARK_DEFAULT_WIDTH = 34;
-		public static final int SHARK_DEFAULT_HEIGHT = 30;
-		public static final int SHARK_ACTUAL_WIDTH = (int) (SHARK_DEFAULT_WIDTH * Game.SCALE);
-		public static final int SHARK_ACTUAL_HEIGHT = (int) (SHARK_DEFAULT_HEIGHT * Game.SCALE);
-		public static final int SHARK_DRAWOFFSET_X = (int) (8 * Game.SCALE);
-		public static final int SHARK_DRAWOFFSET_Y = (int) (6 * Game.SCALE);
+		public static final int GERMANY_DEFAULT_WIDTH = 34;
+		public static final int GERMANY_DEFAULT_HEIGHT = 30;
+		public static final int GERMANY_ACTUAL_WIDTH = (int) (GERMANY_DEFAULT_WIDTH * Game.SCALE);
+		public static final int GERMANY_ACTUAL_HEIGHT = (int) (GERMANY_DEFAULT_HEIGHT * Game.SCALE);
+		public static final int GERMANY_DRAWOFFSET_X = (int) (8 * Game.SCALE);
+		public static final int GERMANY_DRAWOFFSET_Y = (int) (3 * Game.SCALE);
 
 
 			//Enemy Interactions
@@ -223,15 +225,15 @@ public class Constants {
 				switch (enemy_state) {
 	
 				case IDLE: {
-					if (enemy_type == MELEE)
+					if (enemy_type == JAPAN)
 						return 9;
-					else if (enemy_type == PINKSTAR || enemy_type == SHARK)
+					else if (enemy_type == ITALY || enemy_type == GERMANY)
 						return 8;
 				}
 				case RUNNING:
 					return 6;
 				case ATTACK:
-					if (enemy_type == SHARK)
+					if (enemy_type == GERMANY)
 						return 8;
 					return 7;
 				case HIT:
@@ -246,9 +248,9 @@ public class Constants {
 	
 			public static int GetMaxHealth(int enemy_type) {
 				switch (enemy_type) {
-				case MELEE:
+				case JAPAN:
 					return 50;
-				case PINKSTAR, SHARK:
+				case ITALY, GERMANY:
 					return 25;
 				default:
 					return 1;
@@ -257,11 +259,11 @@ public class Constants {
 	
 			public static int GetEnemyDamage(int enemy_type) {
 				switch (enemy_type) {
-				case MELEE:
+				case JAPAN:
 					return 15;
-				case PINKSTAR:
+				case ITALY:
 					return 20;
-				case SHARK:
+				case GERMANY:
 					return 25;
 				default:
 					return 0;

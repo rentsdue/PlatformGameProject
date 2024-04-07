@@ -3,10 +3,10 @@ import static utilz.Constants.EnemyConstants.*;
 import static utilz.HelpMethods.*;
 import gamestates.Playing;
 
-public class Melee extends Enemy {
+public class Japan extends Enemy {
 
-    public Melee(float x, float y) {
-        super(x, y, MELEE_ACTUAL_WIDTH, MELEE_ACTUAL_HEIGHT, MELEE);
+    public Japan(float x, float y) {
+        super(x, y, JAPAN_ACTUAL_WIDTH, JAPAN_ACTUAL_HEIGHT, JAPAN);
         initHitBox(22, 19);
         initAttackBox(82, 19, 30);
     }

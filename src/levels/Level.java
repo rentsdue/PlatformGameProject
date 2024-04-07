@@ -15,13 +15,13 @@ public class Level {
     private int[][] lvlData;
     private BufferedImage img;
 
-    private ArrayList<Melee> melees = new ArrayList<>();
+    private ArrayList<Japan> japans = new ArrayList<>();
     private ArrayList<Potion> potions = new ArrayList<>();
     private ArrayList<Spike> spikes = new ArrayList<>();
     private ArrayList<Cannon> cannons = new ArrayList<>();
 	private ArrayList<GameContainer> containers = new ArrayList<>();
-    private ArrayList<Pinkstar> pinkstars = new ArrayList<>();
-    private ArrayList<Shark> sharks = new ArrayList<>();
+    private ArrayList<Italy> italys = new ArrayList<>();
+    private ArrayList<Germany> germanys = new ArrayList<>();
     private ArrayList<BackgroundTree> trees = new ArrayList<>();
     private ArrayList<Grass> grass = new ArrayList<>();
 
@@ -57,9 +57,9 @@ public class Level {
 
 	private void loadEntities(int greenValue, int x, int y) {
 		switch (greenValue) {
-            case MELEE -> melees.add(new Melee(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
-            case PINKSTAR -> pinkstars.add(new Pinkstar(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
-            case SHARK -> sharks.add(new Shark(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+            case JAPAN -> japans.add(new Japan(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+            case ITALY -> italys.add(new Italy(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+            case GERMANY -> germanys.add(new Germany(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
             case 100 -> spawnPoint = new Point(x * Game.TILES_SIZE, y * Game.TILES_SIZE);
             }
 	}
@@ -104,16 +104,16 @@ public class Level {
         return this.maxLvlOffsetX;
     }
 
-    public ArrayList<Melee> getMelees() {
-        return this.melees;
+    public ArrayList<Japan> getJapans() {
+        return this.japans;
     }
 
-    public ArrayList<Pinkstar> getPinkstars() {
-        return this.pinkstars;
+    public ArrayList<Italy> getItalys() {
+        return this.italys;
     }
 
-    public ArrayList<Shark> getSharks() {
-        return this.sharks;
+    public ArrayList<Germany> getGermanys() {
+        return this.germanys;
     }
 
     public Point getSpawnPoint() {
