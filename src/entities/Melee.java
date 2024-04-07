@@ -1,9 +1,6 @@
 package entities;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.HelpMethods.*;
-
-import java.awt.Color;
-import java.awt.Graphics;
 import gamestates.Playing;
 
 public class Melee extends Enemy {
@@ -55,9 +52,4 @@ public class Melee extends Enemy {
 			}
 		}
 	}
-
-    public void drawAttackBox(Graphics g, int xLvlOffset) {
-        g.setColor(Color.red);
-        g.drawRect((int) attackBox.x - xLvlOffset, (int) attackBox.y, (int) attackBox.width, (int) attackBox.height);
-    }
 }

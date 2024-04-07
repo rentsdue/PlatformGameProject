@@ -54,11 +54,14 @@ public class HelpMethods {
 	}
 
 	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
-		int value = lvlData [yTile][xTile];
-
-		if (value >= 48 || value < 0 || value != 11)
+		int value = lvlData[yTile][xTile];
+		switch (value) {
+		case 11, 48, 49:
+			return false;
+		default:
 			return true;
-		return false;
+		}
+
 	}
 
 	public static boolean IsEntityOnFloor(Rectangle2D.Float hitBox, int[][] lvlData) {

@@ -219,42 +219,55 @@ public class Constants {
 
 
 			//Enemy Interactions
-			public static int GetMaxHealth(int enemy_Type) {
-				switch (enemy_Type) {
-					case MELEE:
-						return 50;
-					default:
-						return 1;
-				}
-			}
-
-			public static int GetEnemyDamage(int enemy_Type) {
-				switch (enemy_Type) {
-					case MELEE:
-						return 15;
-					default:
-						return 0;
-				}
-			}
-
 			public static int GetSpriteAmount(int enemy_type, int enemy_state) {
+				switch (enemy_state) {
+	
+				case IDLE: {
+					if (enemy_type == MELEE)
+						return 9;
+					else if (enemy_type == PINKSTAR || enemy_type == SHARK)
+						return 8;
+				}
+				case RUNNING:
+					return 6;
+				case ATTACK:
+					if (enemy_type == SHARK)
+						return 8;
+					return 7;
+				case HIT:
+					return 4;
+				case DEAD:
+					return 5;
+				}
+	
+				return 0;
+	
+			}
+	
+			public static int GetMaxHealth(int enemy_type) {
 				switch (enemy_type) {
 				case MELEE:
-					switch(enemy_state) {
-						case IDLE:
-							return 9;
-						case RUNNING:
-							return 6;
-						case ATTACK: 
-							return 7;
-						case HIT:
-							return 4;
-						case DEAD:
-							return 5;
-					}
+					return 50;
+				case PINKSTAR, SHARK:
+					return 25;
+				default:
+					return 1;
+				}
 			}
-			return 0;
+	
+			public static int GetEnemyDamage(int enemy_type) {
+				switch (enemy_type) {
+				case MELEE:
+					return 15;
+				case PINKSTAR:
+					return 20;
+				case SHARK:
+					return 25;
+				default:
+					return 0;
+				}
+			}
 		}
+	
 	}
 
-}

@@ -26,7 +26,7 @@ public abstract class Entity {
 	protected float pushDrawOffset;
 	protected int pushBackOffsetDir = UP;
 
-    //Attack box and hit box
+    //Attack box and hitBox
     protected Rectangle2D.Float hitBox;
     protected Rectangle2D.Float attackBox;
     
