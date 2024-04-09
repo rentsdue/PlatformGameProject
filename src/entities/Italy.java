@@ -5,6 +5,7 @@ import static utilz.HelpMethods.*;
 import static utilz.Constants.Directions.*;
 
 import gamestates.Playing;
+import objects.*;
 
 public class Italy extends Enemy {
 
@@ -48,6 +49,22 @@ public class Italy extends Enemy {
 					newState(ATTACK);
 					setWalkDir(playing.getPlayer());
 				}
+				for (Spike s: playing.getLevelManager().getCurrentLevel().getSpikes()) {
+					if (canSeeSpike(lvlData, s)) {
+						turnAwayFromSpike(s);
+					}
+				}
+				for (Cannon c: playing.getLevelManager().getCurrentLevel().getCannons()) {
+					if (canSeeCannon(lvlData, c)) {
+						turnAwayFromCannon(c);
+					}
+				}
+				for (GameContainer gc: playing.getLevelManager().getCurrentLevel().getContainers()) {
+					if (canSeeContainer(lvlData, gc)) {
+						turnAwayFromGameContainer(gc);
+					}
+				}
+				move(lvlData);
 				move(lvlData, playing);
 				break;
 			case ATTACK:

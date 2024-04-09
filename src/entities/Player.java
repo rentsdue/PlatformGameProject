@@ -86,7 +86,7 @@ public class Player extends Entity {
 	}
 
 	private void initAttackBox() {
-		attackBox = new Rectangle2D.Float(x, y, (int) (20 * Game.SCALE), (int) (20 * Game.SCALE));
+		attackBox = new Rectangle2D.Float(x, y, (int) (20 * Game.SCALE) + 10, (int) (20 * Game.SCALE));
 		resetAttackBox();
 	}
 
@@ -388,11 +388,6 @@ public class Player extends Entity {
 		else
 			pushBackDir = LEFT;
 	}
-
-
-	public void kill() {
-		currentHealth = 0;
-    }
 
 	public void powerAttack() {
 		if (powerAttackActive) {

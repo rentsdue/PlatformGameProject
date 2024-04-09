@@ -5,6 +5,7 @@ import static utilz.Constants.EnemyConstants.*;
 import static utilz.HelpMethods.*;
 
 import gamestates.Playing;
+import objects.*;
 
 public class Germany extends Enemy {
 
@@ -37,12 +38,26 @@ public class Germany extends Enemy {
 			case RUNNING:
 				if (canSeePlayer(lvlData, playing.getPlayer())) {
 					turnTowardsPlayer(playing.getPlayer());
-					if (IsPlayerCloseForAttack(playing.getPlayer()))
+					if (IsPlayerCloseForAttack(playing.getPlayer())) {
 						newState(ATTACK);
+					}
 				}
-
+				for (Spike s: playing.getLevelManager().getCurrentLevel().getSpikes()) {
+					if (canSeeSpike(lvlData, s)) {
+						turnAwayFromSpike(s);
+					}
+				}
+				for (Cannon c: playing.getLevelManager().getCurrentLevel().getCannons()) {
+					if (canSeeCannon(lvlData, c)) {
+						turnAwayFromCannon(c);
+					}
+				}
+				for (GameContainer gc: playing.getLevelManager().getCurrentLevel().getContainers()) {
+					if (canSeeContainer(lvlData, gc)) {
+						turnAwayFromGameContainer(gc);
+					}
+				}
 				move(lvlData);
-				break;
 			case ATTACK:
 				if (aniIndex == 0)
 					attackChecked = false;

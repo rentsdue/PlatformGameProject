@@ -2,6 +2,8 @@ package objects;
 
 import static utilz.Constants.ObjectConstants.*;
 
+import java.awt.geom.Rectangle2D;
+
 import main.java.com.example.Game;
 
 public class GameContainer extends GameObject {
@@ -31,5 +33,9 @@ public class GameContainer extends GameObject {
 	public void update() {
 		if (doAnimation)
 			updateAnimationTick();
+	}
+
+	public Rectangle2D.Float getHitBox() {
+		return this.hitBox;
 	}
 }

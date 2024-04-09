@@ -1,13 +1,12 @@
 package entities;
-
-import static utilz.Constants.EnemyConstants.*;
-import static utilz.HelpMethods.*;
-
 import java.awt.geom.Rectangle2D;
 
 import gamestates.Playing;
 import main.java.com.example.Game;
+import objects.*;
 
+import static utilz.Constants.EnemyConstants.*;
+import static utilz.HelpMethods.*;
 import static utilz.Constants.Directions.*;
 import static utilz.Constants.*;
 
@@ -70,6 +69,7 @@ public abstract class Enemy extends Entity {
 		changeWalkDir();
 	}
 
+	//Interactions with player
 	protected void turnTowardsPlayer(Player player) {
 		if (player.hitBox.x > hitBox.x)
 			walkDir = RIGHT;
@@ -80,7 +80,7 @@ public abstract class Enemy extends Entity {
 	protected boolean canSeePlayer(int[][] lvlData, Player player) {
 		int playerTileY = (int) (player.getHitBox().y / Game.TILES_SIZE);
 		if (playerTileY == tileY)
-			if (isPlayerInRange(player)) {
+			if (IsPlayerInRange(player)) {
 				if (IsSightClear(lvlData, hitBox, player.hitBox, tileY))
 					return true;
 			}
@@ -88,13 +88,85 @@ public abstract class Enemy extends Entity {
 		return false;
 	}
 
-	protected boolean isPlayerInRange(Player player) {
+	protected boolean IsPlayerInRange(Player player) {
 		int absValue = (int) Math.abs(player.hitBox.x - hitBox.x);
 		return absValue <= attackDistance * 5;
 	}
 
 	protected boolean IsPlayerCloseForAttack(Player player) {
 		int absValue = (int) Math.abs(player.hitBox.x - hitBox.x);
+		return absValue <= attackDistance;
+	}
+
+	//Interactions with spikes
+	protected void turnAwayFromSpike(Spike spike) {
+		if (spike.getHitBox().x > hitBox.x)
+			walkDir = LEFT;
+		else
+			walkDir = RIGHT;
+	}
+
+	protected boolean canSeeSpike(int[][] lvlData, Spike spike) {
+		int spikeTileY = (int) (spike.getHitBox().y / Game.TILES_SIZE);
+		if (spikeTileY == tileY)
+			if (IsSpikeInRange(spike)) {
+				if (IsSightClear(lvlData, hitBox, spike.getHitBox(), tileY))
+					return true;
+			}
+
+		return false;
+	}
+
+	protected boolean IsSpikeInRange(Spike spike) {
+		int absValue = (int) Math.abs(spike.getHitBox().x - hitBox.x);
+		return absValue <= attackDistance;
+	}
+
+	//Interactions with cannons
+	protected void turnAwayFromCannon(Cannon cannon) {
+		if (cannon.getHitBox().x > hitBox.x)
+			walkDir = LEFT;
+		else
+			walkDir = RIGHT;
+	}
+
+	protected boolean canSeeCannon(int[][] lvlData, Cannon cannon) {
+		int cannonTileY = (int) (cannon.getHitBox().y / Game.TILES_SIZE);
+		if (cannonTileY == tileY)
+			if (IsCannonInRange(cannon)) {
+				if (IsSightClear(lvlData, hitBox, cannon.getHitBox(), tileY))
+					return true;
+			}
+
+		return false;
+	}
+
+	protected boolean IsCannonInRange(Cannon cannon) {
+		int absValue = (int) Math.abs(cannon.getHitBox().x - hitBox.x);
+		return absValue <= attackDistance;
+	}
+
+	//Game container interactions
+	protected void turnAwayFromGameContainer(GameContainer gc) {
+		if (gc.getHitBox().x > hitBox.x)
+			walkDir = LEFT;
+		else
+			walkDir = RIGHT;
+	}
+
+	protected boolean canSeeContainer(int[][] lvlData, GameContainer gc) {
+		int gcTileY = (int) (gc.getHitBox().y / Game.TILES_SIZE);
+		if (gcTileY == tileY)
+			if (IsGameContainerInRange(gc)) {
+				if (IsSightClear(lvlData, hitBox, gc.getHitBox(), tileY))
+					return true;
+			}
+
+		return false;
+	}
+
+	protected boolean IsGameContainerInRange(GameContainer gc) {
+		int absValue = (int) Math.abs(gc.getHitBox().x - hitBox.x);
 		return absValue <= attackDistance;
 	}
 

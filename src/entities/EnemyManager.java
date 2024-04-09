@@ -27,21 +27,21 @@ public class EnemyManager {
 
     public void update(int[][] lvlData) {
         boolean isAnyActive = false;
-        for (Japan japan: currentLevel.getJapans()) {
-            if (japan.isActive()) {
-                japan.update(lvlData, playing);
+        for (Japan j: currentLevel.getJapans()) {
+            if (j.isActive()) {
+                j.update(lvlData, playing);
                 isAnyActive = true;
             }
         }
-        for (Italy p : currentLevel.getItalys())
-			if (p.isActive()) {
-				p.update(lvlData, playing);
+        for (Italy i : currentLevel.getItalys())
+			if (i.isActive()) {
+				i.update(lvlData, playing);
 				isAnyActive = true;
 			}
 
-		for (Germany s : currentLevel.getGermanys())
-			if (s.isActive()) {
-				s.update(lvlData, playing);
+		for (Germany g : currentLevel.getGermanys())
+			if (g.isActive()) {
+				g.update(lvlData, playing);
 				isAnyActive = true;
 			}
 
@@ -57,9 +57,9 @@ public class EnemyManager {
     }
 
     private void drawJapanUnits(Graphics g, int xLvlOffset) {
-        for (Japan japan: currentLevel.getJapans()) {
-            if (japan.isActive()) {
-                g.drawImage(japanArray[japan.getState()][japan.getAniIndex()], (int) japan.getHitBox().x - xLvlOffset - JAPAN_DRAWOFFSET_X + japan.flipX(), (int) japan.getHitBox().y - JAPAN_DRAWOFFSET_Y, JAPAN_ACTUAL_WIDTH * japan.flipW(), JAPAN_ACTUAL_HEIGHT, null);
+        for (Japan j: currentLevel.getJapans()) {
+            if (j.isActive()) {
+                g.drawImage(japanArray[j.getState()][j.getAniIndex()], (int) j.getHitBox().x - xLvlOffset - JAPAN_DRAWOFFSET_X + j.flipX(), (int) j.getHitBox().y - JAPAN_DRAWOFFSET_Y, JAPAN_ACTUAL_WIDTH * j.flipW(), JAPAN_ACTUAL_HEIGHT, null);
                 /*japan.drawHitBox(g, xLvlOffset);
                 japan.drawAttackBox(g, xLvlOffset);*/
             }
@@ -67,21 +67,21 @@ public class EnemyManager {
     }
 
     private void drawGermanys(Graphics g, int xLvlOffset) {
-		for (Germany s : currentLevel.getGermanys())
-			if (s.isActive()) {
-				g.drawImage(germanyArray[s.getState()][s.getAniIndex()], (int) s.getHitBox().x - xLvlOffset - GERMANY_DRAWOFFSET_X + s.flipX(),
-						(int) s.getHitBox().y - GERMANY_DRAWOFFSET_Y + (int) s.getPushDrawOffset(), GERMANY_ACTUAL_WIDTH * s.flipW(), GERMANY_ACTUAL_HEIGHT, null);
-//				s.drawHitbox(g, xLvlOffset);
-//				s.drawAttackBox(g, xLvlOffset);
+		for (Germany d : currentLevel.getGermanys())
+			if (d.isActive()) {
+				g.drawImage(germanyArray[d.getState()][d.getAniIndex()], (int) d.getHitBox().x - xLvlOffset - GERMANY_DRAWOFFSET_X + d.flipX(),
+						(int) d.getHitBox().y - GERMANY_DRAWOFFSET_Y + (int) d.getPushDrawOffset(), GERMANY_ACTUAL_WIDTH * d.flipW(), GERMANY_ACTUAL_HEIGHT, null);
+//				d.drawHitbox(g, xLvlOffset);
+//				d.drawAttackBox(g, xLvlOffset);
 			}
 	}
 
 	private void drawItalys(Graphics g, int xLvlOffset) {
-		for (Italy p : currentLevel.getItalys())
-			if (p.isActive()) {
-				g.drawImage(italyArray[p.getState()][p.getAniIndex()], (int) p.getHitBox().x - xLvlOffset - ITALY_DRAWOFFSET_X + p.flipX(),
-						(int) p.getHitBox().y - ITALY_DRAWOFFSET_Y + (int) p.getPushDrawOffset(), ITALY_ACTUAL_WIDTH * p.flipW(), ITALY_ACTUAL_HEIGHT, null);
-//				p.drawHitbox(g, xLvlOffset);
+		for (Italy i : currentLevel.getItalys())
+			if (i.isActive()) {
+				g.drawImage(italyArray[i.getState()][i.getAniIndex()], (int) i.getHitBox().x - xLvlOffset - ITALY_DRAWOFFSET_X + i.flipX(),
+						(int) i.getHitBox().y - ITALY_DRAWOFFSET_Y + (int) i.getPushDrawOffset(), ITALY_ACTUAL_WIDTH * i.flipW(), ITALY_ACTUAL_HEIGHT, null);
+//				i.drawHitbox(g, xLvlOffset);
 			}
 	}
 
