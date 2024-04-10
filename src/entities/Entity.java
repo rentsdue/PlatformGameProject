@@ -40,7 +40,6 @@ public abstract class Entity {
     protected void updatePushBackDrawOffset() {
 		float speed = 0.95f;
 		float limit = -30f;
-
 		if (pushBackOffsetDir == UP) {
 			pushDrawOffset -= speed;
 			if (pushDrawOffset <= limit)
@@ -70,12 +69,17 @@ public abstract class Entity {
     }
 
     protected void initHitBox(int width, int height) {
-        hitBox= new Rectangle2D.Float(x, y, (int) (width * Game.SCALE), (int) (height * Game.SCALE));
+        hitBox = new Rectangle2D.Float(x, y, (int) (width * Game.SCALE), (int) (height * Game.SCALE));
     }
 
     protected void drawAttackBox(Graphics g, int xLvlOffset) {
         g.setColor(Color.red);
         g.drawRect((int) attackBox.x - xLvlOffset, (int) attackBox.y, (int) attackBox.width, (int) attackBox.height);
+    }
+
+    //Misc
+    public void kill() {
+		currentHealth = 0;
     }
 
     //Getters and setters

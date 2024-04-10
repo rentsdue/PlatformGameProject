@@ -1,5 +1,7 @@
 package objects;
 
+import java.awt.geom.Rectangle2D;
+
 import main.java.com.example.Game;
 
 public class Cannon extends GameObject {
@@ -29,5 +31,8 @@ public class Cannon extends GameObject {
         this.tileY = tileY;
     }
 
+    public Rectangle2D.Float getHitBox() {
+        return this.hitBox;
+    }
     
 }

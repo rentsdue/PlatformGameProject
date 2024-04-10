@@ -2,6 +2,7 @@ package entities;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.HelpMethods.*;
 import gamestates.Playing;
+import objects.*;
 
 public class Japan extends Enemy {
 
@@ -36,6 +37,42 @@ public class Japan extends Enemy {
 					turnTowardsPlayer(playing.getPlayer());
 					if (IsPlayerCloseForAttack(playing.getPlayer()))
 						newState(ATTACK);
+				}
+				for (Spike s: playing.getLevelManager().getCurrentLevel().getSpikes()) {
+					if (canSeeSpike(lvlData, s)) {
+						if (canSeePlayer(lvlData, playing.getPlayer())) {
+							turnTowardsPlayer(playing.getPlayer());
+							if (IsPlayerCloseForAttack(playing.getPlayer())) {
+								newState(ATTACK);
+							} 
+						} else {
+							turnAwayFromSpike(s);
+						}
+					}
+				}
+				for (Cannon c: playing.getLevelManager().getCurrentLevel().getCannons()) {
+					if (canSeeCannon(lvlData, c)) {
+						if (canSeePlayer(lvlData, playing.getPlayer())) {
+							turnTowardsPlayer(playing.getPlayer());
+							if (IsPlayerCloseForAttack(playing.getPlayer())) {
+								newState(ATTACK);
+							} 
+						} else {
+							turnAwayFromCannon(c);
+						}
+					}
+				}
+				for (GameContainer gc: playing.getLevelManager().getCurrentLevel().getContainers()) {
+					if (canSeeContainer(lvlData, gc)) {
+						if (canSeePlayer(lvlData, playing.getPlayer())) {
+							turnTowardsPlayer(playing.getPlayer());
+							if (IsPlayerCloseForAttack(playing.getPlayer())) {
+								newState(ATTACK);
+							} 
+						} else {
+							turnAwayFromGameContainer(gc);
+						}
+					}
 				}
 				move(lvlData);
 			case ATTACK:

@@ -7,14 +7,11 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-import entities.EnemyManager;
-import entities.Player;
+import entities.*;
 import levels.LevelManager;
 import main.java.com.example.Game;
-import objects.ObjectManager;
-import ui.GameOverOverlay;
-import ui.LevelCompletedOverlay;
-import ui.PauseOverlay;
+import objects.*;
+import ui.*;
 import utilz.LoadSave;
 
 public class Playing extends State implements Statemethods {

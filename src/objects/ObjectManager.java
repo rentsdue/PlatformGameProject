@@ -76,7 +76,7 @@ public class ObjectManager {
 	public void checkSpikesTouched(Enemy e) {
 		for (Spike s : currentLevel.getSpikes()) {
 			if (s.getHitBox().intersects(e.getHitBox())) {
-				e.hurt(200);
+				e.kill();
 			}
 		}
 	}
@@ -189,7 +189,7 @@ public class ObjectManager {
 			if (c.getHitBox().x > player.getHitBox().x) {
 				return true;
 			}
-		} else if (c.getHitBox().x < player.getHitBox().x) {
+		} else if (c.getHitBox().x < player.getHitBox().x - 10) {
 			return true;
 		}
 		return false;
