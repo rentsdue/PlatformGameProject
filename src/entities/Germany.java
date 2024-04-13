@@ -5,7 +5,7 @@ import static utilz.Constants.EnemyConstants.*;
 import static utilz.HelpMethods.*;
 
 import gamestates.Playing;
-import objects.*;
+// import objects.*;
 
 public class Germany extends Enemy {
 
@@ -42,21 +42,22 @@ public class Germany extends Enemy {
 						newState(ATTACK);
 					}
 				}
-				for (Spike s: playing.getLevelManager().getCurrentLevel().getSpikes()) {
-					if (canSeeSpike(lvlData, s)) {
-						turnAwayFromSpike(s);
-					}
-				}
-				for (Cannon c: playing.getLevelManager().getCurrentLevel().getCannons()) {
-					if (canSeeCannon(lvlData, c)) {
-						turnAwayFromCannon(c);
-					}
-				}
-				for (GameContainer gc: playing.getLevelManager().getCurrentLevel().getContainers()) {
-					if (canSeeContainer(lvlData, gc)) {
-						turnAwayFromGameContainer(gc);
-					}
-				}
+				// for (Spike s: playing.getLevelManager().getCurrentLevel().getSpikes()) {
+				// 	playing.getObjectManager().checkSpikesTouched(this);
+				// 	if (canSeeSpike(lvlData, s)) {
+				// 		turnAwayFromSpike(s);
+				// 	}
+				// }
+				// for (Cannon c: playing.getLevelManager().getCurrentLevel().getCannons()) {
+				// 	if (canSeeCannon(lvlData, c)) {
+				// 		turnAwayFromCannon(c);
+				// 	}
+				// }
+				// for (GameContainer gc: playing.getLevelManager().getCurrentLevel().getContainers()) {
+				// 	if (canSeeContainer(lvlData, gc)) {
+				// 		turnAwayFromGameContainer(gc);
+				// 	}
+				// }
 				move(lvlData);
 			case ATTACK:
 				if (aniIndex == 0)

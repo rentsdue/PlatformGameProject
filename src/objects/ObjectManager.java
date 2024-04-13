@@ -218,17 +218,17 @@ public class ObjectManager {
 	private void drawProjectiles(Graphics g, int xLvlOffset) {
 		for (Projectile p : projectiles) {
 			if (p.isActive()) {
-				BufferedImage projectileImage = p.getImage();
+				ballImg = p.getImage();
 				int drawX = (int) (p.getHitBox().x - xLvlOffset);
 				int drawY = (int) (p.getHitBox().y);
 				int width = PROJECTILE_WIDTH;
 				int height = PROJECTILE_HEIGHT;
 	
 				if (p.getDir() == -1) { // If projectile is moving left, flip the image
-					BufferedImage flippedProjectileImage = flipImage(projectileImage);
+					BufferedImage flippedProjectileImage = flipImage(ballImg);
 					g.drawImage(flippedProjectileImage, drawX, drawY, width, height, null);
 				} else {
-					g.drawImage(projectileImage, drawX, drawY, width, height, null);
+					g.drawImage(ballImg, drawX, drawY, width, height, null);
 				}
 			}
 		}
