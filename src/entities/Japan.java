@@ -21,7 +21,6 @@ public class Japan extends Enemy {
     private void updateBehavior(int[][] lvlData, Playing playing) {
 		if (firstUpdate)
 			firstUpdateCheck(lvlData);
-
 		if (inAir) {
 			inAirChecks(lvlData, playing);
 		} else {
@@ -38,18 +37,19 @@ public class Japan extends Enemy {
 					if (IsPlayerCloseForAttack(playing.getPlayer()))
 						newState(ATTACK);
 				}
-				for (Spike s: playing.getLevelManager().getCurrentLevel().getSpikes()) {
-					if (canSeeSpike(lvlData, s)) {
-						if (canSeePlayer(lvlData, playing.getPlayer())) {
-							turnTowardsPlayer(playing.getPlayer());
-							if (IsPlayerCloseForAttack(playing.getPlayer())) {
-								newState(ATTACK);
-							} 
-						} else {
-							turnAwayFromSpike(s);
-						}
-					}
-				}
+				// for (Spike s: playing.getLevelManager().getCurrentLevel().getSpikes()) {
+				// 	playing.getObjectManager().checkSpikesTouched(this);
+				// 	if (canSeeSpike(lvlData, s)) {
+				// 		if (canSeePlayer(lvlData, playing.getPlayer())) {
+				// 			turnTowardsPlayer(playing.getPlayer());
+				// 			if (IsPlayerCloseForAttack(playing.getPlayer())) {
+				// 				newState(ATTACK);
+				// 			} 
+				// 		} else {
+				// 			turnAwayFromSpike(s);
+				// 		}
+				// 	}
+				// }
 				for (Cannon c: playing.getLevelManager().getCurrentLevel().getCannons()) {
 					if (canSeeCannon(lvlData, c)) {
 						if (canSeePlayer(lvlData, playing.getPlayer())) {
@@ -75,6 +75,7 @@ public class Japan extends Enemy {
 					}
 				}
 				move(lvlData);
+				break;
 			case ATTACK:
 				if (aniIndex == 0)
 					attackChecked = false;

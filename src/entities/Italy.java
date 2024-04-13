@@ -50,6 +50,7 @@ public class Italy extends Enemy {
 					setWalkDir(playing.getPlayer());
 				}
 				for (Spike s: playing.getLevelManager().getCurrentLevel().getSpikes()) {
+					playing.getObjectManager().checkSpikesTouched(this);
 					if (canSeeSpike(lvlData, s)) {
 						turnAwayFromSpike(s);
 					}

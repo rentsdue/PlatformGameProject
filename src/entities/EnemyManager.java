@@ -60,8 +60,8 @@ public class EnemyManager {
         for (Japan j: currentLevel.getJapans()) {
             if (j.isActive()) {
                 g.drawImage(japanArray[j.getState()][j.getAniIndex()], (int) j.getHitBox().x - xLvlOffset - JAPAN_DRAWOFFSET_X + j.flipX(), (int) j.getHitBox().y - JAPAN_DRAWOFFSET_Y, JAPAN_ACTUAL_WIDTH * j.flipW(), JAPAN_ACTUAL_HEIGHT, null);
-                /*japan.drawHitBox(g, xLvlOffset);
-                japan.drawAttackBox(g, xLvlOffset);*/
+                // j.drawHitBox(g, xLvlOffset);
+                // j.drawAttackBox(g, xLvlOffset);
             }
         }
     }
@@ -123,7 +123,7 @@ public class EnemyManager {
 	}
 
     private void loadEnemyImgs() {
-        japanArray = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.JAPAN_ATLAS), 9, 5, JAPAN_DEFAULT_WIDTH, JAPAN_DEFAULT_HEIGHT);
+        japanArray = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.JAPAN_ATLAS), 8, 5, JAPAN_DEFAULT_WIDTH, JAPAN_DEFAULT_HEIGHT);
 		italyArray = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.ITALY_ATLAS), 8, 5, ITALY_DEFAULT_WIDTH, ITALY_DEFAULT_HEIGHT);
 		germanyArray = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.GERMANY_ATLAS), 8, 5, GERMANY_DEFAULT_WIDTH, GERMANY_DEFAULT_HEIGHT);
     }

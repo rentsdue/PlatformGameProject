@@ -21,6 +21,7 @@ public class Playing extends State implements Statemethods {
 	private ObjectManager objectManager;
 	private PauseOverlay pauseOverlay;
 	private GameOverOverlay gameOverOverlay;
+	private GameCompletedOverlay gameCompletedOverlay;
 	private LevelCompletedOverlay levelCompletedOverlay;
 	private boolean paused = false;
 	private boolean drawShip = true;
@@ -35,7 +36,7 @@ public class Playing extends State implements Statemethods {
 
 	private BufferedImage backgroundImg;
 
-	private boolean gameOver, lvlCompleted, playerDying;
+	private boolean gameOver, lvlCompleted, gameCompleted, playerDying;
 
 	public Playing(Game game) {
 		super(game);
@@ -181,14 +182,20 @@ public class Playing extends State implements Statemethods {
         objectManager.checkSpikesTouched(p);
     }
 
-
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if (!gameOver) {
+			if (e.getButton() == MouseEvent.BUTTON1)
+				player.setAttacking(true);
+			else if (e.getButton() == MouseEvent.BUTTON3)
+				player.powerAttack();
+		}
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (gameOver)
-			gameOverOverlay.keyPressed(e);
-		else
-			switch (e.getKeyCode()) {
+		if (!gameOver && !gameCompleted && !lvlCompleted)
+		switch (e.getKeyCode()) {
 			case KeyEvent.VK_A:
 				player.setLeft(true);
 				break;
@@ -218,8 +225,8 @@ public class Playing extends State implements Statemethods {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (!gameOver)
-			switch (e.getKeyCode()) {
+		if (!gameOver && !gameCompleted && !lvlCompleted)
+		switch (e.getKeyCode()) {
 			case KeyEvent.VK_A:
 				player.setLeft(false);
 				break;
@@ -239,57 +246,62 @@ public class Playing extends State implements Statemethods {
 				player.setJump(false);
 				break;
 			}
-
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		if (!gameOver) {
-			if (e.getButton() == MouseEvent.BUTTON3)
-				player.powerAttack();
-		} 
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		if (!gameOver)
+		if (!gameOver && !gameCompleted && !lvlCompleted)
 			if (paused)
 				pauseOverlay.mouseDragged(e);
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (!gameOver) {
-			if (paused)
-				pauseOverlay.mousePressed(e);
-			else if (lvlCompleted)
-				levelCompletedOverlay.mousePressed(e);
-		} else {
+		if (gameOver)
 			gameOverOverlay.mousePressed(e);
-		}
+		else if (paused)
+			pauseOverlay.mousePressed(e);
+		else if (lvlCompleted)
+			levelCompletedOverlay.mousePressed(e);
+		else if (gameCompleted)
+			gameCompletedOverlay.mousePressed(e);
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (!gameOver) {
-			if (paused)
-				pauseOverlay.mouseReleased(e);
-			else if (lvlCompleted)
-				levelCompletedOverlay.mouseReleased(e);
-		} else {
+		if (gameOver)
 			gameOverOverlay.mouseReleased(e);
-		}
+		else if (paused)
+			pauseOverlay.mouseReleased(e);
+		else if (lvlCompleted)
+			levelCompletedOverlay.mouseReleased(e);
+		else if (gameCompleted)
+			gameCompletedOverlay.mouseReleased(e);
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if (!gameOver) {
-			if (paused)
-				pauseOverlay.mouseMoved(e);
-			else if (lvlCompleted)
-				levelCompletedOverlay.mouseMoved(e);
-		} else {
+		if (gameOver)
 			gameOverOverlay.mouseMoved(e);
+		else if (paused)
+			pauseOverlay.mouseMoved(e);
+		else if (lvlCompleted)
+			levelCompletedOverlay.mouseMoved(e);
+		else if (gameCompleted)
+			gameCompletedOverlay.mouseMoved(e);
+	}
+
+	public void setLevelCompleted(boolean levelCompleted) {
+		game.getAudioPlayer().lvlCompleted();
+		if (levelManager.getLevelIndex() + 1 >= levelManager.getAmountOfLevels()) {
+			// No more levels
+			gameCompleted = true;
+			levelManager.setLevelIndex(0);
+			levelManager.loadNextLevel();
+			resetAll();
+			return;
 		}
+		this.lvlCompleted = levelCompleted;
 	}
 
 	public void unpauseGame() {
@@ -305,11 +317,12 @@ public class Playing extends State implements Statemethods {
 		this.gameOver = gameOver;
 	}
 
-	public void setLevelCompleted(boolean levelCompleted) {
-		this.lvlCompleted = levelCompleted;
-		if (levelCompleted) {
-			game.getAudioPlayer().lvlCompleted();
-		}
+	public void resetGameCompleted() {
+		this.gameCompleted = false;
+	}
+
+	public void setGameCompleted() {
+		this.gameCompleted = true;
 	}
 
 	public void setMaxLvlOffset(int lvlOffset) {

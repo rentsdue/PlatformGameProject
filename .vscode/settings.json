@@ -1,5 +1,12 @@
 {
-    "java.project.sourcePaths": ["src"],
+    "java.project.sourcePaths": [
+        "PlatformGameProject/src",
+        "PlatformGameProject/res",
+        "PlatformGameProject/lib",
+        "PlatformGameProject/bin",
+        "src",
+        "res"
+    ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar"
