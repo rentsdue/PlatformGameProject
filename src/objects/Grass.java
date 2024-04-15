@@ -11,15 +11,14 @@ public class Grass {
 	}
 
 	public int getX() {
-		return x;
+		return this.x;
 	}
 
 	public int getY() {
-		return y;
-
+		return this.y;
 	}
 
 	public int getType() {
-		return type;
+		return this.type;
 	}
 }
