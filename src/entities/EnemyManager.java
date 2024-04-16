@@ -5,6 +5,7 @@ import levels.Level;
 import utilz.LoadSave;
 
 import static utilz.Constants.EnemyConstants.*;
+import static utilz.Constants.PlayerConstants.ATTACK;
 import static utilz.Constants.PlayerConstants.PLAYER_DAMAGE;
 
 import java.awt.image.BufferedImage;
@@ -13,7 +14,7 @@ import java.awt.geom.Rectangle2D;
 
 public class EnemyManager {
     private Playing playing;
-    private BufferedImage[][] japanArray, italyArray, germanyArray;
+    private BufferedImage[][] japanArray, italyArray, germanyArray, tutorialEnemyArray;
     private Level currentLevel;
     
     public EnemyManager(Playing playing) {
@@ -33,27 +34,35 @@ public class EnemyManager {
                 isAnyActive = true;
             }
         }
-        for (Italy i : currentLevel.getItalys())
-			if (i.isActive()) {
+        for (Italy i : currentLevel.getItalys()) {
+            if (i.isActive()) {
 				i.update(lvlData, playing);
 				isAnyActive = true;
 			}
-
-		for (Germany g : currentLevel.getGermanys())
-			if (g.isActive()) {
+        }
+		for (Germany g : currentLevel.getGermanys()) {
+            if (g.isActive()) {
 				g.update(lvlData, playing);
 				isAnyActive = true;
 			}
-
+        }
+        for (TutorialEnemy t : currentLevel.getTutorialEnemies()) {
+            if (t.isActive()) {
+				t.update(lvlData, playing);
+				isAnyActive = true;
+			}
+        }
+			
         if (!isAnyActive) {
             playing.setLevelCompleted(true);
         }
     }
 
     public void draw(Graphics g, int xLvlOffset) {
+        drawTutorialEnemies(g, xLvlOffset);
         drawJapanUnits(g, xLvlOffset);
-        drawItalys(g, xLvlOffset);
-        drawGermanys(g, xLvlOffset);
+        drawItalyUnits(g, xLvlOffset);
+        drawGermanyUnits(g, xLvlOffset);
     }
 
     private void drawJapanUnits(Graphics g, int xLvlOffset) {
@@ -66,22 +75,31 @@ public class EnemyManager {
         }
     }
 
-    private void drawGermanys(Graphics g, int xLvlOffset) {
+    private void drawGermanyUnits(Graphics g, int xLvlOffset) {
 		for (Germany d : currentLevel.getGermanys())
 			if (d.isActive()) {
 				g.drawImage(germanyArray[d.getState()][d.getAniIndex()], (int) d.getHitBox().x - xLvlOffset - GERMANY_DRAWOFFSET_X + d.flipX(),
 						(int) d.getHitBox().y - GERMANY_DRAWOFFSET_Y + (int) d.getPushDrawOffset(), GERMANY_ACTUAL_WIDTH * d.flipW(), GERMANY_ACTUAL_HEIGHT, null);
-//				d.drawHitbox(g, xLvlOffset);
+//				d.drawHitBox(g, xLvlOffset);
 //				d.drawAttackBox(g, xLvlOffset);
 			}
 	}
 
-	private void drawItalys(Graphics g, int xLvlOffset) {
+	private void drawItalyUnits(Graphics g, int xLvlOffset) {
 		for (Italy i : currentLevel.getItalys())
 			if (i.isActive()) {
 				g.drawImage(italyArray[i.getState()][i.getAniIndex()], (int) i.getHitBox().x - xLvlOffset - ITALY_DRAWOFFSET_X + i.flipX(),
 						(int) i.getHitBox().y - ITALY_DRAWOFFSET_Y + (int) i.getPushDrawOffset(), ITALY_ACTUAL_WIDTH * i.flipW(), ITALY_ACTUAL_HEIGHT, null);
-//				i.drawHitbox(g, xLvlOffset);
+//				i.drawHitBox(g, xLvlOffset);
+			}
+	}
+
+    private void drawTutorialEnemies(Graphics g, int xLvlOffset) {
+		for (TutorialEnemy t : currentLevel.getTutorialEnemies())
+			if (t.isActive()) {
+				g.drawImage(tutorialEnemyArray[t.getState()][t.getAniIndex()], (int) t.getHitBox().x - xLvlOffset - JAPAN_DRAWOFFSET_X + t.flipX(),
+						(int) t.getHitBox().y - JAPAN_DRAWOFFSET_Y + (int) t.getPushDrawOffset(), JAPAN_ACTUAL_WIDTH * t.flipW(), JAPAN_ACTUAL_HEIGHT, null);
+                //t.drawHitBox(g, xLvlOffset);
 			}
 	}
 
@@ -91,6 +109,16 @@ public class EnemyManager {
                 if (japan.isActive()) {
                     if (attackBox.intersects(japan.getHitBox())) {
                         japan.hurt(PLAYER_DAMAGE);
+                        return;
+                }
+			}
+        }
+
+        for (TutorialEnemy t : currentLevel.getTutorialEnemies())
+            if (t.getCurrentHealth() > 0) {
+                if (t.isActive()) {
+                    if (attackBox.intersects(t.getHitBox())) {
+                        t.hurt(PLAYER_DAMAGE);
                         return;
                 }
 			}
@@ -110,7 +138,6 @@ public class EnemyManager {
 			}
         }
 			
-
 		for (Germany s : currentLevel.getGermanys()) {
             if (s.isActive()) {
 				if (s.getState() != DEAD && s.getState() != HIT)
@@ -124,6 +151,7 @@ public class EnemyManager {
 
     private void loadEnemyImgs() {
         japanArray = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.JAPAN_ATLAS), 8, 5, JAPAN_DEFAULT_WIDTH, JAPAN_DEFAULT_HEIGHT);
+        tutorialEnemyArray = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.JAPAN_ATLAS), 8, 5, JAPAN_DEFAULT_WIDTH, JAPAN_DEFAULT_HEIGHT);
 		italyArray = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.ITALY_ATLAS), 8, 5, ITALY_DEFAULT_WIDTH, ITALY_DEFAULT_HEIGHT);
 		germanyArray = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.GERMANY_ATLAS), 8, 5, GERMANY_DEFAULT_WIDTH, GERMANY_DEFAULT_HEIGHT);
     }
@@ -139,6 +167,10 @@ public class EnemyManager {
     public void resetAllEnemies() {
         for (Japan japan: currentLevel.getJapans()) {
             japan.resetEnemy();
+        }
+
+        for (TutorialEnemy t: currentLevel.getTutorialEnemies()) {
+            t.resetEnemy();
         }
 
         for (Italy italy: currentLevel.getItalys()) {

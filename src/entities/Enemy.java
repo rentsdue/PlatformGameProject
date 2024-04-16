@@ -23,7 +23,6 @@ public abstract class Enemy extends Entity {
 	public Enemy(float x, float y, int width, int height, int enemyType) {
 		super(x, y, width, height);
 		this.enemyType = enemyType;
-
 		maxHealth = GetMaxHealth(enemyType);
 		currentHealth = maxHealth;
 		walkSpeed = Game.SCALE * 0.35f;
@@ -230,7 +229,7 @@ public abstract class Enemy extends Entity {
 			aniTick = 0;
 			aniIndex++;
 			if (aniIndex >= GetSpriteAmount(enemyType, state)) {
-				if (enemyType == JAPAN || enemyType == GERMANY) {
+				if (enemyType == JAPAN || enemyType == GERMANY || enemyType == TUTORIAL_ENEMY) {
 					aniIndex = 0;
 
 					switch (state) {

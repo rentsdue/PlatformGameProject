@@ -24,7 +24,7 @@ public class Playing extends State implements Statemethods {
 	private GameCompletedOverlay gameCompletedOverlay;
 	private LevelCompletedOverlay levelCompletedOverlay;
 	private boolean paused = false;
-	private boolean drawShip = true;
+	private boolean drawShip = false;
 	private BufferedImage[] shipImgs;
 
 	private int xLvlOffset;
@@ -55,7 +55,9 @@ public class Playing extends State implements Statemethods {
 		levelManager.loadNextLevel();
 		player.setSpawn(levelManager.getCurrentLevel().getSpawnPoint());
 		resetAll();
-		drawShip = false;
+		if (levelManager.getLevelIndex() == 2) {
+			drawShip = true;
+		}
 	}
 
 	private void loadStartLevel() {

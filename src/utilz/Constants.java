@@ -218,29 +218,29 @@ public class Constants {
 			//Enemy Interactions
 			public static int GetSpriteAmount(int enemy_type, int enemy_state) {
 				switch (enemy_state) {
-	
-				case IDLE: {
-					if (enemy_type == JAPAN)
-						return 9;
-					else if (enemy_type == ITALY || enemy_type == GERMANY)
-						return 8;
-				}
-				case RUNNING:
-					return 6;
-				case ATTACK:
-					if (enemy_type == GERMANY)
-						return 8;
-					return 7;
-				case HIT:
-					return 4;
-				case DEAD:
-					return 5;
-				}
-	
-				return 0;
+					case IDLE: {
+						if (enemy_type == JAPAN || enemy_type == TUTORIAL_ENEMY)
+							return 9;
+						else if (enemy_type == ITALY || enemy_type == GERMANY)
+							return 8;
+					}
+					case RUNNING:
+						return 6;
+					case ATTACK:
+						if (enemy_type == GERMANY)
+							return 8;
+						return 7;
+					case HIT:
+						return 4;
+					case DEAD:
+						return 5;
+					}
+		
+					return 0;
 	
 			}
 	
+			//Maximum hitpoints of each enemy type
 			public static int GetMaxHealth(int enemy_type) {
 				switch (enemy_type) {
 				case JAPAN, TUTORIAL_ENEMY:
@@ -252,6 +252,7 @@ public class Constants {
 				}
 			}
 	
+			//Damage enemy INFLICTS ON player
 			public static int GetEnemyDamage(int enemy_type) {
 				switch (enemy_type) {
 				case JAPAN:

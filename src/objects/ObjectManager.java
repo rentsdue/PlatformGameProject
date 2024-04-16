@@ -109,6 +109,7 @@ public class ObjectManager {
 		for (int i = 0; i < cannonImgs.length; i++) {
 			cannonImgs[i] = temp.getSubimage(i * 40, 0, 40, 26);
 		}
+
 		ballImg = LoadSave.GetSpriteAtlas(LoadSave.PROJECTILE);
 		treeImgs = new BufferedImage[2][4];
 		BufferedImage treeOneImg = LoadSave.GetSpriteAtlas(LoadSave.TREE_ONE_ATLAS);
@@ -116,7 +117,6 @@ public class ObjectManager {
 			treeImgs[0][i] = treeOneImg.getSubimage(i * 39, 0, 39, 92);
 		}
 			
-
 		BufferedImage treeTwoImg = LoadSave.GetSpriteAtlas(LoadSave.TREE_TWO_ATLAS);
 		for (int i = 0; i < 4; i++) {
 			treeImgs[1][i] = treeTwoImg.getSubimage(i * 62, 0, 62, 54);

@@ -13,7 +13,7 @@ public class Projectile {
     private Rectangle2D.Float hitBox;
     private int dir;
     private boolean active = true;
-    private BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PROJECTILE);;
+    private BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PROJECTILE);
 
     public Projectile(int x, int y, int dir) {
         int xOffset = (int) (-3 * Game.SCALE);

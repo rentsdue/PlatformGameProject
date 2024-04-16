@@ -22,6 +22,7 @@ public class Level {
 	private ArrayList<GameContainer> containers = new ArrayList<>();
     private ArrayList<Italy> italys = new ArrayList<>();
     private ArrayList<Germany> germanys = new ArrayList<>();
+    private ArrayList<TutorialEnemy> tutorialEnemies = new ArrayList<>();
     private ArrayList<BackgroundTree> trees = new ArrayList<>();
     private ArrayList<Grass> grass = new ArrayList<>();
 
@@ -60,6 +61,7 @@ public class Level {
             case JAPAN -> japans.add(new Japan(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
             case ITALY -> italys.add(new Italy(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
             case GERMANY -> germanys.add(new Germany(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
+            case TUTORIAL_ENEMY -> tutorialEnemies.add(new TutorialEnemy(x * Game.TILES_SIZE, y * Game.TILES_SIZE));
             case 100 -> spawnPoint = new Point(x * Game.TILES_SIZE, y * Game.TILES_SIZE);
             }
 	}
@@ -80,7 +82,7 @@ public class Level {
 		case BOX, BARREL -> containers.add(new GameContainer(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
 		case SPIKE -> spikes.add(new Spike(x * Game.TILES_SIZE, y * Game.TILES_SIZE, SPIKE));
 		case CANNON_LEFT, CANNON_RIGHT -> cannons.add(new Cannon(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
-		case TREE_ONE, TREE_TWO, TREE_THREE -> trees.add(new BackgroundTree(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
+        case TREE_ONE, TREE_TWO, TREE_THREE -> trees.add(new BackgroundTree(x * Game.TILES_SIZE, y * Game.TILES_SIZE, blueValue));
 		}
 	}
 
@@ -132,6 +134,10 @@ public class Level {
         return this.spikes;
     }
 
+    public ArrayList<TutorialEnemy> getTutorialEnemies() {
+        return this.tutorialEnemies;
+    }
+
     public void setSpikes(ArrayList<Spike> spikes) {
         this.spikes = spikes;
     }
@@ -139,6 +145,7 @@ public class Level {
     public ArrayList<Cannon> getCannons() {
         return this.cannons;
     }
+    
 
     public void setCannons(ArrayList<Cannon> cannons) {
         this.cannons = cannons;
@@ -151,5 +158,4 @@ public class Level {
     public ArrayList<Grass> getGrasses() {
         return this.grass;
     }
-
 }

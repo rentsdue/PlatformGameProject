@@ -54,7 +54,7 @@ public class GameObject {
 		hitBox = new Rectangle2D.Float(x, y, (int) (width * Game.SCALE), (int) (height * Game.SCALE));
 	}
 
-	public void drawHitbox(Graphics g, int xLvlOffset) {
+	public void drawHitBox(Graphics g, int xLvlOffset) {
 		g.setColor(Color.PINK);
 		g.drawRect((int) hitBox.x - xLvlOffset, (int) hitBox.y, (int) hitBox.width, (int) hitBox.height);
 	}
