@@ -4,8 +4,8 @@ import main.java.com.example.Game;
 
 public class Constants {
 
-	public static final float GRAVITY = 0.04f * Game.SCALE;
-	public static final int ANI_SPEED= 25;
+	public static final float GRAVITY = 0.03f * Game.SCALE;
+	public static final int ANI_SPEED = 25;
 
 	public static class Projectiles {
 		public static final int PROJECTILE_WIDTH_DEFAULT = 15;
@@ -54,17 +54,11 @@ public class Constants {
 
 		public static int GetSpriteAmount(int object_type) {
 			switch (object_type) {
-			case RED_POTION:
+			case RED_POTION, BLUE_POTION:
 				return 7;
-			case BLUE_POTION:
-				return 7;
-			case BARREL:
+			case BARREL, BOX:
 				return 8;
-			case BOX:
-				return 8;
-			case CANNON_LEFT:
-				return 7;
-			case CANNON_RIGHT:
+			case CANNON_LEFT,CANNON_RIGHT:
 				return 7;
 			}
 			return 1;
@@ -191,6 +185,7 @@ public class Constants {
 		public static final int JAPAN = 0;
 		public static final int ITALY = 1;
 		public static final int GERMANY = 2;
+		public static final int TUTORIAL_ENEMY = 3;
 
 		public static final int IDLE = 0;
 		public static final int RUNNING = 1;
@@ -248,7 +243,7 @@ public class Constants {
 	
 			public static int GetMaxHealth(int enemy_type) {
 				switch (enemy_type) {
-				case JAPAN:
+				case JAPAN, TUTORIAL_ENEMY:
 					return 50;
 				case ITALY, GERMANY:
 					return 25;
@@ -265,6 +260,8 @@ public class Constants {
 					return 20;
 				case GERMANY:
 					return 25;
+				case TUTORIAL_ENEMY:
+					return 1;
 				default:
 					return 0;
 				}

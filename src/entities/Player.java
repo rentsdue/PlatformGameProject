@@ -302,8 +302,9 @@ public class Player extends Entity {
 	private void updatePos() {
 		moving = false;
 
-		if (jump)
+		if (jump) {
 			jump();
+		}
 
 		if (!inAir)
 			if (!powerAttackActive)
