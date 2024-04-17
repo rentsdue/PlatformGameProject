@@ -1,12 +1,12 @@
 package entities;
-import static utilz.Constants.EnemyConstants.*;
+import gamestates.*;
 import static utilz.HelpMethods.*;
-import gamestates.Playing;
+import static utilz.Constants.EnemyConstants.*;
 
 public class TutorialEnemy extends Enemy {
 
     public TutorialEnemy(float x, float y) {
-        super(x, y, JAPAN_ACTUAL_WIDTH, JAPAN_ACTUAL_HEIGHT, JAPAN);
+        super(x, y, TUTORIAL_ENEMY_WIDTH, TUTORIAL_ENEMY_HEIGHT, TUTORIAL_ENEMY);
         initHitBox(22, 19);
         initAttackBox(82, 19, 30);
     }

@@ -49,12 +49,6 @@ public class Italy extends Enemy {
 					newState(ATTACK);
 					setWalkDir(playing.getPlayer());
 				}
-				for (Spike s: playing.getLevelManager().getCurrentLevel().getSpikes()) {
-					playing.getObjectManager().checkSpikesTouched(this);
-					if (canSeeSpike(lvlData, s)) {
-						turnAwayFromSpike(s);
-					}
-				}
 				for (Cannon c: playing.getLevelManager().getCurrentLevel().getCannons()) {
 					if (canSeeCannon(lvlData, c)) {
 						turnAwayFromCannon(c);

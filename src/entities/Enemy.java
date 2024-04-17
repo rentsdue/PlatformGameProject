@@ -115,7 +115,7 @@ public abstract class Enemy extends Entity {
 	protected boolean IsPlayerCloseForAttack(Player player) {
 		int absValue = (int) Math.abs(player.hitBox.x - hitBox.x);
 		switch (enemyType) {
-		case JAPAN -> {
+		case JAPAN, TUTORIAL_ENEMY -> {
 			return absValue <= attackDistance;
 		}
 		case GERMANY -> {
@@ -124,30 +124,6 @@ public abstract class Enemy extends Entity {
 		}
 		return false;
 	}
-
-	//Interactions with spikes
-	protected void turnAwayFromSpike(Spike spike) {
-		if (spike.getHitBox().x > hitBox.x)
-			walkDir = LEFT;
-		else
-			walkDir = RIGHT;
-	}
-
-	protected boolean canSeeSpike(int[][] lvlData, Spike spike) {
-		int spikeTileY = (int) (spike.getHitBox().y / Game.TILES_SIZE);
-		if (spikeTileY == tileY)
-			if (IsSpikeInRange(spike)) {
-				if (IsSightClear(lvlData, hitBox, spike.getHitBox(), tileY))
-					return true;
-			}
-
-		return false;
-	}
-
-	protected boolean IsSpikeInRange(Spike spike) {
-		int absValue = (int) Math.abs(spike.getHitBox().x - hitBox.x);
-		return absValue <= attackDistance;
-	} 
 
 	//Interactions with cannons
 	protected void turnAwayFromCannon(Cannon cannon) {
@@ -231,7 +207,6 @@ public abstract class Enemy extends Entity {
 			if (aniIndex >= GetSpriteAmount(enemyType, state)) {
 				if (enemyType == JAPAN || enemyType == GERMANY || enemyType == TUTORIAL_ENEMY) {
 					aniIndex = 0;
-
 					switch (state) {
 					case ATTACK, HIT -> state = IDLE;
 					case DEAD -> active = false;

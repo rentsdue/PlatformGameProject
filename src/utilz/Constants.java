@@ -214,6 +214,11 @@ public class Constants {
 		public static final int GERMANY_DRAWOFFSET_X = (int) (8 * Game.SCALE);
 		public static final int GERMANY_DRAWOFFSET_Y = (int) (3 * Game.SCALE);
 
+		public static final int TUTORIAL_ENEMY_DEFAULT_WIDTH = JAPAN_DEFAULT_WIDTH;
+		public static final int TUTORIAL_ENEMY_DEFAULT_HEIGHT = JAPAN_DEFAULT_HEIGHT;
+		public static final int TUTORIAL_ENEMY_WIDTH = JAPAN_ACTUAL_WIDTH;
+		public static final int TUTORIAL_ENEMY_HEIGHT = JAPAN_ACTUAL_HEIGHT;
+
 
 			//Enemy Interactions
 			public static int GetSpriteAmount(int enemy_type, int enemy_state) {

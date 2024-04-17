@@ -55,8 +55,10 @@ public class Playing extends State implements Statemethods {
 		levelManager.loadNextLevel();
 		player.setSpawn(levelManager.getCurrentLevel().getSpawnPoint());
 		resetAll();
-		if (levelManager.getLevelIndex() == 2) {
+		if (levelManager.getLevelIndex() == 1) {
 			drawShip = true;
+		} else {
+			drawShip = false;
 		}
 	}
 
