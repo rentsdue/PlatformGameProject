@@ -1,4 +1,5 @@
 package entities;
+
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.HelpMethods.*;
 import gamestates.Playing;
@@ -6,21 +7,22 @@ import objects.*;
 
 public class Japan extends Enemy {
 
-    public Japan(float x, float y) {
-        super(x, y, JAPAN_ACTUAL_WIDTH, JAPAN_ACTUAL_HEIGHT, JAPAN);
-        initHitBox(22, 19);
-        initAttackBox(82, 19, 30);
-    }
+	public Japan(float x, float y) {
+		super(x, y, JAPAN_ACTUAL_WIDTH, JAPAN_ACTUAL_HEIGHT, JAPAN);
+		initHitBox(22, 19);
+		initAttackBox(82, 19, 30);
+	}
 
-    public void update(int[][] lvlData, Playing playing) {
-        updateBehavior(lvlData, playing);
-        updateAnimationTick();
-        updateAttackBox();
-    }
+	public void update(int[][] lvlData, Playing playing) {
+		updateBehavior(lvlData, playing);
+		updateAnimationTick();
+		updateAttackBox();
+	}
 
-    private void updateBehavior(int[][] lvlData, Playing playing) {
+	private void updateBehavior(int[][] lvlData, Playing playing) {
 		if (firstUpdate)
 			firstUpdateCheck(lvlData);
+
 		if (inAir) {
 			inAirChecks(lvlData, playing);
 		} else {
@@ -37,29 +39,27 @@ public class Japan extends Enemy {
 					if (IsPlayerCloseForAttack(playing.getPlayer()))
 						newState(ATTACK);
 				}
-				for (Cannon c: playing.getLevelManager().getCurrentLevel().getCannons()) {
-					if (canSeeCannon(lvlData, c)) {
-						if (canSeePlayer(lvlData, playing.getPlayer())) {
-							turnTowardsPlayer(playing.getPlayer());
-							if (IsPlayerCloseForAttack(playing.getPlayer())) {
-								newState(ATTACK);
-							} 
-						} else {
-							turnAwayFromCannon(c);
-						}
-					}
-				}
+				for (Cannon c: playing.getLevelManager().getCurrentLevel().getCannons()) { 
+					if (canSeeCannon(lvlData, c)) { if (canSeePlayer(lvlData, playing.getPlayer())) { 
+						turnTowardsPlayer(playing.getPlayer()); 
+						if (IsPlayerCloseForAttack(playing.getPlayer())) {
+							 newState(ATTACK); 
+						} 
+					} else { 
+						turnAwayFromCannon(c); 
+					} 
+				} 
+			} 
 				for (GameContainer gc: playing.getLevelManager().getCurrentLevel().getContainers()) {
-					if (canSeeContainer(lvlData, gc)) {
-						if (canSeePlayer(lvlData, playing.getPlayer())) {
-							turnTowardsPlayer(playing.getPlayer());
-							if (IsPlayerCloseForAttack(playing.getPlayer())) {
-								newState(ATTACK);
+					if (canSeeContainer(lvlData, gc)) { 
+						if (canSeePlayer(lvlData, playing.getPlayer())) { 
+							turnTowardsPlayer(playing.getPlayer()); if 
+							(IsPlayerCloseForAttack(playing.getPlayer())) { 
+								newState(ATTACK); 
 							} 
-						} else {
-							turnAwayFromGameContainer(gc);
-						}
-					}
+						} else { 
+							turnAwayFromGameContainer(gc); } 
+						} 
 				}
 				move(lvlData);
 				break;
@@ -77,4 +77,5 @@ public class Japan extends Enemy {
 			}
 		}
 	}
+
 }
