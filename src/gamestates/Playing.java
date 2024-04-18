@@ -42,6 +42,7 @@ public class Playing extends State implements Statemethods {
 
 	private int minutes = 0;
     private int seconds = 0;
+	private int totalPoints = 0;
     private Timer timer, instructionsTimer;
 	private boolean showInstructions = true;
 
@@ -233,6 +234,7 @@ public class Playing extends State implements Statemethods {
 		player.resetAll();
 		enemyManager.resetAllEnemies();
 		objectManager.resetAllObjects();
+		totalPoints = 0;
 	}
 
 	public void checkObjectHit(Rectangle2D.Float attackBox) {
@@ -420,6 +422,15 @@ public class Playing extends State implements Statemethods {
 
     public void setPlayerDying(boolean playerDying) {
         this.playerDying = playerDying;
+		totalPoints = 0;
     }
+
+	public int getTotalPoints() {
+		return this.totalPoints;
+	}
+
+	public void setTotalPoints(int totalPoints) {
+		this.totalPoints = totalPoints;
+	}
 
 }

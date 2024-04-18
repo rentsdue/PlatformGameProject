@@ -503,7 +503,4 @@ public class Player extends Entity {
 	public int getTileY() {
 		return this.tileY;
 	}
-
-	
-
 }
