@@ -1,7 +1,9 @@
 package gamestates;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -38,6 +40,11 @@ public class Playing extends State implements Statemethods {
 
 	private boolean gameOver, lvlCompleted, gameCompleted, playerDying;
 
+	private int minutes = 0;
+    private int seconds = 0;
+    private Timer timer, instructionsTimer;
+	private boolean showInstructions = true;
+
 	public Playing(Game game) {
 		super(game);
 		initClasses();
@@ -48,7 +55,19 @@ public class Playing extends State implements Statemethods {
 			shipImgs[i] = temp.getSubimage(i * 78, 0, 78, 72);
 		calcLvlOffset();
 		loadStartLevel();
-	}
+		startInstructionsTimer();
+		timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                seconds++;
+                if (seconds == 60) {
+                    minutes++;
+                    seconds = 0;
+                }
+            }
+        });
+        timer.start();
+    }
 
 	public void loadNextLevel() {
 		levelManager.setLevelIndex(levelManager.getLevelIndex() + 1);
@@ -121,24 +140,70 @@ public class Playing extends State implements Statemethods {
 			xLvlOffset = 0;
 	}
 
+	private void writeInstructions(Graphics g) {
+		if (showInstructions) {
+			Font font = new Font("Arial", Font.BOLD, 16);
+			g.setColor(Color.WHITE);
+			g.setFont(font);
+			g.drawString("Use W or Up to jump, A or left to go left, and D or right to go down.", (int) (100 * Game.SCALE), (int) ((150 * Game.SCALE)));
+			g.drawString("Click space or left mouse click to attack!", (int) (100 * Game.SCALE), (int) (170 * Game.SCALE));
+			g.drawString("Use right mouse click for power attack!", (int) (100 * Game.SCALE), (int) (190 * Game.SCALE));
+		}
+	}
+	
+	public void startInstructionsTimer() {
+		instructionsTimer = new Timer(5000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				showInstructions = false; // Set showInstructions to false after 10 seconds
+				instructionsTimer.stop(); // Stop the timer
+			}
+		});
+		instructionsTimer.setRepeats(false); // Set the timer to fire only once
+		instructionsTimer.start(); // Start the timer
+	}
+
+	private void drawTimer(Graphics g) {
+		Font timerFont = new Font("Arial", Font.BOLD, 16);
+        g.setColor(Color.WHITE);
+        g.setFont(timerFont);
+        g.drawString(String.format("Time: %02d:%02d", minutes, seconds), (int) (700 * Game.SCALE), (int) (20 * Game.SCALE));
+	}
+
+	private void pauseTimer() {
+		if (timer != null && timer.isRunning()) {
+			timer.stop();
+		}
+	}
+
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+		if (levelManager.getLevelIndex() == 0) {
+			writeInstructions(g);
+		}
 		if (drawShip)
 			g.drawImage(shipImgs[shipAni], (int) (100 * Game.SCALE) - xLvlOffset, (int) ((288 * Game.SCALE) + shipHeightDelta), (int) (78 * Game.SCALE), (int) (72 * Game.SCALE), null);
 			levelManager.draw(g, xLvlOffset);
 			objectManager.draw(g, xLvlOffset);
 			enemyManager.draw(g, xLvlOffset);
 			player.render(g, xLvlOffset);
+			drawTimer(g);
 			objectManager.drawBackgroundTrees(g, xLvlOffset);
 		if (paused) {
 			g.setColor(new Color(0, 0, 0, 150));
 			g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
 			pauseOverlay.draw(g);
-		} else if (gameOver)
+			pauseTimer();
+		} else if (gameOver) {
 			gameOverOverlay.draw(g);
-		else if (lvlCompleted)
+			pauseTimer();
+		} else if (lvlCompleted) {
 			levelCompletedOverlay.draw(g);
+			pauseTimer();
+		} else {
+			timer.start();
+		}
 	}
 
 	private void updateShipAni() {
