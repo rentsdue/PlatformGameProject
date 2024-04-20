@@ -148,7 +148,7 @@ public class Playing extends State implements Statemethods {
 			g.setFont(font);
 			g.drawString("Use W or Up to jump, A or left to go left, and D or right to go down.", (int) (100 * Game.SCALE), (int) ((150 * Game.SCALE)));
 			g.drawString("Click space or left mouse click to attack!", (int) (100 * Game.SCALE), (int) (170 * Game.SCALE));
-			g.drawString("Use right mouse click for power attack!", (int) (100 * Game.SCALE), (int) (190 * Game.SCALE));
+			g.drawString("Use right mouse click or Shift key for power attack!", (int) (100 * Game.SCALE), (int) (190 * Game.SCALE));
 		}
 	}
 	
@@ -195,15 +195,15 @@ public class Playing extends State implements Statemethods {
 			g.setColor(new Color(0, 0, 0, 150));
 			g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
 			pauseOverlay.draw(g);
-			pauseTimer();
+			// pauseTimer();
 		} else if (gameOver) {
 			gameOverOverlay.draw(g);
-			pauseTimer();
+			// pauseTimer();
 		} else if (lvlCompleted) {
 			levelCompletedOverlay.draw(g);
-			pauseTimer();
-		} else {
-			timer.start();
+			// pauseTimer();
+		// } else {
+		// 	timer.start();
 		}
 	}
 
@@ -281,6 +281,9 @@ public class Playing extends State implements Statemethods {
 				break;
 			case KeyEvent.VK_SPACE:
 				player.setAttacking(true);
+				break;
+			case KeyEvent.VK_SHIFT:
+				player.powerAttack();
 				break;
 			case KeyEvent.VK_UP:
 				player.setJump(true);

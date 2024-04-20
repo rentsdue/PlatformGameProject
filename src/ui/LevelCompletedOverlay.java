@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
@@ -91,6 +92,16 @@ public class LevelCompletedOverlay {
 			menu.setMousePressed(true);
 		else if (isIn(next, e))
 			next.setMousePressed(true);
+	}
+
+	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+			case KeyEvent.VK_SPACE:
+				playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
+				playing.loadNextLevel();
+				playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+				break;
+		}
 	}
 
 }

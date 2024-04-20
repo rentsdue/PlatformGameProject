@@ -22,7 +22,7 @@ public class Player extends Entity {
 	private boolean left, right, jump;
 	private int[][] lvlData;
 	private float xDrawOffset = 21 * Game.SCALE;
-	private float yDrawOffset = 7 * Game.SCALE;  //Change this so that sprite actually "touches" the floor
+	private float yDrawOffset = 4 * Game.SCALE;  //Change this so that sprite actually "touches" the floor
 
 	// Jumping / Gravity
 	private float jumpSpeed = -2.25f * Game.SCALE;
