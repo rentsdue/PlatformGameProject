@@ -198,21 +198,21 @@ public class Constants {
 		public static final int JAPAN_ACTUAL_WIDTH = (int) (JAPAN_DEFAULT_WIDTH * Game.SCALE);
 		public static final int JAPAN_ACTUAL_HEIGHT = (int) (JAPAN_DEFAULT_HEIGHT * Game.SCALE);
 		public static final int JAPAN_DRAWOFFSET_X = (int) (26 * Game.SCALE);
-		public static final int JAPAN_DRAWOFFSET_Y = (int) (7 * Game.SCALE);
+		public static final int JAPAN_DRAWOFFSET_Y = (int) (9 * Game.SCALE);
 
 		public static final int ITALY_DEFAULT_WIDTH = 34;
 		public static final int ITALY_DEFAULT_HEIGHT = 30;
 		public static final int ITALY_ACTUAL_WIDTH = (int) (ITALY_DEFAULT_WIDTH * Game.SCALE);
 		public static final int ITALY_ACTUAL_HEIGHT = (int) (ITALY_DEFAULT_HEIGHT * Game.SCALE);
 		public static final int ITALY_DRAWOFFSET_X = (int) (9 * Game.SCALE);
-		public static final int ITALY_DRAWOFFSET_Y = (int) (3 * Game.SCALE);
+		public static final int ITALY_DRAWOFFSET_Y = (int) (7 * Game.SCALE);
 
 		public static final int GERMANY_DEFAULT_WIDTH = 34;
 		public static final int GERMANY_DEFAULT_HEIGHT = 30;
 		public static final int GERMANY_ACTUAL_WIDTH = (int) (GERMANY_DEFAULT_WIDTH * Game.SCALE);
 		public static final int GERMANY_ACTUAL_HEIGHT = (int) (GERMANY_DEFAULT_HEIGHT * Game.SCALE);
 		public static final int GERMANY_DRAWOFFSET_X = (int) (8 * Game.SCALE);
-		public static final int GERMANY_DRAWOFFSET_Y = (int) (3 * Game.SCALE);
+		public static final int GERMANY_DRAWOFFSET_Y = (int) (6 * Game.SCALE);
 
 		public static final int TUTORIAL_ENEMY_DEFAULT_WIDTH = JAPAN_DEFAULT_WIDTH;
 		public static final int TUTORIAL_ENEMY_DEFAULT_HEIGHT = JAPAN_DEFAULT_HEIGHT;

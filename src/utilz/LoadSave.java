@@ -28,7 +28,7 @@ public class LoadSave {
 
     //Backgrounds and UI
     public static final String MENU_BACKGROUND = "menu_background.png"; 
-    public static final String GAME_BACKGROUND = "game_background.png";
+    public static final String GAME_BACKGROUND = "background_menu.png";
     public static final String PAUSE_BACKGROUND = "pause.png";
     public static final String CAVE_BACKGROUND = "cave_background.png";
     public static final String DEATH_SCREEN = "death_screen.png";
