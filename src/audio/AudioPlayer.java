@@ -131,9 +131,9 @@ public class AudioPlayer {
     public void setLevelSong(int lvlIndex) {
         //We don't need this method for now if all of the songs are the same for each level
         if (lvlIndex % 2 == 0)
-			playSong(LVL_1_MUSIC);
+			playSong(MAIN_MUSIC);
 		else
-			playSong(LVL_2_MUSIC);
+			playSong(MAIN_MUSIC);
     }
 
     public void lvlCompleted() {
