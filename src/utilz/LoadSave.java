@@ -33,6 +33,7 @@ public class LoadSave {
     public static final String CAVE_BACKGROUND = "cave_background.png";
     public static final String DEATH_SCREEN = "death_screen.png";
     public static final String OPTIONS_BACKGROUND = "options_menu.png";
+    public static final String CREDITS = "credits_list.png";
 
     //Buttons
     public static final String MENU_BUTTONS = "button_atlas.png"; 

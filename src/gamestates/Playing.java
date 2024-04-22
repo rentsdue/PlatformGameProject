@@ -56,7 +56,6 @@ public class Playing extends State implements Statemethods {
 			shipImgs[i] = temp.getSubimage(i * 78, 0, 78, 72);
 		calcLvlOffset();
 		loadStartLevel();
-		startInstructionsTimer();
 		timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,7 +66,6 @@ public class Playing extends State implements Statemethods {
                 }
             }
         });
-        timer.start();
     }
 
 	public void loadNextLevel() {
@@ -102,6 +100,7 @@ public class Playing extends State implements Statemethods {
 
 		pauseOverlay = new PauseOverlay(this);
 		gameOverOverlay = new GameOverOverlay(this);
+		gameCompletedOverlay = new GameCompletedOverlay(this);
 		levelCompletedOverlay = new LevelCompletedOverlay(this);
 	}
 
@@ -111,6 +110,8 @@ public class Playing extends State implements Statemethods {
 			pauseOverlay.update();
 		else if (lvlCompleted)
 			levelCompletedOverlay.update();
+		else if (gameCompleted) 
+			gameCompletedOverlay.update();
 		else if (gameOver)
 			gameOverOverlay.update();
 		else if (playerDying)
@@ -148,7 +149,8 @@ public class Playing extends State implements Statemethods {
 			g.setFont(font);
 			g.drawString("Use W or Up to jump, A or left to go left, and D or right to go down.", (int) (100 * Game.SCALE), (int) ((150 * Game.SCALE)));
 			g.drawString("Click space or left mouse click to attack!", (int) (100 * Game.SCALE), (int) (170 * Game.SCALE));
-			g.drawString("Use right mouse click for power attack!", (int) (100 * Game.SCALE), (int) (190 * Game.SCALE));
+			g.drawString("Use right mouse click or Shift key for power attack!", (int) (100 * Game.SCALE), (int) (190 * Game.SCALE));
+			g.drawString("Kill all enemies to complete the level!", (int) (100 * Game.SCALE), (int) (210 * Game.SCALE));
 		}
 	}
 	
@@ -265,33 +267,39 @@ public class Playing extends State implements Statemethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (!gameOver && !gameCompleted && !lvlCompleted)
-		switch (e.getKeyCode()) {
-			case KeyEvent.VK_A:
-				player.setLeft(true);
-				break;
-			case KeyEvent.VK_LEFT:
-				player.setLeft(true);
-				break;
-			case KeyEvent.VK_D:
-				player.setRight(true);
-				break;
-			case KeyEvent.VK_RIGHT:
-				player.setRight(true);
-				break;
-			case KeyEvent.VK_SPACE:
-				player.setAttacking(true);
-				break;
-			case KeyEvent.VK_UP:
-				player.setJump(true);
-				break;
-			case KeyEvent.VK_W:
-				player.setJump(true);
-				break;
-			case KeyEvent.VK_ESCAPE:
-				paused = !paused;
-				break;
-			}
+		if (!gameOver && !gameCompleted && !lvlCompleted) {
+			switch (e.getKeyCode()) {
+				case KeyEvent.VK_A:
+					player.setLeft(true);
+					break;
+				case KeyEvent.VK_LEFT:
+					player.setLeft(true);
+					break;
+				case KeyEvent.VK_D:
+					player.setRight(true);
+					break;
+				case KeyEvent.VK_RIGHT:
+					player.setRight(true);
+					break;
+				case KeyEvent.VK_SPACE:
+					player.setAttacking(true);
+					break;
+				case KeyEvent.VK_UP:
+					player.setJump(true);
+					break;
+				case KeyEvent.VK_W:
+					player.setJump(true);
+					break;
+				case KeyEvent.VK_SHIFT:
+					player.powerAttack();
+					break;
+				case KeyEvent.VK_ESCAPE:
+					paused = !paused;
+					break;
+				}
+		} else if (lvlCompleted) {
+			levelCompletedOverlay.keyPressed(e);
+		} 
 	}
 
 	@Override
@@ -316,7 +324,7 @@ public class Playing extends State implements Statemethods {
 			case KeyEvent.VK_W:
 				player.setJump(false);
 				break;
-			}
+			} 
 	}
 
 	public void mouseDragged(MouseEvent e) {
@@ -431,6 +439,22 @@ public class Playing extends State implements Statemethods {
 
 	public void setTotalPoints(int totalPoints) {
 		this.totalPoints = totalPoints;
+	}
+
+	public Timer getTimer() {
+		return this.timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
+
+	public Timer getInstructionsTimer() {
+		return this.instructionsTimer;
+	}
+
+	public void setInstructionsTimer(Timer instructionsTimer) {
+		this.instructionsTimer = instructionsTimer;
 	}
 
 }

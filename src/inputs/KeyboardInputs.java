@@ -19,34 +19,23 @@ public class KeyboardInputs implements KeyListener {
 		// TODO Auto-generated method stub
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void keyReleased(KeyEvent e) {
 		switch (Gamestate.state) {
-		case MENU:
-			gamePanel.getGame().getMenu().keyReleased(e);
-			break;
-		case PLAYING:
-			gamePanel.getGame().getPlaying().keyReleased(e);
-			break;
-		default:
-			break;
-
+		case MENU -> gamePanel.getGame().getMenu().keyReleased(e);
+		case PLAYING -> gamePanel.getGame().getPlaying().keyReleased(e);
+		case CREDITS -> gamePanel.getGame().getCredits().keyReleased(e);
 		}
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch (Gamestate.state) {
-		case MENU:
-			gamePanel.getGame().getMenu().keyPressed(e);
-			break;
-		case PLAYING:
-			gamePanel.getGame().getPlaying().keyPressed(e);
-			break;
-		case OPTIONS:
-			gamePanel.getGame().getGameOptions().keyPressed(e);
-		default:
-			break;
+		case MENU -> gamePanel.getGame().getMenu().keyPressed(e);
+		case PLAYING -> gamePanel.getGame().getPlaying().keyPressed(e);
+		case OPTIONS -> gamePanel.getGame().getGameOptions().keyPressed(e);
 		}
 	}
 }

@@ -16,6 +16,7 @@ public class Game implements Runnable {
 	private AudioOptions audioOptions;
 	private Playing playing;
 	private Menu menu;
+	private Credits credits;
 	private AudioPlayer audioPlayer;
 
 	private final int FPS_SET = 120;
@@ -47,6 +48,7 @@ public class Game implements Runnable {
 		menu = new Menu(this);
 		playing = new Playing(this);
 		gameOptions = new GameOptions(this);
+		credits = new Credits(this);
 	}
 
 	private void startGameLoop() {
@@ -61,31 +63,36 @@ public class Game implements Runnable {
 			break;
 		case PLAYING:
 			playing.update();
+			playing.startInstructionsTimer();
+			playing.getTimer().start();
 			break;
 		case OPTIONS:
 			gameOptions.update();
 			break;
+		case CREDITS:
+			credits.update();
+			break;
 		case QUIT:
-		default:
 			System.exit(0);
 			break;
-
 		}
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	public void render(Graphics g) {
 		switch (Gamestate.state) {
-		case MENU:
-			menu.draw(g);
-			break;
-		case PLAYING:
-			playing.draw(g);
-			break;
-		case OPTIONS:
-			gameOptions.draw(g);
-			break;
-		default:
-			break;
+			case MENU:
+				menu.draw(g);
+				break;
+			case PLAYING:
+				playing.draw(g);
+				break;
+			case OPTIONS: 
+				gameOptions.draw(g);
+				break;
+			case CREDITS: 
+				credits.draw(g);
+				break;
 		}
 	}
 
@@ -162,6 +169,14 @@ public class Game implements Runnable {
 
 	public void setAudioOptions(AudioOptions audioOptions) {
 		this.audioOptions = audioOptions;
+	}
+
+	public Credits getCredits() {
+		return this.credits;
+	}
+
+	public void setCredits(Credits credits) {
+		this.credits = credits;
 	}
 
 	public GameWindow getGameWindow() {
