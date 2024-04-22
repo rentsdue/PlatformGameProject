@@ -94,14 +94,4 @@ public class LevelCompletedOverlay {
 			next.setMousePressed(true);
 	}
 
-	public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()) {
-			case KeyEvent.VK_SPACE:
-				playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
-				playing.loadNextLevel();
-				playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
-				break;
-		}
-	}
-
 }

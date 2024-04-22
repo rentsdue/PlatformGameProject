@@ -1,6 +1,9 @@
 package gamestates;
 
 import javax.swing.*;
+
+import audio.AudioPlayer;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -264,36 +267,46 @@ public class Playing extends State implements Statemethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (!gameOver && !gameCompleted && !lvlCompleted)
-		switch (e.getKeyCode()) {
-			case KeyEvent.VK_A:
-				player.setLeft(true);
-				break;
-			case KeyEvent.VK_LEFT:
-				player.setLeft(true);
-				break;
-			case KeyEvent.VK_D:
-				player.setRight(true);
-				break;
-			case KeyEvent.VK_RIGHT:
-				player.setRight(true);
-				break;
-			case KeyEvent.VK_SPACE:
-				player.setAttacking(true);
-				break;
-			case KeyEvent.VK_SHIFT:
-				player.powerAttack();
-				break;
-			case KeyEvent.VK_UP:
-				player.setJump(true);
-				break;
-			case KeyEvent.VK_W:
-				player.setJump(true);
-				break;
-			case KeyEvent.VK_ESCAPE:
-				paused = !paused;
-				break;
+		if (!gameOver && !gameCompleted && !lvlCompleted) {
+			switch (e.getKeyCode()) {
+				case KeyEvent.VK_A:
+					player.setLeft(true);
+					break;
+				case KeyEvent.VK_LEFT:
+					player.setLeft(true);
+					break;
+				case KeyEvent.VK_D:
+					player.setRight(true);
+					break;
+				case KeyEvent.VK_RIGHT:
+					player.setRight(true);
+					break;
+				case KeyEvent.VK_SPACE:
+					player.setAttacking(true);
+					break;
+				case KeyEvent.VK_SHIFT:
+					player.powerAttack();
+					break;
+				case KeyEvent.VK_UP:
+					player.setJump(true);
+					break;
+				case KeyEvent.VK_W:
+					player.setJump(true);
+					break;
+				case KeyEvent.VK_ESCAPE:
+					paused = !paused;
+					break;
+				}
+		} else if (lvlCompleted) {
+			switch (e.getKeyCode()) {
+				case KeyEvent.VK_SPACE:
+					getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
+					loadNextLevel();
+					getGame().getAudioPlayer().setLevelSong(getLevelManager().getLevelIndex());
+					break;
 			}
+		}
+		
 	}
 
 	@Override
