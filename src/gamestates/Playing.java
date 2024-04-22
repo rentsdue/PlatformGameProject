@@ -151,6 +151,7 @@ public class Playing extends State implements Statemethods {
 			g.drawString("Use W or Up to jump, A or left to go left, and D or right to go down.", (int) (100 * Game.SCALE), (int) ((150 * Game.SCALE)));
 			g.drawString("Click space or left mouse click to attack!", (int) (100 * Game.SCALE), (int) (170 * Game.SCALE));
 			g.drawString("Use right mouse click or Shift key for power attack!", (int) (100 * Game.SCALE), (int) (190 * Game.SCALE));
+			g.drawString("Kill all enemies to complete the level!", (int) (100 * Game.SCALE), (int) (210 * Game.SCALE));
 		}
 	}
 	
