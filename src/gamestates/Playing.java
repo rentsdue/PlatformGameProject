@@ -204,6 +204,9 @@ public class Playing extends State implements Statemethods {
 		} else if (lvlCompleted) {
 			levelCompletedOverlay.draw(g);
 			pauseTimer();
+		} else if (gameCompleted) {
+			gameCompletedOverlay.draw(g);
+			pauseTimer();
 		} else {
 			timer.start();
 		}
@@ -267,7 +270,7 @@ public class Playing extends State implements Statemethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (!gameOver && !gameCompleted && !lvlCompleted) {
+		if (!gameOver && !gameCompleted && !lvlCompleted && !paused) {
 			switch (e.getKeyCode()) {
 				case KeyEvent.VK_A:
 					player.setLeft(true);
@@ -299,7 +302,11 @@ public class Playing extends State implements Statemethods {
 				}
 		} else if (lvlCompleted) {
 			levelCompletedOverlay.keyPressed(e);
-		} 
+		} else if (gameOver) {
+			gameOverOverlay.keyPressed(e);
+		} else if (paused) {
+			pauseOverlay.keyPressed(e);
+		}
 	}
 
 	@Override

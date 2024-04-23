@@ -53,9 +53,26 @@ public class GameOverOverlay {
         play.draw(g);
     }
 
-    public void keyPressed(KeyEvent e) {
-        
+    public void update() {
+        menu.update();
+        play.update();
     }
+
+    //Returning to various gamestates
+    public void returnToMainPage() {
+        playing.resetAll();
+        playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.GAMEOVER);
+        playing.setGamestate(Gamestate.MENU);
+        playing.getGame().getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
+    }
+
+    public void restartLevel() {
+        playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.GAMEOVER);
+        playing.resetAll();
+        playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex()); 
+    }
+
+    //Mouse and Key Events
 
     private boolean isIn(UrmButton b, MouseEvent e) {
 		return b.getBounds().contains(e.getX(), e.getY());
@@ -74,16 +91,11 @@ public class GameOverOverlay {
 	public void mouseReleased(MouseEvent e) {
 		if (isIn(menu, e)) {
 			if (menu.isMousePressed()) {
-				playing.resetAll();
-                playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.GAMEOVER);
-                playing.setGamestate(Gamestate.MENU);
-                playing.getGame().getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
+				returnToMainPage();
 			}
 		} else if (isIn(play, e))
 			if (play.isMousePressed()) {
-                playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.GAMEOVER);
-                playing.resetAll();
-                playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex()); //Change this later if needed
+                restartLevel();
             }
         menu.resetBools();
 		play.resetBools();
@@ -96,8 +108,14 @@ public class GameOverOverlay {
 			play.setMousePressed(true);
 	}
 
-    public void update() {
-        menu.update();
-        play.update();
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_SPACE:
+                restartLevel();
+                break;
+            case KeyEvent.VK_ESCAPE:
+                returnToMainPage();
+                break;
+        }
     }
 }

@@ -33,7 +33,6 @@ public class GameCompletedOverlay {
 		imgH = (int) (img.getHeight() * Game.SCALE);
 		imgX = Game.GAME_WIDTH / 2 - imgW / 2;
 		imgY = (int) (100 * Game.SCALE);
-
 	}
 
 	public void draw(Graphics g) {

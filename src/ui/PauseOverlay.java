@@ -63,6 +63,23 @@ public class PauseOverlay {
         audioOptions.draw(g);
     }
 
+    //GameState changes
+    public void returnToMainPage() {
+        playing.resetAll();
+        playing.setGamestate(Gamestate.MENU);
+        playing.unpauseGame();
+        playing.getGame().getAudioPlayer().stopSong();
+        playing.getGame().getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
+    }
+
+    public void restartLevel() {
+        playing.resetAll();
+        playing.unpauseGame();
+        playing.getGame().getAudioPlayer().stopSong();
+        playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+    }
+
+    //Mouse and Key Event Handlers
     public void mouseDragged(MouseEvent e) {
         audioOptions.mouseDragged(e);
     }
@@ -98,18 +115,11 @@ public class PauseOverlay {
     public void mouseReleased(MouseEvent e) {
         if (isIn(e, menuB)) {
             if (menuB.isMousePressed()) {
-                playing.resetAll();
-                playing.setGamestate(Gamestate.MENU);
-                playing.unpauseGame();
-                playing.getGame().getAudioPlayer().stopSong();
-                playing.getGame().getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
+                returnToMainPage();
             }
         }  else if (isIn(e, replayB)) {
             if (replayB.isMousePressed()) {
-                playing.resetAll();
-                playing.unpauseGame();
-                playing.getGame().getAudioPlayer().stopSong();
-                playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+                restartLevel();
             }
         }  else if (isIn(e, unpauseB)) {
             if (unpauseB.isMousePressed()) {
@@ -121,6 +131,14 @@ public class PauseOverlay {
         menuB.resetBools();
         replayB.resetBools();
         unpauseB.resetBools();
+    }
+
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_SPACE:
+                restartLevel();
+                break;
+        }
     }
 
     public boolean isIn(MouseEvent e, PauseButton b) {

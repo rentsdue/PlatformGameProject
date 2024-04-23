@@ -55,6 +55,21 @@ public class LevelCompletedOverlay {
 		menu.update();
 	}
 
+	//Choosing gamestates
+	public void goToNextLevel() {
+		playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
+		playing.loadNextLevel();
+		playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+	}
+
+	public void returnToMainPage() {
+        playing.resetAll();
+        playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.GAMEOVER);
+        playing.setGamestate(Gamestate.MENU);
+        playing.getGame().getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
+    }
+
+	//Mouse and Key Event handlers
 	private boolean isIn(UrmButton b, MouseEvent e) {
 		return b.getBounds().contains(e.getX(), e.getY());
 	}
@@ -72,16 +87,11 @@ public class LevelCompletedOverlay {
 	public void mouseReleased(MouseEvent e) {
 		if (isIn(menu, e)) {
 			if (menu.isMousePressed()) {
-				playing.resetAll();
-                playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
-                playing.setGamestate(Gamestate.MENU);
-                playing.getGame().getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
+				returnToMainPage();
 			}
 		} else if (isIn(next, e))
 			if (next.isMousePressed()) {
-                playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
-                playing.loadNextLevel();
-                playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex()); //Change this later if needed
+               goToNextLevel();
             }
         menu.resetBools();
 		next.resetBools();
@@ -97,9 +107,10 @@ public class LevelCompletedOverlay {
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_SPACE:
-				playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
-				playing.loadNextLevel();
-				playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+				goToNextLevel();
+				break;
+			case KeyEvent.VK_ESCAPE:
+				returnToMainPage();
 				break;
 		}
 	}
