@@ -2,8 +2,6 @@ package gamestates;
 
 import javax.swing.*;
 
-import audio.AudioPlayer;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -207,7 +205,7 @@ public class Playing extends State implements Statemethods {
 			// pauseTimer();
 		// } else {
 		// 	timer.start();
-		}
+		} 
 	}
 
 	private void updateShipAni() {
@@ -268,7 +266,7 @@ public class Playing extends State implements Statemethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (!gameOver && !gameCompleted && !lvlCompleted) {
+		if (!gameOver && !gameCompleted && !lvlCompleted && !paused) {
 			switch (e.getKeyCode()) {
 				case KeyEvent.VK_A:
 					player.setLeft(true);
@@ -299,13 +297,11 @@ public class Playing extends State implements Statemethods {
 					break;
 				}
 		} else if (lvlCompleted) {
-			switch (e.getKeyCode()) {
-				case KeyEvent.VK_SPACE:
-					getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
-					loadNextLevel();
-					getGame().getAudioPlayer().setLevelSong(getLevelManager().getLevelIndex());
-					break;
-			}
+			levelCompletedOverlay.keyPressed(e);
+		} else if (paused) {
+			pauseOverlay.keyPressed(e);
+		} else if (gameOver) {
+			gameOverOverlay.keyPressed(e);
 		}
 		
 	}

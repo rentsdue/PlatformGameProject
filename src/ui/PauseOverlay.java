@@ -123,6 +123,17 @@ public class PauseOverlay {
         unpauseB.resetBools();
     }
 
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_SPACE:
+                playing.resetAll();
+                playing.unpauseGame();
+                playing.getGame().getAudioPlayer().stopSong();
+                playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+                break;
+        }
+    }
+
     public boolean isIn(MouseEvent e, PauseButton b) {
         return (b.getBounds().contains(e.getX(), e.getY()));
     }

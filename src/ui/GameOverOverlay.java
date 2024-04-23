@@ -54,7 +54,19 @@ public class GameOverOverlay {
     }
 
     public void keyPressed(KeyEvent e) {
-        
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_SPACE:
+                playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.GAMEOVER);
+                playing.resetAll();
+                playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+                break;
+            case KeyEvent.VK_ESCAPE:
+                playing.resetAll();
+                playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.GAMEOVER);
+                playing.setGamestate(Gamestate.MENU);
+                playing.getGame().getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
+                break;
+        }
     }
 
     private boolean isIn(UrmButton b, MouseEvent e) {
