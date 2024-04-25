@@ -40,7 +40,7 @@ public class Playing extends State implements Statemethods {
 
 	private boolean gameOver, lvlCompleted, gameCompleted, playerDying;
 
-	private int minutes = 0;
+	private int minutes = 1;
     private int seconds = 0;
 	private int totalPoints = 0;
     private Timer timer, instructionsTimer;
@@ -57,15 +57,24 @@ public class Playing extends State implements Statemethods {
 		calcLvlOffset();
 		loadStartLevel();
 		timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                seconds++;
-                if (seconds == 60) {
-                    minutes++;
-                    seconds = 0;
-                }
-            }
-        });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (seconds == 0) {
+					if (minutes == 0) {
+						// Timer has reached zero
+						timer.stop(); // Stop the timer if needed
+						// Optionally, add code here to handle what should happen when the timer reaches zero
+						return;
+					} else {
+						minutes--;
+						seconds = 59;
+					}
+				} else {
+					seconds--;
+				}
+			}
+		});
+		
         timer.start();
     }
 
