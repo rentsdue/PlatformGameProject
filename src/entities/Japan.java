@@ -9,7 +9,7 @@ public class Japan extends Enemy {
 
 	public Japan(float x, float y) {
 		super(x, y, JAPAN_ACTUAL_WIDTH, JAPAN_ACTUAL_HEIGHT, JAPAN);
-		initHitBox(22, 19);
+		initHitBox(22, 17);
 		initAttackBox(82, 19, 30);
 	}
 
