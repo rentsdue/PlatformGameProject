@@ -60,9 +60,13 @@ public class Credits extends State implements Statemethods {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			bgYFloat = 0;
-			setGamestate(Gamestate.MENU);
+		switch (e.getKeyCode()) {
+			case KeyEvent.VK_ESCAPE:
+				bgYFloat = 0;
+				setGamestate(Gamestate.MENU);
+			case KeyEvent.VK_DOWN:
+				bgYFloat += 10;
+				break;
 		}
 	}
 
@@ -90,7 +94,20 @@ public class Credits extends State implements Statemethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+			case KeyEvent.VK_ESCAPE:
+				bgYFloat = 0;
+				setGamestate(Gamestate.MENU);
+				break;
+			case KeyEvent.VK_DOWN:
+				bgYFloat += 10;
+				break;
+			case KeyEvent.VK_UP:
+				bgYFloat -= 10;
+				break;
+		}
 	}
+
 
 	private class ShowEntity {
 		private BufferedImage[] idleAnimation;

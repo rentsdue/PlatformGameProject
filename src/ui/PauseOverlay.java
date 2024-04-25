@@ -138,6 +138,9 @@ public class PauseOverlay {
             case KeyEvent.VK_SPACE:
                 restartLevel();
                 break;
+            case KeyEvent.VK_ESCAPE:
+                playing.unpauseGame();
+                break;
         }
     }
 
