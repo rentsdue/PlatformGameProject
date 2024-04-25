@@ -131,11 +131,12 @@ public class PauseOverlay {
                 playing.getGame().getAudioPlayer().stopSong();
                 playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
                 break;
+            case KeyEvent.VK_ESCAPE:
+                playing.unpauseGame();
         }
     }
 
     public boolean isIn(MouseEvent e, PauseButton b) {
         return (b.getBounds().contains(e.getX(), e.getY()));
     }
-
 }

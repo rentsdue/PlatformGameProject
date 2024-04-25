@@ -56,7 +56,6 @@ public class Playing extends State implements Statemethods {
 			shipImgs[i] = temp.getSubimage(i * 78, 0, 78, 72);
 		calcLvlOffset();
 		loadStartLevel();
-		startInstructionsTimer();
 		timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

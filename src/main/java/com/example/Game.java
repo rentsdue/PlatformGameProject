@@ -61,6 +61,7 @@ public class Game implements Runnable {
 			break;
 		case PLAYING:
 			playing.update();
+			playing.startInstructionsTimer();
 			break;
 		case OPTIONS:
 			gameOptions.update();
