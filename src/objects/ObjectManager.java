@@ -76,7 +76,7 @@ public class ObjectManager {
 	public void checkSpikesTouched(Enemy e) {
 		for (Spike s : currentLevel.getSpikes()) {
 			if (s.getHitBox().intersects(e.getHitBox())) {
-				e.hurt(200);
+				e.hurt(10000000);
 			}
 		}
 	}
