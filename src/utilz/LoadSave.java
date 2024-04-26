@@ -87,14 +87,6 @@ public class LoadSave {
                 }
             }
         }
-        
-        /* for (File f: files) { //Testing purposes
-        System.out.println("file "+ f.getName()); 
-        }
-
-        for (File f: files) {
-        System.out.println("file sorted "+ f.getName()); 
-        } */
 
         BufferedImage[] imgs = new BufferedImage[filesSorted.length];
         for (int i = 0; i < imgs.length; i++) {
