@@ -83,7 +83,7 @@ public class Player extends Entity {
 	}
 
 	private void initAttackBox() {
-		attackBox = new Rectangle2D.Float(x, y, (int) (35 * Game.SCALE) + 10, (int) (20 * Game.SCALE));
+		attackBox = new Rectangle2D.Float(x, y, (int) (35 * Game.SCALE), (int) (20 * Game.SCALE));
 		resetAttackBox();
 	}
 
@@ -220,8 +220,8 @@ public class Player extends Entity {
 
 	public void render(Graphics g, int lvlOffset) {
 		g.drawImage(animations[state][aniIndex], (int) (hitBox.x - xDrawOffset) - lvlOffset + flipX, (int) (hitBox.y - yDrawOffset + (int) (pushDrawOffset)), width * flipW, height, null);
-//		drawHitBox(g, lvlOffset);
-//		drawAttackBox(g, lvlOffset);
+		// drawHitBox(g, lvlOffset);
+		// drawAttackBox(g, lvlOffset);
 		drawUI(g);
 	}
 
