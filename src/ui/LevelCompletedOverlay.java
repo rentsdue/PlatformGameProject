@@ -106,7 +106,7 @@ public class LevelCompletedOverlay {
 
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-			case KeyEvent.VK_SPACE:
+			case KeyEvent.VK_SPACE, KeyEvent.VK_ENTER:
 				goToNextLevel();
 				break;
 			case KeyEvent.VK_ESCAPE:
