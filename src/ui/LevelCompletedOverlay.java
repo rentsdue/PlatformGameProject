@@ -59,7 +59,7 @@ public class LevelCompletedOverlay {
 	public void goToNextLevel() {
 		playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.LVL_COMPLETED);
 		playing.loadNextLevel();
-		playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+		playing.getGame().getAudioPlayer().setLevelSong();
 	}
 
 	public void returnToMainPage() {

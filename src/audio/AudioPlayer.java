@@ -12,6 +12,7 @@ public class AudioPlayer {
     public static int MAIN_MUSIC = 0;
     public static int LVL_1_MUSIC = 1;
     public static int LVL_2_MUSIC = 2; 
+    public static int LVL_3_MUSIC = 3;
 
     //In-game sound effects
     public static int DIE = 0;
@@ -35,7 +36,7 @@ public class AudioPlayer {
     }
 
     private void loadSongs() {
-        String[] names = {"main_music", "lvl1music", "lvl2music"};
+        String[] names = {"main_music", "lvl1music", "lvl2music", "lvl3music"};
         songs = new Clip [names.length];
         for (int i = 0; i < songs.length; i++) {
             songs[i] = getClip(names[i]);
@@ -128,12 +129,8 @@ public class AudioPlayer {
         }
     }
 
-    public void setLevelSong(int lvlIndex) {
-        //We don't need this method for now if all of the songs are the same for each level
-        if (lvlIndex % 2 == 0)
-			playSong(LVL_1_MUSIC);
-		else
-			playSong(LVL_2_MUSIC);
+    public void setLevelSong() {
+        playSong((int) (Math.random() * 3) + 1);
     }
 
     public void lvlCompleted() {
