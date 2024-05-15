@@ -12,7 +12,6 @@ public class AudioPlayer {
     public static int MAIN_MUSIC = 0;
     public static int LVL_1_MUSIC = 1;
     public static int LVL_2_MUSIC = 2; 
-    public static int LVL_3_MUSIC = 3;
 
     //In-game sound effects
     public static int DIE = 0;
@@ -36,7 +35,7 @@ public class AudioPlayer {
     }
 
     private void loadSongs() {
-        String[] names = {"main_music", "lvl1music", "lvl2music", "lvl3music"};
+        String[] names = {"main_music", "lvl1music", "lvl2music"};
         songs = new Clip [names.length];
         for (int i = 0; i < songs.length; i++) {
             songs[i] = getClip(names[i]);
@@ -130,7 +129,7 @@ public class AudioPlayer {
     }
 
     public void setLevelSong() {
-        playSong((int) (Math.random() * 3) + 1);
+        playSong((int) (Math.random() * 2) + 1);
     }
 
     public void lvlCompleted() {
