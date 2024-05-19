@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import audio.AudioPlayer;
 import gamestates.Gamestate;
 import gamestates.Playing;
-import main.java.com.example.Game;
+import main.Game;
 import utilz.LoadSave;
 import static utilz.Constants.UI.UrmButtons.*;
 

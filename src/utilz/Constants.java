@@ -1,6 +1,6 @@
 package utilz;
 
-import main.java.com.example.Game;
+import main.Game;
 
 public class Constants {
 

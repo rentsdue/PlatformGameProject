@@ -5,7 +5,7 @@ import ui.MenuButton;
 import java.awt.event.MouseEvent;
 
 import audio.AudioPlayer;
-import main.java.com.example.Game;
+import main.Game;
 
 
 public class State {

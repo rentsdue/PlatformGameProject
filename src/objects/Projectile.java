@@ -5,7 +5,7 @@ import static utilz.Constants.Projectiles.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-import main.java.com.example.Game;
+import main.Game;
 import utilz.LoadSave;
 
 public class Projectile {

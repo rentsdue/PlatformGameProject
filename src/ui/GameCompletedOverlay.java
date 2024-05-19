@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import gamestates.Gamestate;
 import gamestates.Playing;
-import main.java.com.example.Game;
+import main.Game;
 import utilz.LoadSave;
 
 public class GameCompletedOverlay {

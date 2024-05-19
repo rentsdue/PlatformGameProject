@@ -1,1 +1,24 @@
-/bin
+# Compiled class files
+*.class
+
+# Compiled output directory
+/bin/
+
+# VS Code settings
+.vscode/
+
+# Log files
+*.log
+
+# Temporary files
+tmp/
+*.tmp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Maven/Gradle directories (if applicable)
+target/
+.mvn/
+.gradle/

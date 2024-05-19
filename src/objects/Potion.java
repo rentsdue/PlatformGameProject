@@ -1,6 +1,6 @@
 package objects;
 
-import main.java.com.example.Game;
+import main.Game;
 
 public class Potion extends GameObject {
 

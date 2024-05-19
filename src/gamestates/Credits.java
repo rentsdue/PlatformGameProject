@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import main.java.com.example.Game;
+import main.Game;
 import utilz.LoadSave;
 
 public class Credits extends State implements Statemethods {

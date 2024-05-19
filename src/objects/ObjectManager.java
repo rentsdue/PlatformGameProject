@@ -10,7 +10,7 @@ import entities.Enemy;
 import entities.Player;
 import gamestates.Playing;
 import levels.Level;
-import main.java.com.example.Game;
+import main.Game;
 import utilz.LoadSave;
 import static utilz.Constants.ObjectConstants.*;
 import static utilz.Constants.Projectiles.*;

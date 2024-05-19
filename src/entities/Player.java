@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 
 import audio.AudioPlayer;
 import gamestates.Playing;
-import main.java.com.example.Game;
+import main.Game;
 import utilz.LoadSave;
 
 public class Player extends Entity {

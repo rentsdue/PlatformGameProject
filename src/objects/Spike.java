@@ -1,7 +1,7 @@
 package objects;
 import java.awt.geom.Rectangle2D;
 
-import main.java.com.example.Game;
+import main.Game;
 
 public class Spike extends GameObject {
 

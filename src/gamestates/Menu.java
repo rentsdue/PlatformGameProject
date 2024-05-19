@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-import main.java.com.example.*;
+import main.*;
 import ui.MenuButton;
 import utilz.LoadSave;
 

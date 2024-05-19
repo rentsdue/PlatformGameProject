@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
+import main.Game;
+
 import static utilz.Constants.Directions.*;
 import static utilz.HelpMethods.*;
-
-import main.java.com.example.Game;
 
 public abstract class Entity {
 

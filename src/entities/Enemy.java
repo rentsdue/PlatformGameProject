@@ -6,8 +6,9 @@ import static utilz.Constants.Directions.*;
 import static utilz.Constants.*;
 
 import java.awt.geom.Rectangle2D;
+
 import gamestates.Playing;
-import main.java.com.example.Game;
+import main.Game;
 import objects.*;
 
 public abstract class Enemy extends Entity {

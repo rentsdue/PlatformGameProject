@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.awt.event.*;
 import audio.AudioPlayer;
 import gamestates.*;
-import main.java.com.example.Game;
+import main.Game;
 import utilz.LoadSave;
 
 public class PauseOverlay {

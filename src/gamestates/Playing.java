@@ -1,6 +1,7 @@
 package gamestates;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +12,7 @@ import java.awt.image.BufferedImage;
 
 import entities.*;
 import levels.LevelManager;
-import main.java.com.example.Game;
+import main.Game;
 import objects.*;
 import ui.*;
 import utilz.LoadSave;

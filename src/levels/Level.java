@@ -6,8 +6,9 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
 import entities.*;
-import main.java.com.example.Game;
+import main.Game;
 import objects.*;
 
 public class Level {

@@ -4,8 +4,9 @@ import static utilz.Constants.UI.PauseButtons.*;
 import static utilz.Constants.UI.VolumeButtons.*;
 
 import java.awt.Graphics;
-import main.java.com.example.Game;
 import java.awt.event.*;
+
+import main.Game;
 
 public class AudioOptions {
 
