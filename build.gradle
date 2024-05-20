@@ -1,84 +1,48 @@
 plugins {
     id 'java'
-    id 'application'
-    id 'org.teavm' version "0.10.0"
 }
-
-jar {
-    manifest {
-        attributes 'Main-Class': 'main.Main'
-    }
-}
-
-group = 'com.yourcompany.platformgameproject'
-version = '1.0.0'
-
-sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation 'org.apache.commons:commons-lang3:3.12.0' // Example dependency
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-    testImplementation 'org.mockito:mockito-core:3.6.28'
-    implementation teavm.libs.jsoApis
-}
-
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-}
-
-application {
-    mainClassName = 'main.Main' // Adjust this to your main class
+    implementation 'org.jsweet:jsweet-core:3.2.0' // Use the latest version
+    implementation 'org.jsweet:jsweet-transpiler:3.2.0' // Use the latest version
+    implementation 'org.jsweet.candies.jsweet.candies-angular:jsweet-candies-angular:1.6.9' // Example dependency for JSweet
+    implementation 'javax.servlet:javax.servlet-api:3.1.0'
+    testImplementation 'junit:junit:4.13.1'
 }
 
 sourceSets {
     main {
         java {
-            srcDirs = ['src']
+            srcDirs 'src/main/java'
         }
         resources {
-            srcDirs = ['res']
-        }
-    }
-    test {
-        java {
-            srcDirs = ['src/test/java']
-        }
-        resources {
-            srcDirs = ['src/test/resources']
+            srcDirs 'src/main/resources'
         }
     }
 }
 
-// TeaVM task configuration
-task teavm(type: JavaExec) {
-    main = 'org.teavm.cli.TeaVM'
+task transpileToJS(type: JavaExec) {
+    group = 'build'
+    description = 'Transpile Java code to JavaScript using JSweet'
     classpath = sourceSets.main.runtimeClasspath
-    args = [
-        '--target', 'wasm', // Target WebAssembly
-        '--main', 'main.Main', // Replace with your main class
-        '--output-dir', "${buildDir}/teavm",
-        '--target-file-name', 'game.wasm'
-    ]
+    main = 'org.jsweet.transpiler.JSweetTranspiler'
+    args = ['src/main/', '-d', 'build/js', '-tsOut', 'build/ts']
 }
 
-teavm.js {
-    addedToWebApp = true
-    mainClass = "main.Main"
-    
-    // this is also optional, default value is <project name>.js
-    targetFileName = "game.js"
+
+compileJava {
+    options.compilerArgs << '-proc:none' // Disable annotation processing for this task
 }
 
-// Create a new task to build and then run TeaVM
-task buildAndTeavm {
-    dependsOn build
-    finalizedBy teavm
+task copyWebResources(type: Copy) {
+    dependsOn transpileToJS // Ensure this task runs after transpileToJS
+    from 'src/main/'
+    into 'build/js'
 }
+
+// Ensure copyWebResources task runs after transpileToJS completes
+transpileToJS.finalizedBy(copyWebResources)
