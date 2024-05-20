@@ -128,9 +128,12 @@ public class AudioPlayer {
         }
     }
 
-    public void setLevelSong() {
-        playSong((int) (Math.random() * 2) + 1);
-    }
+    public void setLevelSong(int lvlIndex) {
+		if (lvlIndex % 2 == 0)
+			playSong(LVL_1_MUSIC);
+		else
+			playSong(LVL_2_MUSIC);
+	}
 
     public void lvlCompleted() {
         stopSong();

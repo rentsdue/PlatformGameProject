@@ -69,7 +69,7 @@ public class GameOverOverlay {
     public void restartLevel() {
         playing.getGame().getAudioPlayer().stopEffect(AudioPlayer.GAMEOVER);
         playing.resetAll();
-        playing.getGame().getAudioPlayer().setLevelSong(); 
+        playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex()); 
     }
 
     //Mouse and Key Events

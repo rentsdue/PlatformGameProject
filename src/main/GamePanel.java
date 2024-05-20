@@ -33,9 +33,10 @@ public class GamePanel extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		game.render(g);
+		game.render();
 	}
 
+	//Getters and setters
 	public Game getGame() {
 		return this.game;
 	}

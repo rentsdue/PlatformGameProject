@@ -76,7 +76,7 @@ public class PauseOverlay {
         playing.resetAll();
         playing.unpauseGame();
         playing.getGame().getAudioPlayer().stopSong();
-        playing.getGame().getAudioPlayer().setLevelSong();
+        playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
     }
 
     //Mouse and Key Event Handlers

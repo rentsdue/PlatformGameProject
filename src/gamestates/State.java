@@ -30,7 +30,7 @@ public class State {
 		case MENU:
 			game.getAudioPlayer().playSong(AudioPlayer.MAIN_MUSIC);
 		case PLAYING:
-			game.getAudioPlayer().setLevelSong(); //Change this if needed later
+			game.getAudioPlayer().setLevelSong(game.getPlaying().getLevelManager().getLevelIndex()); //Change this if needed later
 		default:
 			break;
 		}

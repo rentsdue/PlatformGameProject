@@ -1,6 +1,7 @@
 plugins {
     id 'java'
-    id 'application' 
+    id 'application'
+    id 'org.teavm' version "0.10.0"
 }
 
 jar {
@@ -12,18 +13,10 @@ jar {
 group = 'com.yourcompany.platformgameproject'
 version = '1.0.0'
 
-sourceCompatibility = '21'
+sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
-}
-
-jar {
-    manifest {
-        attributes(
-            'Main-Class': 'main.Main'
-        )
-    }
 }
 
 dependencies {
@@ -31,19 +24,19 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     testImplementation 'org.mockito:mockito-core:3.6.28'
+    implementation teavm.libs.jsoApis
 }
 
 test {
     useJUnitPlatform()
     testLogging {
-		events "passed", "skipped", "failed"
-	}
+        events "passed", "skipped", "failed"
+    }
 }
 
 application {
     mainClassName = 'main.Main' // Adjust this to your main class
 }
-
 
 sourceSets {
     main {
@@ -62,4 +55,30 @@ sourceSets {
             srcDirs = ['src/test/resources']
         }
     }
+}
+
+// TeaVM task configuration
+task teavm(type: JavaExec) {
+    main = 'org.teavm.cli.TeaVM'
+    classpath = sourceSets.main.runtimeClasspath
+    args = [
+        '--target', 'wasm', // Target WebAssembly
+        '--main', 'main.Main', // Replace with your main class
+        '--output-dir', "${buildDir}/teavm",
+        '--target-file-name', 'game.wasm'
+    ]
+}
+
+teavm.js {
+    addedToWebApp = true
+    mainClass = "main.Main"
+    
+    // this is also optional, default value is <project name>.js
+    targetFileName = "game.js"
+}
+
+// Create a new task to build and then run TeaVM
+task buildAndTeavm {
+    dependsOn build
+    finalizedBy teavm
 }
