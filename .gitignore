@@ -1,9 +1,6 @@
 # Compiled class files
 *.class
 
-# Compiled output directory
-/bin/
-
 # VS Code settings
 .vscode/
 
@@ -18,7 +15,8 @@ tmp/
 .DS_Store
 Thumbs.db
 
-# Maven/Gradle directories (if applicable)
-target/
-.mvn/
-.gradle/
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build

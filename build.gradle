@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'application' 
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'main.Main'
+    }
+}
+
+group = 'com.yourcompany.platformgameproject'
+version = '1.0.0'
+
+sourceCompatibility = '21'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.12.0' // Example dependency
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+}
+
+application {
+    mainClassName = 'main.Main' // Adjust this to your main class
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+        resources {
+            srcDirs = ['res']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+        resources {
+            srcDirs = ['src/test/resources']
+        }
+    }
+}

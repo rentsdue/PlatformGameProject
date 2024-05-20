@@ -1,10 +1,7 @@
 package utilz;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -68,47 +65,6 @@ public class LoadSave {
 		}
 		return img;
 	}
-
-    // public static BufferedImage[] GetAllLevels() {
-    //     URL url = LoadSave.class.getResource("/levels"); 
-    //     File file = null;
-
-    //     try {
-    //         file = new File(url.toURI());
-    //     } catch (URISyntaxException e) {
-    //         e.printStackTrace();
-    //     }
-
-    //     File[] files = file.listFiles();
-    //     File[] filesSorted = new File[files.length];
-
-    //     for (int i=0; i<filesSorted.length; i++) {
-    //         for (int j = 0; j < files.length; j++) {
-    //             if (files[j].getName().equals((i + 1) + ".png")) {
-    //                 filesSorted[i] = files[j];
-    //             }
-    //         }
-    //     }
-        
-    //     /* for (File f: files) { //Testing purposes
-    //     System.out.println("file "+ f.getName()); 
-    //     }
-
-    //     for (File f: files) {
-    //     System.out.println("file sorted "+ f.getName()); 
-    //     } */
-
-    //     BufferedImage[] imgs = new BufferedImage[filesSorted.length];
-    //     for (int i = 0; i < imgs.length; i++) {
-    //         try {
-    //             imgs[i] = ImageIO.read(filesSorted[i]);
-    //         } catch (IOException e) {
-    //             e.printStackTrace();
-    //         }
-    //     }
-
-    //     return imgs;
-    // }
 
     public static BufferedImage[] GetAllLevels() {
         List<String> levelNames = Arrays.asList("1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png");
