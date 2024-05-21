@@ -1,20 +1,3 @@
-# Compiled class files
-*.class
-
-# VS Code settings
-.vscode/
-
-# Log files
-*.log
-
-# Temporary files
-tmp/
-*.tmp
-
-# OS-specific files
-.DS_Store
-Thumbs.db
-
 # Ignore Gradle project-specific cache directory
 .gradle
 
