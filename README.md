@@ -18,7 +18,7 @@ This platform game aims to showcase various game development concepts, including
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/your-platformer-game.git
+    git clone https://github.com/your-username/PlatformGameProject.git
     ```
 
 2. Open the project in your preferred Java development environment.
