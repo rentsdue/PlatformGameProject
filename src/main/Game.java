@@ -1,63 +1,44 @@
 package main;
 
-import java.awt.Graphics;
-
 import audio.AudioPlayer;
 import gamestates.*;
 import ui.AudioOptions;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonWriter;
+import java.io.StringWriter;
 
-public class Game implements Runnable {
+public class Game {
 
-	private GameWindow gameWindow;
-	private GamePanel gamePanel;
-	private Thread gameThread;
+    private GameOptions gameOptions;
+    private AudioOptions audioOptions;
+    private Playing playing;
+    private Menu menu;
+    private Credits credits;
+    private AudioPlayer audioPlayer;
 
-	private GameOptions gameOptions;
-	private AudioOptions audioOptions;
-	private Playing playing;
-	private Menu menu;
-	private Credits credits;
+    public final static int TILES_DEFAULT_SIZE = 32;
+    public final static float SCALE = 1.5f;
+    public final static int TILES_IN_WIDTH = 26;
+    public final static int TILES_IN_HEIGHT = 14;
+    public final static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
+    public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
+    public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
 
-	private AudioPlayer audioPlayer;
+    public Game() {
+        initClasses();
+    }
 
-	private final int FPS_SET = 120;
-	private final int UPS_SET = 200;
+    private void initClasses() {
+        audioOptions = new AudioOptions(this);
+        audioPlayer = new AudioPlayer();
+        menu = new Menu(this);
+        playing = new Playing(this);
+        gameOptions = new GameOptions(this);
+        credits = new Credits(this);
+    }
 
-	public final static int TILES_DEFAULT_SIZE = 32;
-	public final static float SCALE = 1.5f;
-	public final static int TILES_IN_WIDTH = 26;
-	public final static int TILES_IN_HEIGHT = 14;
-	public final static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
-	public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
-	public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
-
-	public Game() {
-		initClasses();
-
-		gamePanel = new GamePanel(this);
-		gameWindow = new GameWindow(gamePanel);
-		gamePanel.setFocusable(true);
-		gamePanel.requestFocus();
-
-		startGameLoop();
-
-	}
-
-	private void initClasses() {
-		audioOptions = new AudioOptions(this);
-		audioPlayer = new AudioPlayer();
-		menu = new Menu(this);
-		playing = new Playing(this);
-		gameOptions = new GameOptions(this);
-		credits = new Credits(this);
-	}
-
-	private void startGameLoop() {
-		gameThread = new Thread(this);
-		gameThread.start();
-	}
-
-	public void update() {
+    public void update() {
         switch (Gamestate.state) {
             case MENU:
                 menu.update();
@@ -79,128 +60,71 @@ public class Game implements Runnable {
         }
     }
 
-	public void render(Graphics g) {
-		switch (Gamestate.state) {
-		case MENU:
-			menu.draw(g);
-			break;
-		case PLAYING:
-			playing.draw(g);
-			break;
-		case OPTIONS:
-			gameOptions.draw(g);
-			break;
-		case CREDITS:
-			credits.draw(g);
-			break;
-		default:
-			break;
-		}
-	}
+    public JsonObject toJson() {
+        return Json.createObjectBuilder()
+                .add("state", Gamestate.state.toString())
+                // Add other necessary state details here
+                .build();
+    }
 
-	@Override
-	public void run() {
-
-		double timePerFrame = 1000000000.0 / FPS_SET;
-		double timePerUpdate = 1000000000.0 / UPS_SET;
-
-		long previousTime = System.nanoTime();
-
-		int frames = 0;
-		int updates = 0;
-		long lastCheck = System.currentTimeMillis();
-
-		double deltaU = 0;
-		double deltaF = 0;
-
-		while (true) {
-			long currentTime = System.nanoTime();
-
-			deltaU += (currentTime - previousTime) / timePerUpdate;
-			deltaF += (currentTime - previousTime) / timePerFrame;
-			previousTime = currentTime;
-
-			if (deltaU >= 1) {
-				update();
-				updates++;
-				deltaU--;
-			}
-
-			if (deltaF >= 1) {
-				gamePanel.repaint();
-				frames++;
-				deltaF--;
-			}
-
-			if (System.currentTimeMillis() - lastCheck >= 1000) {
-				lastCheck = System.currentTimeMillis();
-				System.out.println("FPS: " + frames + " | UPS: " + updates);
-				frames = 0;
-				updates = 0;
-
-			}
-		}
-
-	}
-
-	public void windowFocusLost() {
-		if (Gamestate.state == Gamestate.PLAYING)
-			playing.getPlayer().resetDirBooleans();
-	}
-
-	//Getters and setters
-	public Menu getMenu() {
-		return this.menu;
-	}
-
-	public void setMenu(Menu menu) {
-		this.menu = menu;
-	}
-
-	public Playing getPlaying() {
-		return this.playing;
-	}
-
-	public void setPlaying(Playing playing) {
-		this.playing = playing;
-	}
-
-	public AudioOptions getAudioOptions() {
-		return this.audioOptions;
-	}
-
-	public void setAudioOptions(AudioOptions audioOptions) {
-		this.audioOptions = audioOptions;
-	}
-
-	public GameWindow getGameWindow() {
-		return this.gameWindow;
-	}
-	public void setGameWindow(GameWindow gameWindow) {
-		this.gameWindow = gameWindow;
-	}
+    public String render() {
+        JsonObject gameState = toJson();
+        StringWriter stringWriter = new StringWriter();
+        try (JsonWriter jsonWriter = Json.createWriter(stringWriter)) {
+            jsonWriter.writeObject(gameState);
+        }
+        return stringWriter.toString();
+    }
 
 	public GameOptions getGameOptions() {
-		return this.gameOptions;
+		return gameOptions;
 	}
 
 	public void setGameOptions(GameOptions gameOptions) {
 		this.gameOptions = gameOptions;
 	}
 
+	public AudioOptions getAudioOptions() {
+		return audioOptions;
+	}
+
+	public void setAudioOptions(AudioOptions audioOptions) {
+		this.audioOptions = audioOptions;
+	}
+
+	public Playing getPlaying() {
+		return playing;
+	}
+
+	public void setPlaying(Playing playing) {
+		this.playing = playing;
+	}
+
+	public Menu getMenu() {
+		return menu;
+	}
+
+	public void setMenu(Menu menu) {
+		this.menu = menu;
+	}
+
+	public Credits getCredits() {
+		return credits;
+	}
+
+	public void setCredits(Credits credits) {
+		this.credits = credits;
+	}
+
 	public AudioPlayer getAudioPlayer() {
-		return this.audioPlayer;
+		return audioPlayer;
 	}
 
 	public void setAudioPlayer(AudioPlayer audioPlayer) {
 		this.audioPlayer = audioPlayer;
 	}
 
-	public Credits getCredits() {
-		return this.credits;
-	}
+    // Getters and setters...
 
-	public void setCredits(Credits credits) {
-		this.credits = credits;
-	}
+	
 }
