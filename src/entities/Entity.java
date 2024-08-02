@@ -19,7 +19,6 @@ public abstract class Entity {
     protected boolean inAir = false;
     protected float walkSpeed = 1.0f * Game.SCALE;
     protected boolean attackChecked;
-
     protected int maxHealth;
 	protected int currentHealth;
     protected int pushBackDir;
@@ -42,12 +41,14 @@ public abstract class Entity {
 		float limit = -30f;
 		if (pushBackOffsetDir == UP) {
 			pushDrawOffset -= speed;
-			if (pushDrawOffset <= limit)
-				pushBackOffsetDir = DOWN;
+			if (pushDrawOffset <= limit) {
+                pushBackOffsetDir = DOWN;
+            }
 		} else {
 			pushDrawOffset += speed;
-			if (pushDrawOffset >= 0)
-				pushDrawOffset = 0;
+			if (pushDrawOffset >= 0) {
+                pushDrawOffset = 0;
+            }   
 		}
 	}
 
@@ -64,7 +65,7 @@ public abstract class Entity {
 
     protected void drawHitBox(Graphics g, int xLvlOffset) {
         //For debugging the hitbox
-        g.setColor(Color.PINK);
+        g.setColor(Color.BLUE);
         g.drawRect((int) hitBox.x- xLvlOffset, (int) hitBox.y, (int) hitBox.width, (int) hitBox.height);
     }
 

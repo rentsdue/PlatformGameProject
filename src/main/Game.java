@@ -17,6 +17,7 @@ public class Game implements Runnable {
 	private Playing playing;
 	private Menu menu;
 	private Credits credits;
+	private PlayerSelection playerSelection;
 
 	private AudioPlayer audioPlayer;
 
@@ -37,7 +38,7 @@ public class Game implements Runnable {
 		gamePanel = new GamePanel(this);
 		gameWindow = new GameWindow(gamePanel);
 		gamePanel.setFocusable(true);
-		gamePanel.requestFocus();
+		gamePanel.requestFocusInWindow();
 
 		startGameLoop();
 
@@ -48,6 +49,7 @@ public class Game implements Runnable {
 		audioPlayer = new AudioPlayer();
 		menu = new Menu(this);
 		playing = new Playing(this);
+		playerSelection = new PlayerSelection(this);
 		gameOptions = new GameOptions(this);
 		credits = new Credits(this);
 	}
@@ -57,46 +59,45 @@ public class Game implements Runnable {
 		gameThread.start();
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	public void update() {
-        switch (Gamestate.state) {
-            case MENU:
-                menu.update();
-                break;
-            case PLAYING:
-                playing.update();
-                playing.startInstructionsTimer();
-                playing.getTimer().start();
-                break;
-            case OPTIONS:
-                gameOptions.update();
-                break;
-            case CREDITS:
-                credits.update();
-                break;
-            default:
-                System.exit(0);
-                break;
-        }
-    }
-
-	public void render(Graphics g) {
 		switch (Gamestate.state) {
-		case MENU:
-			menu.draw(g);
-			break;
-		case PLAYING:
-			playing.draw(g);
-			break;
-		case OPTIONS:
-			gameOptions.draw(g);
-			break;
-		case CREDITS:
-			credits.draw(g);
-			break;
-		default:
-			break;
+			case MENU:
+				menu.update();
+				break;
+			case PLAYER_SELECTION:
+				playerSelection.update();
+				break;
+			case PLAYING:
+				playing.update();
+				playing.startInstructionsTimer();
+				playing.getTimer().start();
+				break;
+			case OPTIONS:
+				gameOptions.update();
+				break;
+			case CREDITS:
+				credits.update();
+				break;
+			case QUIT:
+				System.exit(0);
+				break;
+			default:
+				break;
 		}
 	}
+	
+
+	@SuppressWarnings("incomplete-switch")
+    public void render(Graphics g) {
+        switch (Gamestate.state) {
+            case MENU -> menu.draw(g);
+            case PLAYER_SELECTION -> playerSelection.draw(g);
+            case PLAYING -> playing.draw(g);
+            case OPTIONS -> gameOptions.draw(g);
+            case CREDITS -> credits.draw(g);
+        }
+    }
 
 	@Override
 	public void run() {
@@ -203,4 +204,8 @@ public class Game implements Runnable {
 	public void setCredits(Credits credits) {
 		this.credits = credits;
 	}
+
+    public PlayerSelection getPlayerSelection() {
+        return this.playerSelection;
+    }
 }

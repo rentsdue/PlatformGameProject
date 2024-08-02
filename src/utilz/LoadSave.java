@@ -7,9 +7,13 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import entities.PlayerCharacter;
+
 public class LoadSave {
     
     //Players and enemy-related stuff
+    public static final String PLAYER_ORC = "player_orc.png";
+    public static final String PLAYER_SOLDIER = "player_soldier.png";
     public static final String PLAYER_ATLAS = "player_sprites.png";
     public static final String JAPAN_ATLAS = "japan_sprite.png";
     public static final String ITALY_ATLAS = "italy_sprite.png";
@@ -48,6 +52,16 @@ public class LoadSave {
     public static final String CANNON_ATLAS = "cannon_atlas.png";
     public static final String PROJECTILE = "projectile.png";
     public static final String GAME_COMPLETED = "game_completed_ui.png";
+
+    public static BufferedImage[][] loadAnimations(PlayerCharacter pc) {
+        BufferedImage img = LoadSave.GetSpriteAtlas(pc.playerAtlas);
+        BufferedImage[][] animations = new BufferedImage[pc.rowA][pc.colA];
+        for (int j = 0; j < animations.length; j++)
+            for (int i = 0; i < animations[j].length; i++)
+                animations[j][i] = img.getSubimage(i * pc.spriteW, j * pc.spriteH, pc.spriteW, pc.spriteH);
+
+        return animations;
+    }
 
     public static BufferedImage GetSpriteAtlas(String fileName) {
         BufferedImage img = null;

@@ -95,10 +95,6 @@ public class Playing extends State implements Statemethods {
 		enemyManager = new EnemyManager(this);
 		objectManager = new ObjectManager(this);
 
-		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE), this);
-		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
-		player.setSpawn(levelManager.getCurrentLevel().getSpawnPoint());
-
 		pauseOverlay = new PauseOverlay(this);
 		gameOverOverlay = new GameOverOverlay(this);
 		gameCompletedOverlay = new GameCompletedOverlay(this);
@@ -106,27 +102,27 @@ public class Playing extends State implements Statemethods {
 	}
 
 	@Override
-	public void update() {
-		if (paused)
-			pauseOverlay.update();
-		else if (lvlCompleted)
-			levelCompletedOverlay.update();
-		else if (gameCompleted) 
-			gameCompletedOverlay.update();
-		else if (gameOver)
-			gameOverOverlay.update();
-		else if (playerDying)
-			player.update();
-		else {
-			levelManager.update();
-			objectManager.update(levelManager.getCurrentLevel().getLevelData(), player);
-			player.update();
-			enemyManager.update(levelManager.getCurrentLevel().getLevelData());
-			checkCloseToBorder();
-			if (drawShip)
-				updateShipAni();
-		}
-	}
+    public void update() {
+        if (paused)
+            pauseOverlay.update();
+        else if (lvlCompleted)
+            levelCompletedOverlay.update();
+        else if (gameCompleted)
+            gameCompletedOverlay.update();
+        else if (gameOver)
+            gameOverOverlay.update();
+        else if (playerDying)
+            player.update();
+        else {
+            levelManager.update();
+            objectManager.update(levelManager.getCurrentLevel().getLevelData(), player);
+            player.update();
+            enemyManager.update(levelManager.getCurrentLevel().getLevelData());
+            checkCloseToBorder();
+            if (drawShip)
+                updateShipAni();
+        }
+    }
 
 	private void checkCloseToBorder() {
 		int playerX = (int) player.getHitBox().x;
@@ -212,6 +208,12 @@ public class Playing extends State implements Statemethods {
 			timer.start();
 		}
 	}
+
+	public void setPlayerCharacter(PlayerCharacter pc) {
+        player = new Player(pc, this);
+        player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
+        player.setSpawn(levelManager.getCurrentLevel().getSpawnPoint());
+    }
 
 	private void updateShipAni() {
 		shipTick++;
@@ -464,5 +466,6 @@ public class Playing extends State implements Statemethods {
 	public void setInstructionsTimer(Timer instructionsTimer) {
 		this.instructionsTimer = instructionsTimer;
 	}
+	
 
 }
