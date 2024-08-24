@@ -18,6 +18,7 @@ import ui.*;
 import utilz.LoadSave;
 
 public class Playing extends State implements Statemethods {
+
 	private Player player;
 	private LevelManager levelManager;
 	private EnemyManager enemyManager;
@@ -47,7 +48,7 @@ public class Playing extends State implements Statemethods {
     private Timer timer, instructionsTimer;
 	private boolean showInstructions = true;
 
-	public Playing(Game game) {
+    public Playing(Game game) {
 		super(game);
 		initClasses();
 		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.CAVE_BACKGROUND);
@@ -69,7 +70,8 @@ public class Playing extends State implements Statemethods {
         });
     }
 
-	public void loadNextLevel() {
+
+    public void loadNextLevel() {
 		levelManager.setLevelIndex(levelManager.getLevelIndex() + 1);
 		levelManager.loadNextLevel();
 		player.setSpawn(levelManager.getCurrentLevel().getSpawnPoint());
@@ -81,27 +83,35 @@ public class Playing extends State implements Statemethods {
 		}
 	}
 
-	private void loadStartLevel() {
-		enemyManager.loadEnemies(levelManager.getCurrentLevel());
-		objectManager.loadObjects(levelManager.getCurrentLevel());
-	}
+    private void loadStartLevel() {
+        enemyManager.loadEnemies(levelManager.getCurrentLevel());
+        objectManager.loadObjects(levelManager.getCurrentLevel());
+    }
 
-	private void calcLvlOffset() {
-		maxLvlOffsetX = levelManager.getCurrentLevel().getLvlOffset();
-	}
+    private void calcLvlOffset() {
+        maxLvlOffsetX = levelManager.getCurrentLevel().getLvlOffset();
+    }
 
-	private void initClasses() {
-		levelManager = new LevelManager(game);
-		enemyManager = new EnemyManager(this);
-		objectManager = new ObjectManager(this);
+    private void initClasses() {
+        levelManager = new LevelManager(game);
+        enemyManager = new EnemyManager(this);
+        objectManager = new ObjectManager(this);
 
-		pauseOverlay = new PauseOverlay(this);
-		gameOverOverlay = new GameOverOverlay(this);
-		gameCompletedOverlay = new GameCompletedOverlay(this);
-		levelCompletedOverlay = new LevelCompletedOverlay(this);
-	}
 
-	@Override
+        pauseOverlay = new PauseOverlay(this);
+        gameOverOverlay = new GameOverOverlay(this);
+        levelCompletedOverlay = new LevelCompletedOverlay(this);
+        gameCompletedOverlay = new GameCompletedOverlay(this);
+    }
+
+    public void setPlayerCharacter(PlayerCharacter pc) {
+
+        player = new Player(pc, this);
+        player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
+        player.setSpawn(levelManager.getCurrentLevel().getSpawnPoint());
+    }
+
+    @Override
     public void update() {
         if (paused)
             pauseOverlay.update();
@@ -124,19 +134,68 @@ public class Playing extends State implements Statemethods {
         }
     }
 
-	private void checkCloseToBorder() {
-		int playerX = (int) player.getHitBox().x;
-		int diff = playerX - xLvlOffset;
+    private void updateShipAni() {
+        shipTick++;
+        if (shipTick >= 35) {
+            shipTick = 0;
+            shipAni++;
+            if (shipAni >= 4)
+                shipAni = 0;
+        }
 
-		if (diff > rightBorder)
-			xLvlOffset += diff - rightBorder;
-		else if (diff < leftBorder)
-			xLvlOffset += diff - leftBorder;
+        shipHeightDelta += shipHeightChange * shipDir;
+        shipHeightDelta = Math.max(Math.min(10 * Game.SCALE, shipHeightDelta), 0);
 
-		if (xLvlOffset > maxLvlOffsetX)
-			xLvlOffset = maxLvlOffsetX;
-		else if (xLvlOffset < 0)
-			xLvlOffset = 0;
+        if (shipHeightDelta == 0)
+            shipDir = 1;
+        else if (shipHeightDelta == 10 * Game.SCALE)
+            shipDir = -1;
+    }
+
+    private void checkCloseToBorder() {
+        int playerX = (int) player.getHitBox().x;
+        int diff = playerX - xLvlOffset;
+
+        if (diff > rightBorder)
+            xLvlOffset += diff - rightBorder;
+        else if (diff < leftBorder)
+            xLvlOffset += diff - leftBorder;
+
+        xLvlOffset = Math.max(Math.min(xLvlOffset, maxLvlOffsetX), 0);
+    }
+
+	//Change this
+    @Override
+	public void draw(Graphics g) {
+		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+		if (levelManager.getLevelIndex() == 0) {
+			writeInstructions(g);
+		}
+		if (drawShip)
+			g.drawImage(shipImgs[shipAni], (int) (100 * Game.SCALE) - xLvlOffset, (int) ((288 * Game.SCALE) + shipHeightDelta), (int) (78 * Game.SCALE), (int) (72 * Game.SCALE), null);
+			levelManager.draw(g, xLvlOffset);
+			objectManager.draw(g, xLvlOffset);
+			enemyManager.draw(g, xLvlOffset);
+			player.render(g, xLvlOffset);
+			drawTimer(g);
+			objectManager.drawBackgroundTrees(g, xLvlOffset);
+		if (paused) {
+			g.setColor(new Color(0, 0, 0, 150));
+			g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
+			pauseOverlay.draw(g);
+			pauseTimer();
+		} else if (gameOver) {
+			gameOverOverlay.draw(g);
+			pauseTimer();
+		} else if (lvlCompleted) {
+			levelCompletedOverlay.draw(g);
+			pauseTimer();
+		} else if (gameCompleted) {
+			gameCompletedOverlay.draw(g);
+			pauseTimer();
+		} else {
+			timer.start();
+		}
 	}
 
 	private void writeInstructions(Graphics g) {
@@ -176,92 +235,45 @@ public class Playing extends State implements Statemethods {
 		}
 	}
 
-	@Override
-	public void draw(Graphics g) {
-		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
-		if (levelManager.getLevelIndex() == 0) {
-			writeInstructions(g);
-		}
-		if (drawShip)
-			g.drawImage(shipImgs[shipAni], (int) (100 * Game.SCALE) - xLvlOffset, (int) ((288 * Game.SCALE) + shipHeightDelta), (int) (78 * Game.SCALE), (int) (72 * Game.SCALE), null);
-			levelManager.draw(g, xLvlOffset);
-			objectManager.draw(g, xLvlOffset);
-			enemyManager.draw(g, xLvlOffset);
-			player.render(g, xLvlOffset);
-			drawTimer(g);
-			objectManager.drawBackgroundTrees(g, xLvlOffset);
-		if (paused) {
-			g.setColor(new Color(0, 0, 0, 150));
-			g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
-			pauseOverlay.draw(g);
-			pauseTimer();
-		} else if (gameOver) {
-			gameOverOverlay.draw(g);
-			pauseTimer();
-		} else if (lvlCompleted) {
-			levelCompletedOverlay.draw(g);
-			pauseTimer();
-		} else if (gameCompleted) {
-			gameCompletedOverlay.draw(g);
-			pauseTimer();
-		} else {
-			timer.start();
-		}
-	}
-
-	public void setPlayerCharacter(PlayerCharacter pc) {
-        player = new Player(pc, this);
-        player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
-        player.setSpawn(levelManager.getCurrentLevel().getSpawnPoint());
+    public void setGameCompleted() {
+        gameCompleted = true;
     }
 
-	private void updateShipAni() {
-		shipTick++;
-		if (shipTick >= 35) {
-			shipTick = 0;
-			shipAni++;
-			if (shipAni >= 4)
-				shipAni = 0;
-		}
+    public void resetGameCompleted() {
+        gameCompleted = false;
+    }
 
-		shipHeightDelta += shipHeightChange * shipDir;
-		shipHeightDelta = Math.max(Math.min(10 * Game.SCALE, shipHeightDelta), 0);
+    public void resetAll() {
+        gameOver = false;
+        paused = false;
+        lvlCompleted = false;
+        playerDying = false;
+        player.resetAll();
+        enemyManager.resetAllEnemies();
+        objectManager.resetAllObjects();
+    }
 
-		if (shipHeightDelta == 0)
-			shipDir = 1;
-		else if (shipHeightDelta == 10 * Game.SCALE)
-			shipDir = -1;
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
 
-	}
+    public void checkObjectHit(Rectangle2D.Float attackBox) {
+        objectManager.checkObjectHit(attackBox);
+    }
 
-	public void resetAll() {
-		gameOver = false;
-		paused = false;
-		lvlCompleted = false;
-		playerDying = false;
-		player.resetAll();
-		enemyManager.resetAllEnemies();
-		objectManager.resetAllObjects();
-		totalPoints = 0;
-	}
+    public void checkEnemyHit(Rectangle2D.Float attackBox) {
+        enemyManager.checkEnemyHit(attackBox);
+    }
 
-	public void checkObjectHit(Rectangle2D.Float attackBox) {
-		objectManager.checkObjectHit(attackBox);
-	}
+    public void checkPotionTouched(Rectangle2D.Float hitbox) {
+        objectManager.checkObjectTouched(hitbox);
+    }
 
-	public void checkEnemyHit(Rectangle2D.Float attackBox) {
-		enemyManager.checkEnemyHit(attackBox);
-	}
-
-	public void checkPotionTouched(Rectangle2D.Float hitBox) {
-		objectManager.checkObjectTouched(hitBox);
-	}
-
-	public void checkSpikesTouched(Player p) {
+    public void checkSpikesTouched(Player p) {
         objectManager.checkSpikesTouched(p);
     }
 
-	@Override
+    @Override
 	public void mouseClicked(MouseEvent e) {
 		if (!gameOver) {
 			if (e.getButton() == MouseEvent.BUTTON1)
@@ -380,43 +392,32 @@ public class Playing extends State implements Statemethods {
 			gameCompletedOverlay.mouseMoved(e);
 	}
 
-	public void setLevelCompleted(boolean levelCompleted) {
-		game.getAudioPlayer().lvlCompleted();
-		if (levelManager.getLevelIndex() + 1 >= levelManager.getAmountOfLevels()) {
-			// No more levels
-			gameCompleted = true;
-			levelManager.setLevelIndex(0);
-			levelManager.loadNextLevel();
-			resetAll();
-			return;
-		}
-		this.lvlCompleted = levelCompleted;
-	}
+    public void setLevelCompleted(boolean levelCompleted) {
+        game.getAudioPlayer().lvlCompleted();
+        if (levelManager.getLevelIndex() + 1 >= levelManager.getAmountOfLevels()) {
+            // No more levels
+            gameCompleted = true;
+            levelManager.setLevelIndex(0);
+            levelManager.loadNextLevel();
+            resetAll();
+            return;
+        }
+        this.lvlCompleted = levelCompleted;
+    }
 
-	public void unpauseGame() {
-		paused = false;
-	}
+    public void setMaxLvlOffset(int lvlOffset) {
+        this.maxLvlOffsetX = lvlOffset;
+    }
 
-	public void windowFocusLost() {
-		player.resetDirBooleans();
-	}
+    public void unpauseGame() {
+        paused = false;
+    }
 
-	//Getters and setters
-	public void setGameOver(boolean gameOver) {
-		this.gameOver = gameOver;
-	}
+    public void windowFocusLost() {
+        player.resetDirBooleans();
+    }
 
-	public void resetGameCompleted() {
-		this.gameCompleted = false;
-	}
-
-	public void setGameCompleted() {
-		this.gameCompleted = true;
-	}
-
-	public void setMaxLvlOffset(int lvlOffset) {
-		this.maxLvlOffsetX = lvlOffset;
-	}
+    //Getters and setters
 
 	public Player getPlayer() {
 		return this.player;
@@ -466,6 +467,5 @@ public class Playing extends State implements Statemethods {
 	public void setInstructionsTimer(Timer instructionsTimer) {
 		this.instructionsTimer = instructionsTimer;
 	}
-	
 
 }
