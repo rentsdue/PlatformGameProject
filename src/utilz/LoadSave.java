@@ -13,8 +13,8 @@ public class LoadSave {
     
     //Players and enemy-related stuff
     public static final String PLAYER_USABALL = "player_usa.png";
-    public static final String PLAYER_SOLDIER = "player_soldier.png";
-    public static final String PLAYER_ATLAS = "player_uk.png";
+    public static final String PLAYER_USSRBALL = "player_ussr.png";
+    public static final String PLAYER_UKBALL = "player_uk.png";
     public static final String JAPAN_ATLAS = "japan_sprite.png";
     public static final String ITALY_ATLAS = "italy_sprite.png";
     public static final String GERMANY_ATLAS = "germany_sprite.png";

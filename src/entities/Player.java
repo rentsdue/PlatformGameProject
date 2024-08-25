@@ -94,7 +94,6 @@ public class Player extends Entity {
     public void update() {
         updateHealthBar();
         updatePowerBar();
-
         if (currentHealth <= 0) {
             if (state != DEAD) {
                 state = DEAD;
@@ -119,7 +118,7 @@ public class Player extends Entity {
                 if (inAir)
                     if (CanMoveHere(hitBox.x, hitBox.y + airSpeed, hitBox.width, hitBox.height, lvlData)) {
                         hitBox.y += airSpeed;
-                        airSpeed += GRAVITY;
+                        airSpeed += playerCharacter.gravity;
                     } else
                         inAir = false;
 
@@ -344,7 +343,7 @@ public class Player extends Entity {
         if (inAir && !powerAttackActive) {
             if (CanMoveHere(hitBox.x, hitBox.y + airSpeed, hitBox.width, hitBox.height, lvlData)) {
                 hitBox.y += airSpeed;
-                airSpeed += GRAVITY;
+                airSpeed += playerCharacter.gravity;
                 updateXPos(xSpeed);
             } else {
                 hitBox.y = GetEntityYPosUnderRoofOrAboveFloor(hitBox, airSpeed);
@@ -409,6 +408,7 @@ public class Player extends Entity {
         else
             pushBackDir = LEFT;
     }
+    
 
     public void kill() {
         currentHealth = 0;
