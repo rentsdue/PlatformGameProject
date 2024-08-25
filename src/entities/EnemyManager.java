@@ -6,7 +6,6 @@ import utilz.LoadSave;
 
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.Constants.PlayerConstants.ATTACK;
-import static utilz.Constants.PlayerConstants.PLAYER_DAMAGE;
 
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
@@ -108,7 +107,7 @@ public class EnemyManager {
             if (japan.getCurrentHealth() > 0) {
                 if (japan.isActive()) {
                     if (attackBox.intersects(japan.getHitBox())) {
-                        japan.hurt(PLAYER_DAMAGE);
+                        japan.hurt(playing.getPlayer().getPlayerCharacter().damageDealt);
                         return;
                 }
 			}
@@ -118,7 +117,7 @@ public class EnemyManager {
             if (t.getCurrentHealth() > 0) {
                 if (t.isActive()) {
                     if (attackBox.intersects(t.getHitBox())) {
-                        t.hurt(PLAYER_DAMAGE);
+                        t.hurt(playing.getPlayer().getPlayerCharacter().damageDealt);
                         return;
                 }
 			}
@@ -131,7 +130,7 @@ public class EnemyManager {
 				else {
 					if (p.getState() != DEAD && p.getState() != HIT)
 						if (attackBox.intersects(p.getHitBox())) {
-							p.hurt(PLAYER_DAMAGE);
+							p.hurt(playing.getPlayer().getPlayerCharacter().damageDealt);
 							return;
 						}
 				}
@@ -142,7 +141,7 @@ public class EnemyManager {
             if (s.isActive()) {
 				if (s.getState() != DEAD && s.getState() != HIT)
 					if (attackBox.intersects(s.getHitBox())) {
-						s.hurt(PLAYER_DAMAGE);
+						s.hurt(playing.getPlayer().getPlayerCharacter().damageDealt);
 						return;
 					}
 			}

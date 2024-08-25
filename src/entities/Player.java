@@ -70,12 +70,12 @@ public class Player extends Entity {
         this.playerCharacter = playerCharacter;
         this.playing = playing;
         this.state = IDLE;
-        this.maxHealth = 100;
+        this.maxHealth = playerCharacter.maxHealth;
         this.currentHealth = maxHealth;
         this.walkSpeed = Game.SCALE * 1.0f;
         animations = LoadSave.loadAnimations(playerCharacter);
         statusBarImg = LoadSave.GetSpriteAtlas(LoadSave.HEALTH_POWER_BAR);
-        initHitBox(playerCharacter.hitboxW, playerCharacter.hitboxH);
+        initHitBox(playerCharacter.hitBoxW, playerCharacter.hitBoxH);
         initAttackBox();
     }
 
@@ -223,7 +223,7 @@ public class Player extends Entity {
 
     public void render(Graphics g, int lvlOffset) {
         g.drawImage(animations[playerCharacter.getRowIndex(state)][aniIndex], (int) (hitBox.x - playerCharacter.xDrawOffset) - lvlOffset + flipX, (int) (hitBox.y - playerCharacter.yDrawOffset + (int) (pushDrawOffset)), width * flipW, height, null);
-        drawHitBox(g, lvlOffset);
+        // drawHitBox(g, lvlOffset);
 //		drawAttackBox(g, lvlOffset);
         drawUI(g);
     }
@@ -431,30 +431,6 @@ public class Player extends Entity {
         right = false;
     }
 
-    public void setAttacking(boolean attacking) {
-        this.attacking = attacking;
-    }
-
-    public boolean isLeft() {
-        return left;
-    }
-
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
-
-    public boolean isRight() {
-        return right;
-    }
-
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
-    public void setJump(boolean jump) {
-        this.jump = jump;
-    }
-
     public void resetAll() {
         resetDirBooleans();
         inAir = false;
@@ -482,10 +458,6 @@ public class Player extends Entity {
             setAttackBoxOnLeftSide();
     }
 
-    public int getTileY() {
-        return tileY;
-    }
-
     public void powerAttack() {
         if (powerAttackActive)
             return;
@@ -493,7 +465,39 @@ public class Player extends Entity {
             powerAttackActive = true;
             changePower(-60);
         }
+    }
 
+    //Getters and setters
+    public int getTileY() {
+        return this.tileY;
+    }
+
+    public void setAttacking(boolean attacking) {
+        this.attacking = attacking;
+    }
+
+    public boolean isLeft() {
+        return this.left;
+    }
+
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+    public boolean isRight() {
+        return this.right;
+    }
+
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+    public void setJump(boolean jump) {
+        this.jump = jump;
+    }
+
+    public PlayerCharacter getPlayerCharacter() {
+        return this.playerCharacter;
     }
 
 }

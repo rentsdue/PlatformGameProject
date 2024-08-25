@@ -158,7 +158,7 @@ public class Constants {
 		public static final int HIT = 5;
 		public static final int DEAD = 6;
 
-		public static final int PLAYER_DAMAGE = 25;
+		// public static final int PLAYER_DAMAGE = 25;
 
 		// public static int GetSpriteAmount(int player_action) { 
 		// 	switch (player_action) {

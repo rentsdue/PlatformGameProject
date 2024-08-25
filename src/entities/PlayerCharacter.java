@@ -7,18 +7,18 @@ import static utilz.Constants.PlayerConstants.*;
 
 public enum PlayerCharacter {
 
-    PIRATE(5, 6, 3, 1, 3, 4, 8,
+    UKBALL(5, 6, 3, 1, 3, 4, 8,
             0, 1, 2, 3, 4, 5, 6,
             LoadSave.PLAYER_ATLAS, 7, 8, 64, 40,
-            20, 27, 21, 7, 100),
-    ORC(5, 6, 3, 1, 3, 4, 8,
+            20, 27, 21, 7, 100, 25),
+    USABALL(5, 6, 3, 1, 3, 4, 8,
             0, 1, 2, 3, 4, 5, 6,
-            LoadSave.PLAYER_ORC, 7, 8, 64, 40,
-            20, 27, 21, 7, 50),
+            LoadSave.PLAYER_USABALL, 7, 8, 64, 40,
+            20, 27, 21, 7, 50, 50),
     SOLDIER(6, 8, 8, 8, 6, 4, 4,
             0, 1, 1, 1, 2, 5, 6,
             LoadSave.PLAYER_SOLDIER, 7, 8, 100, 100,
-            12, 18, 44, 39, 100);
+            12, 18, 44, 39, 100, 100);
 
 
     public int spriteA_IDLE, spriteA_RUNNING, spriteA_JUMP, spriteA_FALLING, spriteA_ATTACK, spriteA_HIT, spriteA_DEAD;
@@ -26,16 +26,16 @@ public enum PlayerCharacter {
     public String playerAtlas;
     public int rowA, colA;
     public int spriteW, spriteH;
-    public int hitboxW, hitboxH;
+    public int hitBoxW, hitBoxH;
     public int xDrawOffset, yDrawOffset;
-    public int maxHealth;
+    public int maxHealth, damageDealt;
 
 
     PlayerCharacter(int spriteA_IDLE, int spriteA_RUNNING, int spriteA_JUMP, int spriteA_FALLING, int spriteA_ATTACK, int spriteA_HIT, int spriteA_DEAD,
                     int rowIDLE, int rowRUNNING, int rowJUMP, int rowFALLING, int rowATTACK, int rowHIT, int rowDEAD,
                     String playerAtlas, int rowA, int colA, int spriteW, int spriteH,
-                    int hitboxW, int hitboxH,
-                    int xDrawOffset, int yDrawOffset, int maxHealth) {
+                    int hitBoxW, int hitBoxH,
+                    int xDrawOffset, int yDrawOffset, int maxHealth, int damageDealt) {
 
         this.spriteA_IDLE = spriteA_IDLE;
         this.spriteA_RUNNING = spriteA_RUNNING;
@@ -59,13 +59,14 @@ public enum PlayerCharacter {
         this.spriteW = spriteW;
         this.spriteH = spriteH;
 
-        this.hitboxW = hitboxW;
-        this.hitboxH = hitboxH;
+        this.hitBoxW = hitBoxW;
+        this.hitBoxH = hitBoxH;
 
         this.xDrawOffset = (int) (xDrawOffset * Game.SCALE);
         this.yDrawOffset = (int) (yDrawOffset * Game.SCALE);
 
         this.maxHealth = maxHealth;
+        this.damageDealt = damageDealt;
     }
 
     public int getSpriteAmount(int player_action) {
