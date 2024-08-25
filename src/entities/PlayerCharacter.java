@@ -14,7 +14,7 @@ public enum PlayerCharacter {
     ORC(5, 6, 3, 1, 3, 4, 8,
             0, 1, 2, 3, 4, 5, 6,
             LoadSave.PLAYER_ORC, 7, 8, 64, 40,
-            20, 27, 21, 7, 10),
+            20, 27, 21, 7, 50),
     SOLDIER(6, 8, 8, 8, 6, 4, 4,
             0, 1, 1, 1, 2, 5, 6,
             LoadSave.PLAYER_SOLDIER, 7, 8, 100, 100,
