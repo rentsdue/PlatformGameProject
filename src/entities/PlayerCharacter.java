@@ -71,29 +71,45 @@ public enum PlayerCharacter {
     }
 
     public int getSpriteAmount(int player_action) {
-        return switch (player_action) {
-            case IDLE -> spriteA_IDLE;
-            case RUNNING -> spriteA_RUNNING;
-            case JUMP -> spriteA_JUMP;
-            case FALLING -> spriteA_FALLING;
-            case ATTACK -> spriteA_ATTACK;
-            case HIT -> spriteA_HIT;
-            case DEAD -> spriteA_DEAD;
-            default -> 1;
-        };
+        switch (player_action) {
+            case IDLE:
+                return spriteA_IDLE;
+            case RUNNING:
+                return spriteA_RUNNING;
+            case JUMP:
+                return spriteA_JUMP;
+            case FALLING:
+                return spriteA_FALLING;
+            case ATTACK:
+                return spriteA_ATTACK;
+            case HIT:
+                return spriteA_HIT;
+            case DEAD:
+                return spriteA_DEAD;
+            default:
+                return 1;
+        }
     }
 
     public int getRowIndex(int player_action) {
-        return switch (player_action) {
-            case IDLE -> rowIDLE;
-            case RUNNING -> rowRUNNING;
-            case JUMP -> rowJUMP;
-            case FALLING -> rowFALLING;
-            case ATTACK -> rowATTACK;
-            case HIT -> rowHIT;
-            case DEAD -> rowDEAD;
-            default -> 1;
-        };
+        switch (player_action) {
+            case IDLE:
+                return rowIDLE;
+            case RUNNING:
+                return rowRUNNING;
+            case JUMP:
+                return rowJUMP;
+            case FALLING:
+                return rowFALLING;
+            case ATTACK:
+                return rowATTACK;
+            case HIT:
+                return rowHIT;
+            case DEAD:
+                return rowDEAD;
+            default:
+                return 1;
+        }
     }
 
 }

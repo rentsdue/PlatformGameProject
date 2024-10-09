@@ -54,11 +54,17 @@ public class Constants {
 
 		public static int GetSpriteAmount(int object_type) {
 			switch (object_type) {
-			case RED_POTION, BLUE_POTION:
+			case RED_POTION:
 				return 7;
-			case BARREL, BOX:
+			case BLUE_POTION:
+				return 7;
+			case BARREL:
 				return 8;
-			case CANNON_LEFT,CANNON_RIGHT:
+			case BOX:
+				return 8;
+			case CANNON_LEFT:
+				return 7;
+			case CANNON_RIGHT:
 				return 7;
 			}
 			return 1;
@@ -80,7 +86,9 @@ public class Constants {
 			switch (treeType) {
 			case TREE_ONE:
 				return -GetTreeHeight(treeType) + Game.TILES_SIZE * 2;
-			case TREE_TWO, TREE_THREE:
+			case TREE_TWO:
+				return -GetTreeHeight(treeType) + (int) (Game.TILES_SIZE / 1.25f);
+			case TREE_THREE:
 				return -GetTreeHeight(treeType) + (int) (Game.TILES_SIZE / 1.25f);
 			}
 			return 0;
@@ -248,9 +256,13 @@ public class Constants {
 			//Maximum hitpoints of each enemy type
 			public static int GetMaxHealth(int enemy_type) {
 				switch (enemy_type) {
-				case JAPAN, TUTORIAL_ENEMY:
+				case JAPAN:
 					return 50;
-				case ITALY, GERMANY:
+				case TUTORIAL_ENEMY:
+					return 50;
+				case ITALY:
+					return 25;
+				case GERMANY:
 					return 25;
 				default:
 					return 1;

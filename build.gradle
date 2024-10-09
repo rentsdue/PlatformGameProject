@@ -1,29 +1,17 @@
 plugins {
     id 'java'
-    id 'application' 
-}
-
-jar {
-    manifest {
-        attributes 'Main-Class': 'main.Main'
-    }
+    id 'application'
 }
 
 group = 'com.yourcompany.platformgameproject'
 version = '1.0.0'
 
-sourceCompatibility = '21'
+// Set the source and target compatibility to Java 8
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 repositories {
     mavenCentral()
-}
-
-jar {
-    manifest {
-        attributes(
-            'Main-Class': 'main.Main'
-        )
-    }
 }
 
 dependencies {
@@ -36,14 +24,21 @@ dependencies {
 test {
     useJUnitPlatform()
     testLogging {
-		events "passed", "skipped", "failed"
-	}
+        events "passed", "skipped", "failed"
+    }
 }
 
 application {
     mainClassName = 'main.Main' // Adjust this to your main class
 }
 
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'main.Main'
+        )
+    }
+}
 
 sourceSets {
     main {

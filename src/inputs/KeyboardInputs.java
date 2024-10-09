@@ -18,9 +18,18 @@ public class KeyboardInputs implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         switch (Gamestate.state) {
-            case MENU -> gamePanel.getGame().getMenu().keyReleased(e);
-            case PLAYING -> gamePanel.getGame().getPlaying().keyReleased(e);
-            case CREDITS -> gamePanel.getGame().getCredits().keyReleased(e);
+            case MENU:
+                gamePanel.getGame().getMenu().keyReleased(e);
+                break;
+            case PLAYING:
+                gamePanel.getGame().getPlaying().keyReleased(e);
+                break;
+            case CREDITS:
+                gamePanel.getGame().getCredits().keyReleased(e);
+                break;
+            default:
+                // Handle other states if necessary
+                break;
         }
     }
 
@@ -28,10 +37,21 @@ public class KeyboardInputs implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (Gamestate.state) {
-            case MENU -> gamePanel.getGame().getMenu().keyPressed(e);
-            case PLAYER_SELECTION -> gamePanel.getGame().getPlayerSelection().keyPressed(e);
-            case PLAYING -> gamePanel.getGame().getPlaying().keyPressed(e);
-            case OPTIONS -> gamePanel.getGame().getGameOptions().keyPressed(e);
+            case MENU:
+                gamePanel.getGame().getMenu().keyPressed(e);
+                break;
+            case PLAYER_SELECTION:
+                gamePanel.getGame().getPlayerSelection().keyPressed(e);
+                break;
+            case PLAYING:
+                gamePanel.getGame().getPlaying().keyPressed(e);
+                break;
+            case OPTIONS:
+                gamePanel.getGame().getGameOptions().keyPressed(e);
+                break;
+            default:
+                // Handle other states if necessary
+                break;
         }
     }
 

@@ -57,7 +57,11 @@ public class HelpMethods {
 	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
 		int value = lvlData[yTile][xTile];
 		switch (value) {
-		case 11, 48, 49:
+		case 11:
+			return false;
+		case 48:
+			return false;
+		case 49:
 			return false;
 		default:
 			return true;
