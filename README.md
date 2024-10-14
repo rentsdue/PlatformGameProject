@@ -86,5 +86,3 @@ Contributions are welcome! Feel free to submit bug reports, feature requests, or
 This project is licensed under the [MIT License](LICENSE), allowing for both personal and commercial use.
 
 ---
-
-This should help users run your Java game using CheerpJ!
