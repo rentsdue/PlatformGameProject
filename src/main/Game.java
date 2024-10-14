@@ -147,7 +147,7 @@ public class Game implements Runnable {
                 updates = 0;
             }
 
-            Thread.yield();  // Use Thread.yield() to avoid blocking other processes
+            Thread.yield();  
         }
     }
 
