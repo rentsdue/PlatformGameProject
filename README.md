@@ -1,6 +1,3 @@
-
----
-
 # Platform Game - Inspired by [KaarinGaming's Platformer Tutorial](https://github.com/KaarinGaming/PlatformerTutorial/)
 
 This platform game is a project inspired by the fantastic work done by KaarinGaming in the Platformer Tutorial repository. The original repository provided valuable insights and guidance, serving as a foundation for the development of this platform game.
@@ -84,5 +81,3 @@ Contributions are welcome! Feel free to submit bug reports, feature requests, or
 ## License
 
 This project is licensed under the [MIT License](LICENSE), allowing for both personal and commercial use.
-
----
