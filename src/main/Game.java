@@ -1,7 +1,7 @@
 package main;
 
 import java.awt.Graphics;
-
+import javax.swing.Timer;
 import audio.AudioPlayer;
 import gamestates.*;
 import ui.AudioOptions;
@@ -21,8 +21,8 @@ public class Game implements Runnable {
 
     private AudioPlayer audioPlayer;
 
-    private final int FPS_SET = 120;
-    private final int UPS_SET = 200;
+    private final int FPS_SET = 60;  // Set FPS to 60, standard for most games
+    private final int UPS_SET = 200; // Game updates per second
 
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static float SCALE = 1.5f;
@@ -39,6 +39,7 @@ public class Game implements Runnable {
         gamePanel.setFocusable(true);
         gamePanel.requestFocusInWindow();
         startGameLoop();
+        startGameTimer();
     }
 
     private void initClasses() {
@@ -144,10 +145,20 @@ public class Game implements Runnable {
                 System.out.println("FPS: " + frames + " | UPS: " + updates);
                 frames = 0;
                 updates = 0;
-
             }
-        }
 
+            Thread.yield();  // Use Thread.yield() to avoid blocking other processes
+        }
+    }
+
+    // Alternative Timer-based game loop for better browser compatibility
+    private void startGameTimer() {
+        int delay = 1000 / FPS_SET;  // Milliseconds per frame, based on FPS
+        Timer timer = new Timer(delay, e -> {
+            update();
+            gamePanel.repaint();
+        });
+        timer.start();
     }
 
     public void windowFocusLost() {
